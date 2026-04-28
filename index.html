@@ -560,12 +560,18 @@
         .service-card {
             position: relative;
             background: var(--black-card);
+            background-size: cover;
+            background-position: center;
             border: 1px solid rgba(255,255,255,0.05);
             padding: 40px 28px;
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: hidden;
             cursor: pointer;
             group: true;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
         }
 
         .service-card::before {
@@ -578,14 +584,29 @@
             background: var(--red);
             transform: scaleX(0);
             transition: transform 0.4s;
+            z-index: 2;
+        }
+
+        .service-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.3));
+            z-index: 1;
         }
 
         .service-card:hover::before { transform: scaleX(1); }
+        .service-card:hover { transform: translateY(-12px) scale(1.02); }
 
         .service-card:hover {
             border-color: rgba(196, 30, 30, 0.3);
             transform: translateY(-8px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .service-content {
+            position: relative;
+            z-index: 2;
         }
 
         .service-icon-wrap {
@@ -598,11 +619,12 @@
             justify-content: center;
             margin-bottom: 24px;
             transition: all 0.4s;
+            background: rgba(0, 0, 0, 0.7);
         }
 
         .service-card:hover .service-icon-wrap {
-            background: rgba(196, 30, 30, 0.1);
-            box-shadow: 0 0 20px rgba(196, 30, 30, 0.2);
+            background: rgba(196, 30, 30, 0.3);
+            box-shadow: 0 0 30px rgba(196, 30, 30, 0.4);
         }
 
         .service-icon {
@@ -1352,65 +1374,73 @@
                 <p class="section-desc">Soluciones integrales de producción audiovisual, fotografía, eventos y branding para llevar tu marca al siguiente nivel.</p>
             </div>
             <div class="services-grid">
-                <!-- Service 1 -->
-                <div class="service-card reveal reveal-delay-1">
-                    <div class="service-icon-wrap">
-                        <svg class="service-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
-                        </svg>
+                <!-- Service 1: Producción Audiovisual -->
+                <div class="service-card reveal reveal-delay-1" style="background-image: url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&h=600&fit=crop');">
+                    <div class="service-content">
+                        <div class="service-icon-wrap">
+                            <svg class="service-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+                            </svg>
+                        </div>
+                        <h3>Producción Audiovisual</h3>
+                        <ul class="service-list">
+                            <li>Producción y postproducción de video</li>
+                            <li>Comerciales, videoclips y contenido corporativo</li>
+                            <li>Contenido para redes sociales</li>
+                            <li>Streaming y cobertura de eventos en vivo</li>
+                        </ul>
                     </div>
-                    <h3>Producción Audiovisual</h3>
-                    <ul class="service-list">
-                        <li>Producción y postproducción de video</li>
-                        <li>Comerciales, videoclips y contenido corporativo</li>
-                        <li>Contenido para redes sociales</li>
-                        <li>Streaming y cobertura de eventos en vivo</li>
-                    </ul>
                 </div>
-                <!-- Service 2 -->
-                <div class="service-card reveal reveal-delay-2">
-                    <div class="service-icon-wrap">
-                        <svg class="service-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>
-                        </svg>
+                <!-- Service 2: Fotografía Profesional -->
+                <div class="service-card reveal reveal-delay-2" style="background-image: url('https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=600&h=600&fit=crop');">
+                    <div class="service-content">
+                        <div class="service-icon-wrap">
+                            <svg class="service-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>
+                            </svg>
+                        </div>
+                        <h3>Fotografía Profesional</h3>
+                        <ul class="service-list">
+                            <li>Cobertura de eventos y conciertos</li>
+                            <li>Fotografía corporativa y de producto</li>
+                            <li>Editorial y moda</li>
+                            <li>Sesiones creativas de alto impacto</li>
+                        </ul>
                     </div>
-                    <h3>Fotografía Profesional</h3>
-                    <ul class="service-list">
-                        <li>Cobertura de eventos y conciertos</li>
-                        <li>Fotografía corporativa y de producto</li>
-                        <li>Editorial y moda</li>
-                        <li>Sesiones creativas de alto impacto</li>
-                    </ul>
                 </div>
-                <!-- Service 3 -->
-                <div class="service-card reveal reveal-delay-3">
-                    <div class="service-icon-wrap">
-                        <svg class="service-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
-                        </svg>
+                <!-- Service 3: Eventos y Producción -->
+                <div class="service-card reveal reveal-delay-3" style="background-image: url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=600&h=600&fit=crop');">
+                    <div class="service-content">
+                        <div class="service-icon-wrap">
+                            <svg class="service-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+                            </svg>
+                        </div>
+                        <h3>Eventos y Producción</h3>
+                        <ul class="service-list">
+                            <li>Organización de eventos corporativos y festivales</li>
+                            <li>Activaciones de marca</li>
+                            <li>Logística y operación técnica</li>
+                            <li>Experiencias inmersivas y realidad aumentada</li>
+                        </ul>
                     </div>
-                    <h3>Eventos y Producción</h3>
-                    <ul class="service-list">
-                        <li>Organización de eventos corporativos y festivales</li>
-                        <li>Activaciones de marca</li>
-                        <li>Logística y operación técnica</li>
-                        <li>Experiencias inmersivas y realidad aumentada</li>
-                    </ul>
                 </div>
-                <!-- Service 4 -->
-                <div class="service-card reveal reveal-delay-4">
-                    <div class="service-icon-wrap">
-                        <svg class="service-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-                        </svg>
+                <!-- Service 4: Branding y Estrategia Visual -->
+                <div class="service-card reveal reveal-delay-4" style="background-image: url('https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&h=600&fit=crop');">
+                    <div class="service-content">
+                        <div class="service-icon-wrap">
+                            <svg class="service-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                            </svg>
+                        </div>
+                        <h3>Branding y Estrategia Visual</h3>
+                        <ul class="service-list">
+                            <li>Desarrollo de identidad visual</li>
+                            <li>Motion graphics y animación</li>
+                            <li>Estrategia de contenido para redes sociales</li>
+                            <li>Diseño gráfico para marcas y eventos</li>
+                        </ul>
                     </div>
-                    <h3>Branding y Estrategia Visual</h3>
-                    <ul class="service-list">
-                        <li>Desarrollo de identidad visual</li>
-                        <li>Motion graphics y animación</li>
-                        <li>Estrategia de contenido para redes sociales</li>
-                        <li>Diseño gráfico para marcas y eventos</li>
-                    </ul>
                 </div>
             </div>
         </div>
