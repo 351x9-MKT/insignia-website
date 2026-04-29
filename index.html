@@ -535,6 +535,211 @@
             color: var(--gray-light);
         }
 
+        /* ===== DEMO REEL ===== */
+        .demoreel-wrap {
+            margin-top: 72px;
+            position: relative;
+        }
+
+        .demoreel-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            aspect-ratio: 16 / 9;
+            background: var(--black-card);
+            border: 1px solid rgba(255,255,255,0.08);
+            overflow: hidden;
+        }
+
+        .demoreel-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .demoreel-placeholder {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0000 50%, #0a0a0a 100%);
+            cursor: pointer;
+            transition: all 0.4s;
+        }
+
+        .demoreel-placeholder:hover { background: linear-gradient(135deg, #0a0a0a 0%, #2d0000 50%, #0a0a0a 100%); }
+
+        .demoreel-play {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid var(--red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s;
+        }
+
+        .demoreel-placeholder:hover .demoreel-play {
+            background: rgba(196, 30, 30, 0.15);
+            box-shadow: 0 0 40px rgba(196, 30, 30, 0.3);
+            transform: scale(1.05);
+        }
+
+        .demoreel-label {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gray-light);
+        }
+
+        .demoreel-sublabel {
+            font-size: 0.8rem;
+            color: var(--gray-mid);
+        }
+
+        /* ===== EVENTS INTRO ===== */
+        .events-intro {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+            margin-bottom: 80px;
+        }
+
+        .events-intro-text h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        .events-intro-text p {
+            color: var(--gray-light);
+            font-size: 1rem;
+            line-height: 1.8;
+            margin-bottom: 16px;
+            font-weight: 300;
+        }
+
+        .events-capabilities {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 28px;
+        }
+
+        .capability-tag {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            background: var(--black-card);
+            border: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.85rem;
+            color: var(--gray-light);
+            transition: all 0.3s;
+        }
+
+        .capability-tag:hover {
+            border-color: rgba(196, 30, 30, 0.3);
+        }
+
+        .capability-tag .tag-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--red);
+            flex-shrink: 0;
+        }
+
+        .events-intro-visual {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .event-stat-card {
+            padding: 28px 20px;
+            text-align: center;
+            background: var(--black-card);
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.4s;
+        }
+
+        .event-stat-card:hover {
+            border-color: rgba(196, 30, 30, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .event-stat-number {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--red);
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+
+        .event-stat-label {
+            font-family: var(--font-alt);
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--gray-light);
+        }
+
+        .events-subsection-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .events-subsection-header h3 {
+            font-family: var(--font-display);
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .events-subsection-header .section-line {
+            margin-top: 16px;
+        }
+
+        .btn-landing {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-alt);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 14px 32px;
+            border: 1px solid var(--red);
+            color: var(--white);
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 24px;
+        }
+
+        .btn-landing:hover {
+            background: var(--red);
+            box-shadow: 0 0 20px var(--red-glow);
+        }
+
+        @media (max-width: 768px) {
+            .events-intro { grid-template-columns: 1fr; gap: 32px; }
+            .events-capabilities { grid-template-columns: 1fr; }
+        }
+
         /* ===== SERVICES SECTION ===== */
         .services {
             background: var(--black);
@@ -1361,6 +1566,22 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Demo Reel -->
+            <div class="demoreel-wrap reveal">
+                <div class="demoreel-container" id="demoreelContainer">
+                    <video id="demoreelVideo" preload="metadata" playsinline>
+                        <source src="demoreel.mp4" type="video/mp4">
+                    </video>
+                    <div class="demoreel-placeholder" id="demoreelOverlay" onclick="playDemoreel()">
+                        <div class="demoreel-play">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--red)" stroke="none"><polygon points="8 5 20 12 8 19 8 5"/></svg>
+                        </div>
+                        <span class="demoreel-label">Demo Reel</span>
+                        <span class="demoreel-sublabel">Descubre lo que hacemos</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -1375,7 +1596,7 @@
             </div>
             <div class="services-grid">
                 <!-- Service 1: Producción Audiovisual -->
-                <div class="service-card reveal reveal-delay-1" style="background-image: url('assets/audiovisual-bg.jpg');">
+                <div class="service-card reveal reveal-delay-1" style="background-image: url('Assets/audiovisual-bg.jpg');">
                     <div class="service-content">
                         <div class="service-icon-wrap">
                             <svg class="service-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -1392,7 +1613,7 @@
                     </div>
                 </div>
                 <!-- Service 2: Fotografía Profesional -->
-                <div class="service-card reveal reveal-delay-2" style="background-image: url('assets/fotografia-bg.jpg');">
+                <div class="service-card reveal reveal-delay-2" style="background-image: url('Assets/fotografia-bg.jpg');">
                     <div class="service-content">
                         <div class="service-icon-wrap">
                             <svg class="service-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -1409,7 +1630,7 @@
                     </div>
                 </div>
                 <!-- Service 3: Eventos y Producción -->
-                <div class="service-card reveal reveal-delay-3" style="background-image: url('assets/eventos-bg.jpg');">
+                <div class="service-card reveal reveal-delay-3" style="background-image: url('Assets/eventos-bg.jpg');">
                     <div class="service-content">
                         <div class="service-icon-wrap">
                             <svg class="service-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -1426,7 +1647,7 @@
                     </div>
                 </div>
                 <!-- Service 4: Branding y Estrategia Visual -->
-                <div class="service-card reveal reveal-delay-4" style="background-image: url('assets/branding-bg.jpg');">
+                <div class="service-card reveal reveal-delay-4" style="background-image: url('Assets/branding-bg.jpg');">
                     <div class="service-content">
                         <div class="service-icon-wrap">
                             <svg class="service-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -1446,19 +1667,106 @@
         </div>
     </section>
 
+    <!-- Differentiators -->
+    <section class="section differentiators">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">¿Por qué elegirnos?</span>
+                <h2 class="section-title">Diferenciadores Clave</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="diff-grid">
+                <div class="diff-card reveal reveal-delay-1">
+                    <div class="diff-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+                    </div>
+                    <h3>Calidad Cinematográfica</h3>
+                    <p>Equipamiento de alta gama y equipo creativo experto para resultados de nivel premium.</p>
+                </div>
+                <div class="diff-card reveal reveal-delay-2">
+                    <div class="diff-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a7 7 0 0 1 7 7c0 5.25-7 13-7 13S5 14.25 5 9a7 7 0 0 1 7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+                    </div>
+                    <h3>Innovación</h3>
+                    <p>Uso de nuevas tecnologías en producción y edición para resultados de vanguardia.</p>
+                </div>
+                <div class="diff-card reveal reveal-delay-3">
+                    <div class="diff-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    </div>
+                    <h3>Experiencia Comprobada</h3>
+                    <p>Portafolio con marcas y eventos reconocidos que respaldan nuestro trabajo.</p>
+                </div>
+                <div class="diff-card reveal reveal-delay-4">
+                    <div class="diff-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    </div>
+                    <h3>Enfoque 360°</h3>
+                    <p>Desde la conceptualización hasta la ejecución final, cubrimos cada aspecto de tu proyecto.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Events -->
     <section class="section events" id="events">
         <div class="container">
             <div class="section-header reveal">
-                <span class="section-label">Próximos eventos</span>
-                <h2 class="section-title">Eventos Anunciados</h2>
+                <span class="section-label">Eventos y Producción</span>
+                <h2 class="section-title">Creamos Experiencias Inolvidables</h2>
                 <div class="section-line"></div>
-                <p class="section-desc">Descubre los próximos eventos que estamos produciendo. Selecciona tu evento favorito y adquiere tus boletos.</p>
+                <p class="section-desc">Desarrollamos y producimos eventos de principio a fin, combinando creatividad, logística impecable y tecnología de vanguardia.</p>
+            </div>
+
+            <!-- Events Intro -->
+            <div class="events-intro reveal">
+                <div class="events-intro-text">
+                    <h3>Producción Integral de Eventos</h3>
+                    <p>En Insignia Entertainment no solo organizamos eventos — los diseñamos como experiencias. Desde conciertos internacionales y festivales de música hasta eventos corporativos y activaciones de marca, nuestro equipo se encarga de cada detalle para que tú solo te preocupes por disfrutar el resultado.</p>
+                    <p>Contamos con un equipo multidisciplinario especializado en producción técnica, logística, diseño de escenografía, iluminación, audio, y cobertura audiovisual en vivo.</p>
+                    <div class="events-capabilities">
+                        <div class="capability-tag"><span class="tag-dot"></span>Conciertos y Festivales</div>
+                        <div class="capability-tag"><span class="tag-dot"></span>Eventos Corporativos</div>
+                        <div class="capability-tag"><span class="tag-dot"></span>Activaciones de Marca</div>
+                        <div class="capability-tag"><span class="tag-dot"></span>Experiencias Inmersivas</div>
+                        <div class="capability-tag"><span class="tag-dot"></span>Logística y Operación</div>
+                        <div class="capability-tag"><span class="tag-dot"></span>Producción Técnica</div>
+                    </div>
+                    <a href="eventos.html" class="btn-landing">
+                        Conoce más sobre nuestros eventos
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </a>
+                </div>
+                <div class="events-intro-visual">
+                    <div class="event-stat-card">
+                        <div class="event-stat-number">80+</div>
+                        <div class="event-stat-label">Eventos Producidos</div>
+                    </div>
+                    <div class="event-stat-card">
+                        <div class="event-stat-number">50K+</div>
+                        <div class="event-stat-label">Asistentes</div>
+                    </div>
+                    <div class="event-stat-card">
+                        <div class="event-stat-number">30+</div>
+                        <div class="event-stat-label">Artistas y Marcas</div>
+                    </div>
+                    <div class="event-stat-card">
+                        <div class="event-stat-number">100%</div>
+                        <div class="event-stat-label">Compromiso</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Próximos Eventos Sub-section -->
+            <div class="events-subsection-header reveal">
+                <span class="section-label">Boletos disponibles</span>
+                <h3>Próximos Eventos</h3>
+                <div class="section-line"></div>
             </div>
             <div class="events-grid">
                 <!-- Event 1: I See Stars -->
                 <div class="event-card reveal reveal-delay-1">
-                    <div class="event-image" style="background-size: cover; background-position: center; background-image: url('assets/i-see-stars-flyer.jpg');">
+                    <div class="event-image" style="background-size: cover; background-position: center; background-image: url('Assets/i-see-stars-flyer.jpg');">
                         <span class="event-status on-sale">En Venta</span>
                         <div class="event-date-badge">
                             <div class="day">08</div>
@@ -1489,7 +1797,7 @@
                 </div>
                 <!-- Event 2: FLOW Festival '26 -->
                 <div class="event-card reveal reveal-delay-2">
-                    <div class="event-image" style="background-size: cover; background-position: center; background-image: url('assets/flow-festival-flyer.jpg');">
+                    <div class="event-image" style="background-size: cover; background-position: center; background-image: url('Assets/flow-festival-flyer.jpg');">
                         <span class="event-status coming-soon">Próximamente</span>
                         <div class="event-date-badge">
                             <div class="day">22</div>
@@ -1517,55 +1825,6 @@
                             Próximamente en Boletia
                         </button>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Differentiators -->
-    <section class="section differentiators">
-        <div class="container">
-            <div class="section-header reveal">
-                <span class="section-label">¿Por qué elegirnos?</span>
-                <h2 class="section-title">Diferenciadores Clave</h2>
-                <div class="section-line"></div>
-            </div>
-            <div class="diff-grid">
-                <div class="diff-card reveal reveal-delay-1">
-                    <div class="diff-icon">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/>
-                        </svg>
-                    </div>
-                    <h3>Calidad Cinematográfica</h3>
-                    <p>Equipamiento de alta gama y equipo creativo experto para resultados de nivel premium.</p>
-                </div>
-                <div class="diff-card reveal reveal-delay-2">
-                    <div class="diff-icon">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M12 2a7 7 0 0 1 7 7c0 5.25-7 13-7 13S5 14.25 5 9a7 7 0 0 1 7-7z"/><circle cx="12" cy="9" r="2.5"/>
-                        </svg>
-                    </div>
-                    <h3>Innovación</h3>
-                    <p>Uso de nuevas tecnologías en producción y edición para resultados de vanguardia.</p>
-                </div>
-                <div class="diff-card reveal reveal-delay-3">
-                    <div class="diff-icon">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
-                        </svg>
-                    </div>
-                    <h3>Experiencia Comprobada</h3>
-                    <p>Portafolio con marcas y eventos reconocidos que respaldan nuestro trabajo.</p>
-                </div>
-                <div class="diff-card reveal reveal-delay-4">
-                    <div class="diff-icon">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
-                        </svg>
-                    </div>
-                    <h3>Enfoque 360°</h3>
-                    <p>Desde la conceptualización hasta la ejecución final, cubrimos cada aspecto de tu proyecto.</p>
                 </div>
             </div>
         </div>
@@ -1688,6 +1947,7 @@
                     <li><a href="#about">Nosotros</a></li>
                     <li><a href="#services">Servicios</a></li>
                     <li><a href="#events">Eventos</a></li>
+                    <li><a href="eventos.html">Producción de Eventos</a></li>
                     <li><a href="#contact">Contacto</a></li>
                 </ul>
             </div>
@@ -1817,6 +2077,21 @@
                 btn.style.background = '';
                 form.reset();
             }, 1000);
+        }
+
+        // ===== DEMO REEL =====
+        function playDemoreel() {
+            const video = document.getElementById('demoreelVideo');
+            const overlay = document.getElementById('demoreelOverlay');
+            if (video && overlay) {
+                overlay.style.opacity = '0';
+                overlay.style.pointerEvents = 'none';
+                video.controls = true;
+                video.play().catch(() => {
+                    overlay.style.opacity = '1';
+                    overlay.style.pointerEvents = 'auto';
+                });
+            }
         }
 
         // ===== SMOOTH SCROLL FOR ANCHOR LINKS =====

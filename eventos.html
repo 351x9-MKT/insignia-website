@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos y Producción | Insignia Entertainment</title>
+    <meta name="description" content="Producción integral de eventos: conciertos, festivales, corporativos, activaciones de marca y experiencias inmersivas. Insignia Entertainment.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --red: #C41E1E;
+            --red-light: #E53535;
+            --red-dark: #8B0000;
+            --red-glow: rgba(196, 30, 30, 0.4);
+            --black: #000000;
+            --black-soft: #0A0A0A;
+            --black-card: #111111;
+            --gray-dark: #1A1A1A;
+            --gray: #2A2A2A;
+            --gray-mid: #666666;
+            --gray-light: #999999;
+            --white: #FFFFFF;
+            --font-display: 'Orbitron', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-alt: 'Space Grotesk', sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-body); background: var(--black); color: var(--white); overflow-x: hidden; line-height: 1.6; }
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; display: block; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            padding: 16px 0; background: rgba(0,0,0,0.92); backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(196,30,30,0.15);
+        }
+        .navbar .container { display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo { display: flex; align-items: center; height: 40px; }
+        .logo-img { object-fit: contain; filter: brightness(0) invert(1); }
+        .nav-logo-img { height: 28px; width: auto; }
+        .nav-links { display: flex; list-style: none; gap: 32px; }
+        .nav-links a {
+            font-family: var(--font-alt); font-size: 0.85rem; font-weight: 500;
+            letter-spacing: 1.5px; text-transform: uppercase; color: var(--gray-light);
+            transition: color 0.3s; position: relative;
+        }
+        .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--red); transition: width 0.3s; }
+        .nav-links a:hover { color: var(--white); }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-cta {
+            font-family: var(--font-alt); font-size: 0.8rem; font-weight: 600;
+            letter-spacing: 1px; text-transform: uppercase; padding: 10px 24px;
+            border: 1px solid var(--red); color: var(--white); background: transparent;
+            cursor: pointer; transition: all 0.3s;
+        }
+        .nav-cta:hover { background: var(--red); box-shadow: 0 0 20px var(--red-glow); }
+
+        .menu-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; z-index: 1001; background: none; border: none; }
+        .menu-toggle span { width: 28px; height: 2px; background: var(--white); transition: all 0.3s; }
+        .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .menu-toggle.active span:nth-child(2) { opacity: 0; }
+        .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        /* ===== HERO BANNER ===== */
+        .events-hero {
+            padding: 160px 0 100px;
+            position: relative;
+            overflow: hidden;
+        }
+        .events-hero::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(ellipse at 30% 50%, rgba(139,0,0,0.25) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 20%, rgba(196,30,30,0.1) 0%, transparent 50%), var(--black);
+        }
+        .events-hero .container { position: relative; z-index: 2; }
+        .events-hero .breadcrumb {
+            font-family: var(--font-alt); font-size: 0.8rem; color: var(--gray-mid);
+            margin-bottom: 24px; display: flex; align-items: center; gap: 8px;
+        }
+        .events-hero .breadcrumb a { color: var(--gray-light); transition: color 0.3s; }
+        .events-hero .breadcrumb a:hover { color: var(--red); }
+        .events-hero h1 {
+            font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800; letter-spacing: 4px; text-transform: uppercase;
+            line-height: 1.2; margin-bottom: 20px;
+        }
+        .events-hero h1 span { color: var(--red); }
+        .events-hero p {
+            font-size: 1.1rem; color: var(--gray-light); max-width: 650px;
+            line-height: 1.8; font-weight: 300;
+        }
+
+        /* ===== SECTIONS ===== */
+        .section { padding: 100px 0; position: relative; }
+        .section::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 1px; background: linear-gradient(90deg, transparent, var(--red), transparent);
+        }
+        .section-label {
+            font-family: var(--font-alt); font-size: 0.75rem; font-weight: 500;
+            letter-spacing: 4px; text-transform: uppercase; color: var(--red);
+            margin-bottom: 16px; display: block;
+        }
+        .section-title {
+            font-family: var(--font-display); font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+            font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;
+        }
+        .section-line { width: 60px; height: 3px; background: var(--red); margin: 0 auto 24px; }
+        .section-header { text-align: center; margin-bottom: 64px; }
+
+        /* ===== EVENT TYPES ===== */
+        .types-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+        }
+        .type-card {
+            padding: 40px 28px; background: var(--black-card);
+            border: 1px solid rgba(255,255,255,0.05); transition: all 0.4s;
+            position: relative; overflow: hidden;
+        }
+        .type-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 3px; background: var(--red); transform: scaleX(0); transition: transform 0.4s;
+        }
+        .type-card:hover::before { transform: scaleX(1); }
+        .type-card:hover { border-color: rgba(196,30,30,0.3); transform: translateY(-6px); }
+        .type-icon {
+            width: 56px; height: 56px; border-radius: 50%; border: 1.5px solid var(--red);
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 20px; color: var(--red);
+        }
+        .type-card:hover .type-icon { background: rgba(196,30,30,0.1); box-shadow: 0 0 20px rgba(196,30,30,0.2); }
+        .type-card h3 { font-family: var(--font-alt); font-size: 1.1rem; font-weight: 600; margin-bottom: 12px; }
+        .type-card p { font-size: 0.9rem; color: var(--gray-light); line-height: 1.6; }
+
+        /* ===== PROCESS ===== */
+        .process-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+            position: relative;
+        }
+        .process-grid::before {
+            content: ''; position: absolute; top: 40px; left: 10%; right: 10%;
+            height: 1px; background: rgba(196,30,30,0.2); z-index: 0;
+        }
+        .process-step {
+            text-align: center; position: relative; z-index: 1;
+        }
+        .step-number {
+            width: 64px; height: 64px; border-radius: 50%; border: 2px solid var(--red);
+            display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-display); font-size: 1.2rem; font-weight: 800;
+            color: var(--red); margin: 0 auto 20px; background: var(--black);
+            transition: all 0.4s;
+        }
+        .process-step:hover .step-number {
+            background: var(--red); color: var(--white);
+            box-shadow: 0 0 30px rgba(196,30,30,0.3);
+        }
+        .process-step h4 { font-family: var(--font-alt); font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; }
+        .process-step p { font-size: 0.85rem; color: var(--gray-light); line-height: 1.5; }
+
+        /* ===== GALLERY PLACEHOLDER ===== */
+        .gallery-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+        }
+        .gallery-item {
+            aspect-ratio: 1; background: var(--black-card); border: 1px solid rgba(255,255,255,0.05);
+            display: flex; align-items: center; justify-content: center; flex-direction: column;
+            gap: 8px; transition: all 0.3s; cursor: pointer;
+        }
+        .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; aspect-ratio: auto; }
+        .gallery-item:hover { border-color: rgba(196,30,30,0.3); }
+        .gallery-item svg { opacity: 0.2; }
+        .gallery-item span { font-size: 0.7rem; color: var(--gray-mid); letter-spacing: 1px; text-transform: uppercase; }
+
+        /* ===== UPCOMING EVENTS ===== */
+        .upcoming-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px;
+            max-width: 900px; margin: 0 auto;
+        }
+        .event-card {
+            background: var(--black-card); border: 1px solid rgba(255,255,255,0.05);
+            overflow: hidden; transition: all 0.5s;
+        }
+        .event-card:hover { transform: translateY(-8px); border-color: rgba(196,30,30,0.4); box-shadow: 0 20px 40px rgba(196,30,30,0.1); }
+        .event-image {
+            width: 100%; height: 220px; position: relative; overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, var(--gray-dark), var(--black));
+        }
+        .event-date-badge {
+            position: absolute; top: 16px; right: 16px; background: var(--red);
+            padding: 8px 14px; text-align: center;
+        }
+        .event-date-badge .day { font-family: var(--font-display); font-size: 1.4rem; font-weight: 800; line-height: 1; }
+        .event-date-badge .month { font-family: var(--font-alt); font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; }
+        .event-status {
+            position: absolute; top: 16px; left: 16px; font-family: var(--font-alt);
+            font-size: 0.65rem; font-weight: 600; letter-spacing: 1.5px;
+            text-transform: uppercase; padding: 5px 12px;
+        }
+        .event-status.on-sale { background: var(--red); color: var(--white); }
+        .event-status.coming-soon { background: rgba(255,255,255,0.1); color: var(--gray-light); border: 1px solid rgba(255,255,255,0.2); }
+        .event-info { padding: 24px; }
+        .event-info h3 { font-family: var(--font-alt); font-size: 1.15rem; font-weight: 600; margin-bottom: 8px; }
+        .event-meta { display: flex; flex-direction: column; gap: 6px; margin-bottom: 20px; }
+        .event-meta span { font-size: 0.85rem; color: var(--gray-light); display: flex; align-items: center; gap: 8px; }
+        .event-meta .icon { color: var(--red); font-size: 0.9rem; }
+        .btn-ticket {
+            display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-alt);
+            font-size: 0.8rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+            padding: 12px 24px; border: 1px solid var(--red); color: var(--white);
+            background: transparent; cursor: pointer; transition: all 0.3s; width: 100%; justify-content: center;
+        }
+        .btn-ticket:hover { background: var(--red); box-shadow: 0 0 20px var(--red-glow); }
+        .btn-ticket.disabled { border-color: var(--gray); color: var(--gray-mid); cursor: not-allowed; }
+        .btn-ticket.disabled:hover { background: transparent; box-shadow: none; }
+
+        /* ===== CTA ===== */
+        .cta-section {
+            padding: 100px 0; text-align: center; position: relative;
+        }
+        .cta-section::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(ellipse at center, rgba(139,0,0,0.2) 0%, transparent 70%);
+        }
+        .cta-section .container { position: relative; z-index: 2; }
+        .cta-section h2 {
+            font-family: var(--font-display); font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 700; letter-spacing: 3px; margin-bottom: 20px;
+        }
+        .cta-section p { color: var(--gray-light); font-size: 1.05rem; max-width: 500px; margin: 0 auto 32px; line-height: 1.7; }
+        .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .btn-primary {
+            font-family: var(--font-alt); font-size: 0.85rem; font-weight: 600;
+            letter-spacing: 2px; text-transform: uppercase; padding: 16px 40px;
+            background: var(--red); color: var(--white); border: none; cursor: pointer;
+            transition: all 0.4s; position: relative; overflow: hidden;
+        }
+        .btn-primary:hover { box-shadow: 0 0 30px var(--red-glow); transform: translateY(-2px); }
+        .btn-outline {
+            font-family: var(--font-alt); font-size: 0.85rem; font-weight: 600;
+            letter-spacing: 2px; text-transform: uppercase; padding: 16px 40px;
+            background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,0.2);
+            cursor: pointer; transition: all 0.4s;
+        }
+        .btn-outline:hover { border-color: var(--red); color: var(--red-light); }
+
+        /* ===== FOOTER ===== */
+        .footer { background: var(--black); border-top: 1px solid rgba(255,255,255,0.05); padding: 48px 0 24px; }
+        .footer-content { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
+        .footer-logo { display: flex; align-items: center; height: 28px; }
+        .footer-logo-img { height: 24px; width: auto; }
+        .footer-links { display: flex; gap: 28px; list-style: none; }
+        .footer-links a { font-size: 0.85rem; color: var(--gray-mid); transition: color 0.3s; }
+        .footer-links a:hover { color: var(--red); }
+        .footer-bottom { text-align: center; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.8rem; color: var(--gray-mid); }
+
+        /* ===== WHATSAPP ===== */
+        .whatsapp-float {
+            position: fixed; bottom: 28px; right: 28px; z-index: 999;
+            width: 60px; height: 60px; border-radius: 50%; background: #25D366;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 20px rgba(37,211,102,0.4); cursor: pointer;
+            transition: all 0.3s; animation: whatsappPulse 2s infinite;
+        }
+        .whatsapp-float:hover { transform: scale(1.1); }
+        .whatsapp-float svg { width: 32px; height: 32px; fill: white; }
+        @keyframes whatsappPulse { 0%,100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); } 50% { box-shadow: 0 4px 30px rgba(37,211,102,0.6); } }
+
+        /* ===== ANIMATIONS ===== */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.4,0,0.2,1); }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .types-grid { grid-template-columns: repeat(2, 1fr); }
+            .process-grid { grid-template-columns: repeat(2, 1fr); }
+            .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+            .gallery-item:nth-child(1) { grid-column: span 1; grid-row: span 1; }
+        }
+        @media (max-width: 768px) {
+            .nav-links, .nav-cta { display: none; }
+            .menu-toggle { display: flex; }
+            .nav-links.mobile-open {
+                display: flex; flex-direction: column; position: fixed; inset: 0;
+                background: rgba(0,0,0,0.97); justify-content: center; align-items: center;
+                gap: 40px; z-index: 1000;
+            }
+            .nav-links.mobile-open a { font-size: 1.2rem; color: var(--white); }
+            .types-grid { grid-template-columns: 1fr; }
+            .process-grid { grid-template-columns: 1fr; }
+            .process-grid::before { display: none; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+            .upcoming-grid { grid-template-columns: 1fr; }
+            .footer-content { flex-direction: column; gap: 24px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="nav-logo">
+                <img src="logo.png" alt="Insignia Entertainment" class="logo-img nav-logo-img">
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html#about" onclick="closeMobile()">Nosotros</a></li>
+                <li><a href="index.html#services" onclick="closeMobile()">Servicios</a></li>
+                <li><a href="index.html#events" onclick="closeMobile()">Eventos</a></li>
+                <li><a href="index.html#contact" onclick="closeMobile()">Contacto</a></li>
+            </ul>
+            <a href="index.html#contact" class="nav-cta">Cotiza tu evento</a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Banner -->
+    <section class="events-hero">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Inicio</a>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                <span>Eventos y Producción</span>
+            </div>
+            <h1>Producción de <span>Eventos</span> de Clase Mundial</h1>
+            <p>Desde la conceptualización hasta la ejecución final, transformamos tu visión en una experiencia que tu audiencia nunca olvidará. Conciertos, festivales, corporativos, activaciones de marca y más.</p>
+        </div>
+    </section>
+
+    <!-- Tipos de Eventos -->
+    <section class="section" style="background: var(--black-soft);">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Especialidades</span>
+                <h2 class="section-title">Tipos de Eventos que Producimos</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="types-grid">
+                <div class="type-card reveal reveal-delay-1">
+                    <div class="type-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                    </div>
+                    <h3>Conciertos y Shows en Vivo</h3>
+                    <p>Producción técnica completa para artistas nacionales e internacionales. Audio, iluminación, escenografía, backline y coordinación con artistas y management.</p>
+                </div>
+                <div class="type-card reveal reveal-delay-2">
+                    <div class="type-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    </div>
+                    <h3>Festivales de Música</h3>
+                    <p>Diseño y producción de festivales multi-escenario. Coordinación de line-up, logística de artistas, producción técnica simultánea y experiencia del asistente.</p>
+                </div>
+                <div class="type-card reveal reveal-delay-3">
+                    <div class="type-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    </div>
+                    <h3>Eventos Corporativos</h3>
+                    <p>Conferencias, lanzamientos de producto, galas, convenciones y reuniones ejecutivas. Producción impecable que refleja la imagen de tu marca.</p>
+                </div>
+                <div class="type-card reveal reveal-delay-1">
+                    <div class="type-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    </div>
+                    <h3>Activaciones de Marca</h3>
+                    <p>Experiencias interactivas y campañas BTL que conectan tu marca con tu audiencia de manera memorable. Pop-ups, roadshows y activaciones experienciales.</p>
+                </div>
+                <div class="type-card reveal reveal-delay-2">
+                    <div class="type-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                    </div>
+                    <h3>Experiencias Inmersivas</h3>
+                    <p>Eventos que combinan tecnología de vanguardia con arte: proyecciones mapping, realidad aumentada, instalaciones interactivas y experiencias sensoriales.</p>
+                </div>
+                <div class="type-card reveal reveal-delay-3">
+                    <div class="type-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                    </div>
+                    <h3>Streaming y Eventos Híbridos</h3>
+                    <p>Producción profesional de eventos virtuales e híbridos con transmisión en vivo multi-cámara, gráficos en tiempo real y engagement digital.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proceso -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Cómo trabajamos</span>
+                <h2 class="section-title">Nuestro Proceso</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="process-grid">
+                <div class="process-step reveal reveal-delay-1">
+                    <div class="step-number">01</div>
+                    <h4>Conceptualización</h4>
+                    <p>Entendemos tu visión, definimos objetivos y diseñamos el concepto creativo del evento.</p>
+                </div>
+                <div class="process-step reveal reveal-delay-2">
+                    <div class="step-number">02</div>
+                    <h4>Preproducción</h4>
+                    <p>Planificación técnica, logística, selección de venue, proveedores y cronograma detallado.</p>
+                </div>
+                <div class="process-step reveal reveal-delay-3">
+                    <div class="step-number">03</div>
+                    <h4>Producción</h4>
+                    <p>Montaje, operación técnica, coordinación en sitio y ejecución impecable el día del evento.</p>
+                </div>
+                <div class="process-step reveal">
+                    <div class="step-number">04</div>
+                    <h4>Postproducción</h4>
+                    <p>Cobertura audiovisual, entrega de contenido editado, métricas y evaluación de resultados.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galería -->
+    <section class="section" style="background: var(--black-soft);">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Portfolio</span>
+                <h2 class="section-title">Galería de Eventos</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="gallery-grid reveal">
+                <div class="gallery-item">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                    <span>Foto destacada</span>
+                </div>
+                <div class="gallery-item">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                    <span>Foto</span>
+                </div>
+                <div class="gallery-item">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                    <span>Foto</span>
+                </div>
+                <div class="gallery-item">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                    <span>Foto</span>
+                </div>
+                <div class="gallery-item">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                    <span>Video</span>
+                </div>
+                <div class="gallery-item">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                    <span>Foto</span>
+                </div>
+            </div>
+            <p style="text-align:center;color:var(--gray-mid);font-size:0.85rem;margin-top:24px;">Las fotos serán agregadas próximamente</p>
+        </div>
+    </section>
+
+    <!-- Próximos Eventos -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Boletos disponibles</span>
+                <h2 class="section-title">Próximos Eventos</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="upcoming-grid">
+                <div class="event-card reveal reveal-delay-1">
+                    <div class="event-image" style="background: linear-gradient(135deg, #2d0000, #1a0000, #0a0a0a);">
+                        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(196,30,30,0.6)" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            <span style="font-size:0.7rem;letter-spacing:2px;color:rgba(255,255,255,0.5);text-transform:uppercase;">I See Stars</span>
+                        </div>
+                        <span class="event-status on-sale">En Venta</span>
+                        <div class="event-date-badge"><div class="day">08</div><div class="month">MAY 2026</div></div>
+                    </div>
+                    <div class="event-info">
+                        <h3>I See Stars — "The Wheel" Tour</h3>
+                        <div class="event-meta">
+                            <span><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span> Multiforo Alicia, CDMX</span>
+                            <span><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span> 19:00 hrs</span>
+                            <span><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span> Invitado especial: Afterglow</span>
+                        </div>
+                        <div style="font-size:0.75rem;color:var(--gray-mid);margin-bottom:16px;line-height:1.5;">Presentan: Insignia Entertainment · The Gang México · Ekoos MX · I Wish Productions</div>
+                        <a href="https://boletia.com" target="_blank" rel="noopener" class="btn-ticket">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 10h20"/></svg>
+                            Comprar en Boletia
+                        </a>
+                    </div>
+                </div>
+                <div class="event-card reveal reveal-delay-2">
+                    <div class="event-image" style="background: linear-gradient(135deg, #0a1a00, #001a0a, #0a0a0a);">
+                        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="rgba(196,30,30,0.6)" stroke-width="1.5"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                            <span style="font-size:0.7rem;letter-spacing:2px;color:rgba(255,255,255,0.5);text-transform:uppercase;">FLOW Festival</span>
+                        </div>
+                        <span class="event-status on-sale">En Venta</span>
+                        <div class="event-date-badge"><div class="day">22</div><div class="month">JUL 2026</div></div>
+                    </div>
+                    <div class="event-info">
+                        <h3>FLOW Festival '26 in Mexico City</h3>
+                        <div class="event-meta">
+                            <span><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span> Foro Moliere, Ciudad de México</span>
+                            <span><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span> Miércoles 22 de Julio</span>
+                            <span><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></span> FLOW · DOES · DJ TAKE (FLOW)</span>
+                        </div>
+                        <div style="font-size:0.75rem;color:var(--gray-mid);margin-bottom:16px;line-height:1.5;">Presentan: Insignia Entertainment · Boletia</div>
+                        <a href="https://boletia.com" target="_blank" rel="noopener" class="btn-ticket">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 10h20"/></svg>
+                            Comprar en Boletia
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>¿Tienes un evento en mente?</h2>
+            <p>Cuéntanos tu idea y hagamos algo extraordinario juntos. Desde la primera reunión hasta el último aplauso, estamos contigo.</p>
+            <div class="cta-buttons">
+                <a href="index.html#contact" class="btn-primary">Cotizar mi Evento</a>
+                <a href="https://wa.me/5215516952852?text=Hola%20Insignia%2C%20me%20interesa%20cotizar%20un%20evento." target="_blank" rel="noopener" class="btn-outline">Escribir por WhatsApp</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="logo.png" alt="Insignia Entertainment" class="logo-img footer-logo-img">
+                </div>
+                <ul class="footer-links">
+                    <li><a href="index.html#about">Nosotros</a></li>
+                    <li><a href="index.html#services">Servicios</a></li>
+                    <li><a href="eventos.html">Eventos</a></li>
+                    <li><a href="index.html#contact">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-bottom">&copy; 2026 Insignia Entertainment. Todos los derechos reservados.</div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/5215516952852?text=Hola%20Insignia%20Entertainment%2C%20me%20gustar%C3%ADa%20obtener%20m%C3%A1s%20informaci%C3%B3n%20sobre%20producci%C3%B3n%20de%20eventos." target="_blank" rel="noopener" class="whatsapp-float" aria-label="WhatsApp">
+        <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M16.004 0h-.008C7.174 0 0 7.176 0 16.004c0 3.5 1.132 6.744 3.056 9.38L1.056 31.2l6.08-1.964A15.91 15.91 0 0 0 16.004 32C24.824 32 32 24.824 32 16.004S24.824 0 16.004 0zm9.316 22.612c-.388 1.1-2.272 2.1-3.14 2.168-.868.068-1.672.388-5.632-1.172-4.768-1.876-7.768-6.816-8-7.132-.236-.316-1.9-2.532-1.9-4.828s1.204-3.424 1.632-3.892c.428-.468.936-.584 1.248-.584.312 0 .624.004.896.016.288.012.672-.108.952.728.288.86.976 2.94 1.064 3.156.084.216.14.468.028.752-.112.288-.168.464-.336.716-.168.248-.352.556-.504.748-.168.2-.34.416-.148.816.196.4.868 1.432 1.864 2.32 1.28 1.14 2.36 1.492 2.696 1.66.336.168.532.14.728-.084.2-.224.84-.976 1.064-1.312.224-.336.448-.28.752-.168.308.112 1.948.92 2.28 1.084.336.168.56.248.644.388.084.136.084.8-.304 1.9z"/></svg>
+    </a>
+
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+        menuToggle.addEventListener('click', () => { menuToggle.classList.toggle('active'); navLinks.classList.toggle('mobile-open'); });
+        function closeMobile() { menuToggle.classList.remove('active'); navLinks.classList.remove('mobile-open'); }
+
+        const reveals = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        reveals.forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
