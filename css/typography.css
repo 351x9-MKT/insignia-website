@@ -1,0 +1,23 @@
+/* ──────────────────────────────────────────────────
+   typography.css — base body/text rules
+   Fonts loaded via <link> in index.html (Google Fonts):
+     Anton · Inter (400/500/600) · JetBrains Mono (400/500)
+   ────────────────────────────────────────────────── */
+
+html {
+  scroll-behavior: auto;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--fg);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+@media (pointer: coarse) {
+  body { cursor: auto; }
+}

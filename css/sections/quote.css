@@ -1,0 +1,53 @@
+/* ── QUOTE ── */
+#quote-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  padding: 80px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.quote-deco {
+  position: absolute;
+  font-family: var(--font-display);
+  font-size: 320px;
+  color: var(--accent);
+  opacity: .1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.quote-text {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4.5vw, 56px);
+  color: var(--fg);
+  font-style: italic;
+  line-height: 1.25;
+  max-width: 900px;
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.quote-attr {
+  font-family: var(--font-body);
+  font-size: 13px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .45);
+  margin-top: 32px;
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+}

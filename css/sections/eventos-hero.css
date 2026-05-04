@@ -1,0 +1,193 @@
+/* ── EVENTOS HERO (post-servicios) ── */
+#eventos-hero {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#eventos-bg-video {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  will-change: transform;
+}
+
+.eventos-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(to bottom,
+    rgba(10, 10, 10, .7) 0%,
+    rgba(10, 10, 10, .35) 40%,
+    rgba(10, 10, 10, .6) 80%,
+    var(--bg) 100%);
+}
+
+.eventos-rimlight {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+  z-index: 2;
+  opacity: .6;
+}
+
+#eventos-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0, 0, 0, .04) 3px, rgba(0, 0, 0, .04) 4px);
+  pointer-events: none;
+}
+
+.eventos-content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 60px;
+  margin: 0 auto;
+}
+
+.eventos-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 32px;
+  opacity: 0;
+  transform: translateY(20px);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.eventos-label::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.eventos-headline {
+  font-family: var(--font-display);
+  font-size: clamp(42px, 6.5vw, 110px);
+  color: var(--fg);
+  line-height: .96;
+  text-transform: uppercase;
+  max-width: 900px;
+  opacity: 0;
+  transform: translateY(50px);
+  text-wrap: balance;
+}
+.eventos-headline em {
+  font-style: normal;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, .4);
+  color: transparent;
+}
+
+.eventos-body {
+  font-family: var(--font-body);
+  font-size: clamp(15px, 1.6vw, 18px);
+  line-height: 1.75;
+  color: rgba(255, 255, 255, .7);
+  max-width: 540px;
+  margin-top: 32px;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.eventos-stats {
+  display: flex;
+  gap: 48px;
+  margin-top: 56px;
+  flex-wrap: wrap;
+  opacity: 0;
+  transform: translateY(20px);
+}
+.eventos-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.eventos-stat-num {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4vw, 56px);
+  color: var(--fg);
+  line-height: 1;
+}
+.eventos-stat-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .45);
+}
+.eventos-stat-divider {
+  width: 1px;
+  background: rgba(255, 255, 255, .12);
+  align-self: stretch;
+  margin: 4px 0;
+}
+
+.eventos-cta-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 48px;
+  opacity: 0;
+  transform: translateY(20px);
+}
+.eventos-cta-primary {
+  font-family: var(--font-display);
+  font-size: 14px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  background: var(--accent);
+  color: #000;
+  padding: 16px 36px;
+  border-radius: 100px;
+  border: none;
+  cursor: pointer;
+  transition: box-shadow .3s var(--ease),
+              transform .3s var(--ease);
+  text-decoration: none;
+  display: inline-block;
+}
+.eventos-cta-primary:hover {
+  box-shadow: 0 12px 40px rgba(225, 6, 0, .45);
+  transform: translateY(-3px);
+}
+.eventos-cta-secondary {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .6);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, .25);
+  padding-bottom: 2px;
+  transition: color .3s, border-color .3s;
+}
+.eventos-cta-secondary:hover {
+  color: var(--fg);
+  border-color: var(--fg);
+}
+
+@media (max-width: 640px) {
+  .eventos-content { padding: 0 24px; }
+  .eventos-stats { gap: 28px; }
+  .eventos-cta-row { flex-direction: column; align-items: flex-start; }
+}

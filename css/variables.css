@@ -1,0 +1,35 @@
+/* ──────────────────────────────────────────────────
+   variables.css — design tokens + reset
+   ────────────────────────────────────────────────── */
+
+:root {
+  /* Palette */
+  --bg: #0A0A0A;
+  --accent: #E10600;
+  --fg: #FFFFFF;
+  --fg-muted: #F2F2F2;
+
+  /* Easing */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-power3: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Type */
+  --font-display: 'Anton', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Z-index scale */
+  --z-letterbox: 800;
+  --z-nav: 900;
+  --z-modal: 9000;
+  --z-modal-contact: 9001;
+  --z-cursor: 10000;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}

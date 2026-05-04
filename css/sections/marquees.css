@@ -1,0 +1,175 @@
+/* ──────────────────────────────────────────────────
+   marquees.css — Clientes (2 rows) + Partners (1 row)
+   Infinite horizontal scroll via JS-cloned tracks
+   ────────────────────────────────────────────────── */
+
+#clientes,
+#partners {
+  position: relative;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+#clientes { padding: 80px 0 60px; }
+#partners {
+  padding: 60px 0;
+  border-top: 1px solid rgba(255, 255, 255, .08);
+  border-bottom: 1px solid rgba(255, 255, 255, .08);
+}
+
+.marquee-header {
+  text-align: center;
+  margin-bottom: 56px;
+  padding: 0 24px;
+}
+.marquee-eyebrow {
+  font-family: var(--font-display);
+  font-size: 14px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--fg);
+  margin-bottom: 8px;
+}
+/* Note: muted variant uses 0.65 alpha (~4.59:1 on bg #0A0A0A) for AA contrast.
+   Visual hierarchy with the unmuted eyebrow is preserved by font weight + size. */
+.marquee-eyebrow.muted { opacity: .65; }
+
+.marquee-sub {
+  font-family: var(--font-body);
+  font-size: 14px;
+  letter-spacing: .04em;
+  color: rgba(255, 255, 255, .6);
+}
+.marquee-sub.tight {
+  font-size: 13px;
+  /* AA contrast on bg #0A0A0A: .65 alpha = ~4.59:1 */
+  color: rgba(255, 255, 255, .65);
+}
+
+#partners .marquee-header { margin-bottom: 32px; }
+
+/* Side fade mask */
+.marquee-row {
+  position: relative;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+}
+#clientes .marquee-row + .marquee-row { margin-top: 32px; }
+
+.marquee-track {
+  display: flex;
+  align-items: center;
+  gap: 80px;
+  width: max-content;
+  padding: 24px 0;
+  will-change: transform;
+}
+#partners .marquee-track {
+  gap: 100px;
+  padding: 32px 0;
+}
+
+/* Animations */
+.marquee-track.left {
+  animation: marquee-left 60s linear infinite;
+}
+.marquee-track.right {
+  animation: marquee-right 75s linear infinite;
+}
+#partners .marquee-track.left {
+  animation-duration: 90s;
+}
+
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes marquee-right {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+/* Pause on hover */
+.marquee-row:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* Logo item */
+.marquee-item {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  padding: 0 8px;
+  transition: filter .3s var(--ease),
+              transform .3s var(--ease),
+              opacity .3s var(--ease);
+}
+#partners .marquee-item { height: 80px; }
+
+.marquee-item img,
+.marquee-item .marquee-placeholder {
+  max-height: 100%;
+  max-width: 200px;
+  width: auto;
+  height: auto;
+  filter: brightness(0) invert(1);
+  opacity: .5;
+  transition: filter .3s var(--ease),
+              opacity .3s var(--ease),
+              transform .3s var(--ease);
+}
+#partners .marquee-item img,
+#partners .marquee-item .marquee-placeholder {
+  opacity: .4;
+}
+
+.marquee-item:hover img,
+.marquee-item:hover .marquee-placeholder {
+  filter: none;
+  opacity: 1;
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 12px rgba(225, 6, 0, .4));
+}
+
+/* Placeholder when no actual logo image */
+.marquee-placeholder {
+  font-family: var(--font-display);
+  font-size: 15px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--fg);
+  border: 1px solid rgba(255, 255, 255, .25);
+  padding: 14px 22px;
+  border-radius: 4px;
+  white-space: nowrap;
+  height: auto;
+  background: transparent;
+}
+#partners .marquee-placeholder {
+  font-size: 16px;
+  padding: 16px 26px;
+}
+
+@media (max-width: 640px) {
+  #clientes { padding: 60px 0 40px; }
+  #partners { padding: 40px 0; }
+  .marquee-item { height: 40px; }
+  #partners .marquee-item { height: 56px; }
+  .marquee-track { gap: 50px; }
+  #partners .marquee-track { gap: 60px; }
+  .marquee-placeholder { font-size: 12px; padding: 10px 16px; }
+  #partners .marquee-placeholder { font-size: 13px; padding: 12px 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none !important;
+    transform: translateX(0) !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+}
