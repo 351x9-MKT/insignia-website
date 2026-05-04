@@ -53,6 +53,11 @@
   text-transform: uppercase;
   letter-spacing: .1em;
 }
+/* Placeholder hint via pseudo-element so it doesn't count as accessible
+   visible text (avoids label-content-name-mismatch on .reel-player). */
+.reel-bg-label::before {
+  content: "founder reel · reemplazar";
+}
 
 .reel-play-btn {
   position: absolute;

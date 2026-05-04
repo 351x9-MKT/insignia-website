@@ -51,7 +51,7 @@
   <!-- ── NAVBAR ── -->
   <nav id="navbar" role="navigation" aria-label="Navegación principal">
     <a href="#hero" aria-label="Insignia Entertainment — inicio">
-      <img src="assets/images/brand/logo.svg" alt="Insignia Entertainment" class="nav-logo-img" />
+      <img src="assets/images/brand/logo.svg" alt="Insignia Entertainment" class="nav-logo-img" width="143" height="67" />
     </a>
     <ul class="nav-links" role="list">
       <li><a href="#manifesto" data-section="manifesto"><span class="nav-bracket-l">[</span>&nbsp;INTRO&nbsp;<span class="nav-bracket-r">]</span></a></li>
@@ -81,9 +81,11 @@
     <div id="hero-video-wrap">
       <video
         id="hero-camera-video"
+        width="1912"
+        height="1080"
         muted
         playsinline
-        preload="auto"
+        preload="metadata"
         poster="assets/images/cinematic/poster_hero.jpg"
         aria-hidden="true">
         <source src="assets/videos/sprint1_chained.mp4" type="video/mp4" />
@@ -460,7 +462,7 @@
           <th scope="col" id="wt-disciplina">DISCIPLINA</th>
           <th scope="col" id="wt-cliente">CLIENTE</th>
           <th scope="col" id="wt-anio">AÑO</th>
-          <th scope="col" id="wt-action" style="width:32px;"></th>
+          <th scope="col" id="wt-action" style="width:32px;"><span class="sr-only">Acción</span></th>
         </tr>
       </thead>
       <tbody id="work-rows">
@@ -769,8 +771,8 @@
   <!-- ══ FOUNDER REEL ══ -->
   <section id="founder-reel" aria-label="Reel del founder">
     <h2 class="reel-label" id="reel-heading">DETRÁS DE CADA INSIGNIA</h2>
-    <div class="reel-player" role="button" tabindex="0" aria-labelledby="reel-heading" data-vimeo="https://player.vimeo.com/video/placeholder?autoplay=1">
-      <div class="reel-bg"><span class="reel-bg-label">founder reel · reemplazar</span></div>
+    <div class="reel-player" role="button" tabindex="0" aria-label="Reproducir founder reel — Detrás de cada Insignia" data-vimeo="https://player.vimeo.com/video/placeholder?autoplay=1">
+      <div class="reel-bg" aria-hidden="true"><span class="reel-bg-label" aria-hidden="true"></span></div>
       <button class="reel-play-btn" aria-label="Reproducir reel">
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M7 4L18 11L7 18V4Z" fill="white"/></svg>
       </button>
@@ -785,7 +787,7 @@
     <canvas id="footer-canvas" aria-hidden="true"></canvas>
     <div class="footer-content">
       <div class="footer-logo-wrap">
-        <img src="assets/images/brand/logo.svg" alt="Insignia Entertainment" class="footer-logo-img" />
+        <img src="assets/images/brand/logo.svg" alt="Insignia Entertainment" class="footer-logo-img" width="286" height="134" />
       </div>
       <p class="footer-tagline">HECHO PARA EL ESCENARIO. CONSTRUIDO PARA LA CÁMARA.</p>
       <hr class="footer-rule" />

@@ -4,6 +4,26 @@
      Anton · Inter (400/500/600) · JetBrains Mono (400/500)
    ────────────────────────────────────────────────── */
 
+/* CLS prevention — metric-adjusted fallbacks. While Anton/Inter download,
+   the browser uses these system-fallback faces with overridden metrics so
+   layout box matches the final font. No reflow when the real font swaps. */
+@font-face {
+  font-family: 'Anton-fallback';
+  src: local('Impact'), local('Haettenschweiler'), local('Arial Black');
+  size-adjust: 92%;
+  ascent-override: 92%;
+  descent-override: 18%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Inter-fallback';
+  src: local('Helvetica Neue'), local('Arial');
+  size-adjust: 100%;
+  ascent-override: 90%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+}
+
 html {
   scroll-behavior: auto;
   background: var(--bg);

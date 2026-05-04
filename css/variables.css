@@ -13,10 +13,11 @@
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-power3: cubic-bezier(0.4, 0, 0.2, 1);
 
-  /* Type */
-  --font-display: 'Anton', sans-serif;
-  --font-body: 'Inter', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  /* Type — metric-adjusted fallbacks (defined in typography.css) match the
+     real font's layout box so the FOUT swap doesn't trigger CLS. */
+  --font-display: 'Anton', 'Anton-fallback', Impact, sans-serif;
+  --font-body: 'Inter', 'Inter-fallback', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
   /* Z-index scale */
   --z-letterbox: 800;

@@ -1,0 +1,576 @@
+/* ──────────────────────────────────────────────────
+   eventos-page.css — page-specific styles for eventos.html
+   Sections: hero banner, types grid, process grid, gallery,
+   upcoming events (richer than #proximos-eventos), CTA, WhatsApp float
+   ────────────────────────────────────────────────── */
+
+/* Container helper used across the page */
+.ev-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+@media (max-width: 640px) {
+  .ev-container { padding: 0 20px; }
+}
+
+/* Generic page section spacing */
+.ev-section {
+  padding: 100px 0;
+  position: relative;
+}
+.ev-section.alt { background: #060606; }
+@media (max-width: 640px) {
+  .ev-section { padding: 64px 0; }
+}
+
+/* Section header (eyebrow + title + line) — reused 4 times */
+.ev-section-header {
+  margin-bottom: 56px;
+  max-width: 720px;
+}
+.ev-section-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  /* Was var(--accent) #E10600 — failed AA contrast on dark bg (4.07:1).
+     White-on-dark passes; the red accent stays in the leading bar. */
+  color: rgba(255, 255, 255, .75);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.ev-section-eyebrow::before {
+  content: '';
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--accent);
+}
+.ev-section-title {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4.5vw, 60px);
+  color: var(--fg);
+  text-transform: uppercase;
+  line-height: 1.05;
+}
+
+/* ── HERO BANNER (page header, smaller than index hero) ── */
+#ev-hero {
+  padding: 160px 0 100px;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+}
+#ev-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 50%, rgba(225, 6, 0, .12) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 20%, rgba(225, 6, 0, .06) 0%, transparent 50%);
+  pointer-events: none;
+}
+.ev-hero-content {
+  position: relative;
+  z-index: 2;
+}
+.ev-breadcrumb {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .65);
+  margin-bottom: 32px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ev-breadcrumb a {
+  color: rgba(255, 255, 255, .65);
+  text-decoration: none;
+  transition: color .3s var(--ease);
+}
+.ev-breadcrumb a:hover { color: var(--accent); }
+.ev-breadcrumb svg {
+  opacity: .5;
+  flex-shrink: 0;
+}
+.ev-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(44px, 7vw, 96px);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: .02em;
+  line-height: 1;
+  color: var(--fg);
+  margin-bottom: 32px;
+}
+.ev-hero-title em {
+  font-style: normal;
+  color: var(--accent);
+}
+.ev-hero-body {
+  font-family: var(--font-body);
+  font-size: clamp(15px, 1.6vw, 18px);
+  color: rgba(255, 255, 255, .72);
+  max-width: 640px;
+  line-height: 1.75;
+}
+
+/* ── TIPOS DE EVENTOS — 6 type-cards with SVG icons ── */
+.ev-types-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+@media (max-width: 1024px) { .ev-types-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px)  { .ev-types-grid { grid-template-columns: 1fr; } }
+
+.ev-type-card {
+  background: rgba(255, 255, 255, .03);
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: 6px;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: transform .5s var(--ease),
+              border-color .4s var(--ease),
+              box-shadow .4s var(--ease);
+}
+.ev-type-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--accent);
+  box-shadow: 0 20px 60px rgba(225, 6, 0, .08);
+}
+.ev-type-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  border: 1px solid rgba(225, 6, 0, .35);
+  border-radius: 4px;
+}
+.ev-type-card h3 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--fg);
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+.ev-type-card p {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: rgba(255, 255, 255, .7);
+  line-height: 1.7;
+}
+
+/* ── PROCESO — 4 numbered steps with connecting line ── */
+.ev-process-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  position: relative;
+}
+.ev-process-grid::before {
+  content: '';
+  position: absolute;
+  top: 32px;
+  left: 8%;
+  right: 8%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(225, 6, 0, .35), transparent);
+  pointer-events: none;
+}
+@media (max-width: 1024px) {
+  .ev-process-grid { grid-template-columns: repeat(2, 1fr); }
+  .ev-process-grid::before { display: none; }
+}
+@media (max-width: 640px) {
+  .ev-process-grid { grid-template-columns: 1fr; }
+}
+
+.ev-process-step {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  background: var(--bg);
+  padding: 0 12px;
+}
+.ev-step-number {
+  font-family: var(--font-display);
+  font-size: 56px;
+  color: var(--accent);
+  line-height: .9;
+  margin-bottom: 8px;
+}
+.ev-process-step h4 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--fg);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.ev-process-step p {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: rgba(255, 255, 255, .7);
+  line-height: 1.7;
+}
+
+/* ── GALERÍA — placeholder grid 3×2, will fill later ── */
+.ev-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+@media (max-width: 1024px) { .ev-gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px)  { .ev-gallery-grid { grid-template-columns: 1fr; } }
+.ev-gallery-item {
+  aspect-ratio: 4/3;
+  background-image: repeating-linear-gradient(-45deg, transparent, transparent 6px, rgba(255, 255, 255, .02) 6px, rgba(255, 255, 255, .02) 12px);
+  border: 1px solid rgba(255, 255, 255, .06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, .25);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  overflow: hidden;
+  transition: border-color .3s var(--ease);
+}
+.ev-gallery-item:hover { border-color: rgba(225, 6, 0, .4); }
+/* Drop-in: <img src="..."> inside .ev-gallery-item will hide the pattern */
+.ev-gallery-item:has(img) {
+  background-image: none;
+  border-color: transparent;
+}
+.ev-gallery-item:has(img) > :not(img) { display: none; }
+.ev-gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.ev-gallery-note {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: rgba(255, 255, 255, .35);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-top: 24px;
+  text-align: center;
+}
+
+/* ── UPCOMING EVENTS — richer than index pe-cards (with line-up + presents) ── */
+.ev-upcoming-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr));
+  gap: 24px;
+}
+.ev-upcoming-card {
+  background: rgba(255, 255, 255, .02);
+  border: 1px solid rgba(255, 255, 255, .07);
+  overflow: hidden;
+  transition: border-color .4s var(--ease);
+  display: flex;
+  flex-direction: column;
+}
+.ev-upcoming-card:hover { border-color: rgba(225, 6, 0, .4); }
+.ev-upcoming-image {
+  position: relative;
+  aspect-ratio: 16/9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 255, 255, .07);
+}
+.ev-upcoming-image > svg {
+  opacity: .55;
+  color: var(--accent);
+}
+.ev-upcoming-image-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .2em;
+  color: rgba(255, 255, 255, .55);
+  text-transform: uppercase;
+}
+/* When an <img> is dropped in, it covers the placeholder content */
+.ev-upcoming-image:has(img) > :not(img):not(.ev-status-badge):not(.ev-date-badge) { display: none; }
+.ev-upcoming-image img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ev-status-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border: 1px solid rgba(255, 255, 255, .25);
+  color: rgba(255, 255, 255, .85);
+  background: rgba(10, 10, 10, .6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.ev-status-badge.on-sale {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.ev-status-badge.sold-out {
+  background: rgba(225, 6, 0, .9);
+  color: #000;
+  border-color: var(--accent);
+}
+
+.ev-date-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 2;
+  background: var(--accent);
+  color: #000;
+  padding: 8px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+}
+.ev-date-day {
+  font-family: var(--font-display);
+  font-size: 24px;
+}
+.ev-date-month {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.ev-upcoming-info { padding: 28px 32px 30px; flex: 1; display: flex; flex-direction: column; }
+.ev-upcoming-title {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.5vw, 30px);
+  font-weight: 400;
+  color: var(--fg);
+  text-transform: uppercase;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+.ev-upcoming-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.ev-upcoming-meta li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: rgba(255, 255, 255, .72);
+  list-style: none;
+}
+.ev-upcoming-meta svg {
+  flex-shrink: 0;
+  opacity: .55;
+}
+.ev-upcoming-presents {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .45);
+  line-height: 1.7;
+  margin-bottom: 22px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, .06);
+}
+.ev-upcoming-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--accent);
+  color: #000;
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 14px 26px;
+  border-radius: 100px;
+  text-decoration: none;
+  transition: box-shadow .3s var(--ease),
+              transform .3s var(--ease);
+  align-self: flex-start;
+  margin-top: auto;
+}
+.ev-upcoming-cta:hover {
+  box-shadow: 0 12px 40px rgba(225, 6, 0, .45);
+  transform: translateY(-2px);
+}
+
+/* ── CTA SECTION ── */
+.ev-cta {
+  padding: 120px 0;
+  text-align: center;
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+.ev-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(225, 6, 0, .08) 0%, transparent 60%);
+  pointer-events: none;
+}
+.ev-cta-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.ev-cta h2 {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 64px);
+  text-transform: uppercase;
+  line-height: 1.05;
+  color: var(--fg);
+  margin-bottom: 24px;
+}
+.ev-cta p {
+  font-family: var(--font-body);
+  font-size: clamp(14px, 1.5vw, 17px);
+  color: rgba(255, 255, 255, .72);
+  line-height: 1.75;
+  margin-bottom: 40px;
+}
+.ev-cta-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.ev-btn-primary {
+  background: var(--accent);
+  color: #000;
+  font-family: var(--font-display);
+  font-size: 14px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 16px 36px;
+  border-radius: 100px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: box-shadow .3s var(--ease),
+              transform .3s var(--ease);
+}
+.ev-btn-primary:hover {
+  box-shadow: 0 12px 40px rgba(225, 6, 0, .45);
+  transform: translateY(-3px);
+}
+.ev-btn-outline {
+  background: transparent;
+  color: var(--fg);
+  font-family: var(--font-display);
+  font-size: 14px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 16px 36px;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, .25);
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color .3s var(--ease),
+              color .3s var(--ease);
+}
+.ev-btn-outline:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ── WHATSAPP FLOAT BUTTON ── */
+.ev-whatsapp-float {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 999;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #25D366;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, .35);
+  transition: transform .3s var(--ease),
+              box-shadow .3s var(--ease);
+}
+.ev-whatsapp-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 32px rgba(37, 211, 102, .55);
+}
+.ev-whatsapp-float svg {
+  width: 28px;
+  height: 28px;
+  fill: currentColor;
+}
+.ev-whatsapp-float::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid #25D366;
+  opacity: .4;
+  animation: wa-pulse 2.4s ease-out infinite;
+  pointer-events: none;
+}
+@keyframes wa-pulse {
+  0%   { transform: scale(.8); opacity: .55; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+/* ── REVEAL ON SCROLL (used across this page) ── */
+.ev-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .9s var(--ease),
+              transform .9s var(--ease);
+}
+.ev-reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ev-reveal { opacity: 1; transform: none; }
+}
