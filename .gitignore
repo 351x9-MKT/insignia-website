@@ -1,2 +1,5 @@
 # Lighthouse audit reports (local)
 .lh-*.json
+
+# Local Netlify folder
+.netlify

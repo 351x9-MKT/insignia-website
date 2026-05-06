@@ -10,15 +10,18 @@
   align-items: center;
   justify-content: center;
   /* CLS prevention: pre-allocate the pin-spacer scroll space that
-     ScrollTrigger will inject when it pins #hero with end:'+=240%'.
+     ScrollTrigger will inject when it pins #hero with end:'+=600%'.
      Without this, the document height jumps once GSAP initializes,
-     producing a measurable layout shift. */
-  margin-bottom: 240vh;
+     producing a measurable layout shift. Mega-pinned hero (Opción C) — the
+     storytelling overlays (manifesto + disciplinas) all live INSIDE this
+     section as absolute panes, so the pin range is 6 viewports. */
+  margin-bottom: 600vh;
 }
 
-@media (max-width: 640px), (prefers-reduced-motion: reduce) {
-  /* Hero scrub is disabled on mobile + reduced-motion; remove reservation. */
-  #hero { margin-bottom: 0; }
+@media (max-width: 768px), (prefers-reduced-motion: reduce) {
+  /* Hero scrub is disabled on mobile + reduced-motion; overlays render as
+     stacked sections via the hero-overlays.css fallback, so no reservation. */
+  #hero { margin-bottom: 0; height: auto; min-height: 100vh; }
 }
 
 #hero-video-wrap {

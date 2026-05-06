@@ -16,8 +16,11 @@ import { initHeroLogo } from './modules/hero-logo.js';
 import { initHeroEntrance } from './modules/hero-entrance.js';
 import { initHeroScrub } from './modules/hero-scrub.js';
 
-import { initManifesto } from './modules/manifesto.js';
-import { initDisciplinas } from './modules/disciplinas.js';
+// NOTE: manifesto + disciplinas modules removed. Their content now lives as
+// absolute overlays inside #hero, animated by the master timeline in
+// hero-scrub.js. The manifesto.js and disciplinas.js files are kept for
+// reference but no longer imported.
+
 import { initSelectedWork } from './modules/selected-work.js';
 import { initServicios } from './modules/servicios.js';
 import { initEventosHero } from './modules/eventos-hero.js';
@@ -53,9 +56,8 @@ function boot() {
   initHeroEntrance();
   initHeroScrub();
 
-  // Sections (in document order)
-  initManifesto();
-  initDisciplinas();
+  // Sections (in document order). Manifesto + disciplinas are now hero
+  // overlays — driven by hero-scrub.js, not their own modules.
   initSelectedWork();
   initServicios();
   initEventosHero();
