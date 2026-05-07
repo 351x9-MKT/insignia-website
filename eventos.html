@@ -707,10 +707,13 @@ body.letterbox-on .letterbox-bottom {
   height: 32px;
   width: auto;
   display: block;
+  /* Solid white. brightness(0) invert(1) maps any source color to pure
+     white; opacity 1 keeps it crisp against the dark navbar. */
   filter: brightness(0) invert(1);
+  opacity: 1;
   transition: opacity .3s;
 }
-.nav-logo-img:hover { opacity: .8; }
+.nav-logo-img:hover { opacity: .85; }
 
 .nav-links {
   display: flex;
@@ -1410,9 +1413,9 @@ body.letterbox-on .letterbox-bottom {
     <ul class="nav-links" role="list">
       <li><a href="index.html#manifesto"><span class="nav-bracket-l">[</span>&nbsp;INTRO&nbsp;<span class="nav-bracket-r">]</span></a></li>
       <li><a href="index.html#disciplinas"><span class="nav-bracket-l">[</span>&nbsp;DISCIPLINAS&nbsp;<span class="nav-bracket-r">]</span></a></li>
-      <li><a href="index.html#selected-work"><span class="nav-bracket-l">[</span>&nbsp;TRABAJOS&nbsp;<span class="nav-bracket-r">]</span></a></li>
+      <li><a href="index.html#selected-work"><span class="nav-bracket-l">[</span>&nbsp;CREACIONES&nbsp;<span class="nav-bracket-r">]</span></a></li>
       <li><a href="eventos.html" class="active" aria-current="page"><span class="nav-bracket-l">[</span>&nbsp;EVENTOS&nbsp;<span class="nav-bracket-r">]</span></a></li>
-      <li><a href="index.html#servicios"><span class="nav-bracket-l">[</span>&nbsp;SERVICIOS&nbsp;<span class="nav-bracket-r">]</span></a></li>
+      <li><a href="index.html#servicios"><span class="nav-bracket-l">[</span>&nbsp;SOLUCIONES&nbsp;<span class="nav-bracket-r">]</span></a></li>
       <li><a href="index.html#footer"><span class="nav-bracket-l">[</span>&nbsp;CONTACTO&nbsp;<span class="nav-bracket-r">]</span></a></li>
     </ul>
     <button id="nav-mobile-toggle" aria-label="Abrir menú" aria-expanded="false">
@@ -1424,9 +1427,9 @@ body.letterbox-on .letterbox-bottom {
   <div id="mobile-nav-menu" role="dialog" aria-label="Menú móvil" aria-modal="true">
     <a href="index.html#manifesto">INTRO</a>
     <a href="index.html#disciplinas">DISCIPLINAS</a>
-    <a href="index.html#selected-work">TRABAJOS</a>
+    <a href="index.html#selected-work">CREACIONES</a>
     <a href="eventos.html" aria-current="page">EVENTOS</a>
-    <a href="index.html#servicios">SERVICIOS</a>
+    <a href="index.html#servicios">SOLUCIONES</a>
     <a href="index.html#footer">CONTACTO</a>
   </div>
 
@@ -1700,7 +1703,7 @@ body.letterbox-on .letterbox-bottom {
           <ul>
             <li><a href="index.html#manifesto">Intro</a></li>
             <li><a href="index.html#disciplinas">Disciplinas</a></li>
-            <li><a href="index.html#selected-work">Trabajos</a></li>
+            <li><a href="index.html#selected-work">Creaciones</a></li>
             <li><a href="eventos.html" aria-current="page">Eventos</a></li>
           </ul>
         </div>

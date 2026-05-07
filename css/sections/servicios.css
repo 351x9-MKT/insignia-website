@@ -75,25 +75,38 @@
 
 .service-image-placeholder {
   width: 100%;
-  aspect-ratio: 16/9;
-  background-image: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(255, 255, 255, .025) 5px, rgba(255, 255, 255, .025) 10px);
-  border: 1px solid rgba(255, 255, 255, .06);
+  aspect-ratio: 16 / 10;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 }
-/* When an <img> is dropped in, hide the diagonal pattern + label */
-.service-image-placeholder:has(img) {
-  background-image: none;
-  border-color: transparent;
+/* Diagonal-stripe fallback only when no <img> is present. */
+.service-image-placeholder:not(:has(img)) {
+  background-image: repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(255, 255, 255, .025) 5px, rgba(255, 255, 255, .025) 10px);
+  border: 1px solid rgba(255, 255, 255, .06);
 }
 .service-image-placeholder:has(img) .service-image-label { display: none; }
-.service-image-placeholder img {
+.service-image-placeholder picture,
+.service-image-placeholder img,
+.service-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
   display: block;
+}
+/* The actual service image — utilitarian card style (no radial mask, no
+   multi-layer red shadow). That cinematic treatment is reserved for the
+   Disciplinas showcase; here the same WebP serves as a tidy product card. */
+.service-image {
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 4px;
+  transition: transform .5s var(--ease), filter .4s var(--ease);
+}
+.service-card:hover .service-image {
+  transform: scale(1.02);
+  filter: brightness(1.05);
 }
 .service-image-label {
   font-family: var(--font-mono);

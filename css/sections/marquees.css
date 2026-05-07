@@ -134,7 +134,39 @@
   filter: drop-shadow(0 0 12px rgba(225, 6, 0, .4));
 }
 
-/* Placeholder when no actual logo image */
+/* ── LOGO-CARD — wordmark of a brand name when no SVG/PNG exists ──
+   Carl doesn't have logo files for clients/partners, so each brand
+   renders as a typographic wordmark inside the marquee. */
+.logo-card {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.2vw, 32px);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .55);
+  padding: 0 32px;
+  white-space: nowrap;
+  transition: color .3s var(--ease), opacity .3s var(--ease);
+}
+#partners .logo-card {
+  color: rgba(255, 255, 255, .4);
+  padding: 0 40px;
+}
+.marquee-item:hover .logo-card {
+  color: var(--accent);
+  opacity: 1;
+}
+
+/* Override the legacy marquee-item img/placeholder filters that would
+   otherwise dim the wordmarks (the brightness/invert logic was for
+   actual logo PNGs, not text). */
+.marquee-item:has(.logo-card) { filter: none; }
+.marquee-item:has(.logo-card):hover {
+  transform: none;
+  filter: none;
+}
+
+/* Legacy placeholder rule — kept for backwards compatibility if any
+   surface still uses .marquee-placeholder for image-style logos. */
 .marquee-placeholder {
   font-family: var(--font-display);
   font-size: 15px;
@@ -162,6 +194,8 @@
   #partners .marquee-track { gap: 60px; }
   .marquee-placeholder { font-size: 12px; padding: 10px 16px; }
   #partners .marquee-placeholder { font-size: 13px; padding: 12px 18px; }
+  .logo-card { padding: 0 18px; }
+  #partners .logo-card { padding: 0 22px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

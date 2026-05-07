@@ -706,10 +706,13 @@ body.letterbox-on .letterbox-bottom {
   height: 32px;
   width: auto;
   display: block;
+  /* Solid white. brightness(0) invert(1) maps any source color to pure
+     white; opacity 1 keeps it crisp against the dark navbar. */
   filter: brightness(0) invert(1);
+  opacity: 1;
   transition: opacity .3s;
 }
-.nav-logo-img:hover { opacity: .8; }
+.nav-logo-img:hover { opacity: .85; }
 
 .nav-links {
   display: flex;
@@ -1133,9 +1136,9 @@ body.letterbox-on .letterbox-bottom {
     <ul class="nav-links" role="list">
       <li><a href="#manifesto" data-section="manifesto"><span class="nav-bracket-l">[</span>&nbsp;INTRO&nbsp;<span class="nav-bracket-r">]</span></a></li>
       <li><a href="#disciplinas" data-section="disciplinas"><span class="nav-bracket-l">[</span>&nbsp;DISCIPLINAS&nbsp;<span class="nav-bracket-r">]</span></a></li>
-      <li><a href="#selected-work" data-section="selected-work"><span class="nav-bracket-l">[</span>&nbsp;TRABAJOS&nbsp;<span class="nav-bracket-r">]</span></a></li>
+      <li><a href="#selected-work" data-section="selected-work"><span class="nav-bracket-l">[</span>&nbsp;CREACIONES&nbsp;<span class="nav-bracket-r">]</span></a></li>
       <li><a href="#proximos-eventos" data-section="proximos-eventos"><span class="nav-bracket-l">[</span>&nbsp;EVENTOS&nbsp;<span class="nav-bracket-r">]</span></a></li>
-      <li><a href="#servicios" data-section="servicios"><span class="nav-bracket-l">[</span>&nbsp;SERVICIOS&nbsp;<span class="nav-bracket-r">]</span></a></li>
+      <li><a href="#servicios" data-section="servicios"><span class="nav-bracket-l">[</span>&nbsp;SOLUCIONES&nbsp;<span class="nav-bracket-r">]</span></a></li>
       <li><a href="#footer" data-section="footer"><span class="nav-bracket-l">[</span>&nbsp;CONTACTO&nbsp;<span class="nav-bracket-r">]</span></a></li>
     </ul>
     <button id="nav-mobile-toggle" aria-label="Abrir menú" aria-expanded="false">
@@ -1147,9 +1150,9 @@ body.letterbox-on .letterbox-bottom {
   <div id="mobile-nav-menu" role="dialog" aria-label="Menú móvil" aria-modal="true">
     <a href="#manifesto">INTRO</a>
     <a href="#disciplinas">DISCIPLINAS</a>
-    <a href="#selected-work">TRABAJOS</a>
+    <a href="#selected-work">CREACIONES</a>
     <a href="#proximos-eventos">EVENTOS</a>
-    <a href="#servicios">SERVICIOS</a>
+    <a href="#servicios">SOLUCIONES</a>
     <a href="#footer">CONTACTO</a>
   </div>
 
@@ -1623,7 +1626,10 @@ body.letterbox-on .letterbox-bottom {
       <div class="service-card" role="listitem">
         <span class="service-num">01</span>
         <div class="service-image-placeholder" aria-hidden="true">
-          <span class="service-image-label">imagen evento</span>
+          <picture>
+            <source srcset="assets/images/disciplinas/01-eventos.webp" type="image/webp" />
+            <img src="assets/images/disciplinas/01-eventos.webp" alt="" loading="lazy" class="service-image" />
+          </picture>
         </div>
         <h3 class="service-title">EVENTOS</h3>
         <p class="service-desc">Producción ejecutiva de conciertos, festivales y corporativos. Gestión integral desde el concepto hasta el cierre técnico.</p>
@@ -1632,7 +1638,10 @@ body.letterbox-on .letterbox-bottom {
       <div class="service-card" role="listitem">
         <span class="service-num">02</span>
         <div class="service-image-placeholder" aria-hidden="true">
-          <span class="service-image-label">imagen booking</span>
+          <picture>
+            <source srcset="assets/images/disciplinas/02-booking.webp" type="image/webp" />
+            <img src="assets/images/disciplinas/02-booking.webp" alt="" loading="lazy" class="service-image" />
+          </picture>
         </div>
         <h3 class="service-title">BOOKING &amp; MGMT</h3>
         <p class="service-desc">Representación de talento, armado de tours y riders técnicos. La agenda que libera al artista para crear.</p>
@@ -1641,7 +1650,10 @@ body.letterbox-on .letterbox-bottom {
       <div class="service-card" role="listitem">
         <span class="service-num">03</span>
         <div class="service-image-placeholder" aria-hidden="true">
-          <span class="service-image-label">imagen filmación</span>
+          <picture>
+            <source srcset="assets/images/disciplinas/03-filmacion.webp" type="image/webp" />
+            <img src="assets/images/disciplinas/03-filmacion.webp" alt="" loading="lazy" class="service-image" />
+          </picture>
         </div>
         <h3 class="service-title">FILMACIÓN</h3>
         <p class="service-desc">Producción audiovisual para cine, comercial y corporativo. Desde el guión hasta la entrega del master final.</p>
@@ -1650,7 +1662,10 @@ body.letterbox-on .letterbox-bottom {
       <div class="service-card" role="listitem">
         <span class="service-num">04</span>
         <div class="service-image-placeholder" aria-hidden="true">
-          <span class="service-image-label">imagen fotografía</span>
+          <picture>
+            <source srcset="assets/images/disciplinas/04-fotografia.webp" type="image/webp" />
+            <img src="assets/images/disciplinas/04-fotografia.webp" alt="" loading="lazy" class="service-image" />
+          </picture>
         </div>
         <h3 class="service-title">FOTOGRAFÍA</h3>
         <p class="service-desc">Sesiones editoriales, de producto, BTS y campaña. Imágenes que trabajan en todos los formatos.</p>
@@ -1659,7 +1674,10 @@ body.letterbox-on .letterbox-bottom {
       <div class="service-card" role="listitem">
         <span class="service-num">05</span>
         <div class="service-image-placeholder" aria-hidden="true">
-          <span class="service-image-label">imagen experiencias</span>
+          <picture>
+            <source srcset="assets/images/disciplinas/05-experiencias.webp" type="image/webp" />
+            <img src="assets/images/disciplinas/05-experiencias.webp" alt="" loading="lazy" class="service-image" />
+          </picture>
         </div>
         <h3 class="service-title">EXPERIENCIAS</h3>
         <p class="service-desc">Branded entertainment, instalaciones inmersivas y dirección creativa 360. Cuando el brief no cabe en un briefing.</p>
@@ -1811,28 +1829,31 @@ body.letterbox-on .letterbox-bottom {
       <p class="marquee-eyebrow">MARCAS QUE NOS HAN ELEGIDO</p>
       <p class="marquee-sub">+ 80 PROYECTOS · + 12 INDUSTRIAS · DESDE 2018</p>
     </div>
+    <!-- 17 brands split across 2 rows. marquees.js auto-clones the items
+         for the seamless loop, so each list appears once here. -->
     <div class="marquee-row">
       <div class="marquee-track left">
-        <div class="marquee-item"><div class="marquee-placeholder">MARCA · A</div></div>
-        <div class="marquee-item"><div class="marquee-placeholder">MARCA · B</div></div>
-        <div class="marquee-item"><div class="marquee-placeholder">MARCA · C</div></div>
-        <div class="marquee-item"><div class="marquee-placeholder">MARCA · D</div></div>
-        <div class="marquee-item"><div class="marquee-placeholder">MARCA · E</div></div>
-        <div class="marquee-item"><div class="marquee-placeholder">MARCA · F</div></div>
-        <div class="marquee-item"><div class="marquee-placeholder">MARCA · G</div></div>
-        <div class="marquee-item"><div class="marquee-placeholder">MARCA · H</div></div>
+        <div class="marquee-item"><div class="logo-card">Microdyn</div></div>
+        <div class="marquee-item"><div class="logo-card">Natura</div></div>
+        <div class="marquee-item"><div class="logo-card">Red Cola</div></div>
+        <div class="marquee-item"><div class="logo-card">Clipper</div></div>
+        <div class="marquee-item"><div class="logo-card">BBVA</div></div>
+        <div class="marquee-item"><div class="logo-card">Antisocial Rooftop</div></div>
+        <div class="marquee-item"><div class="logo-card">Alveo Trafiplastic</div></div>
+        <div class="marquee-item"><div class="logo-card">Prayser</div></div>
+        <div class="marquee-item"><div class="logo-card">Reyco del Valle</div></div>
       </div>
     </div>
     <div class="marquee-row">
       <div class="marquee-track right">
-        <div class="marquee-item"><div class="marquee-placeholder">MARCA · I</div></div>
-        <div class="marquee-item"><div class="marquee-placeholder">MARCA · J</div></div>
-        <div class="marquee-item"><div class="marquee-placeholder">MARCA · K</div></div>
-        <div class="marquee-item"><div class="marquee-placeholder">MARCA · L</div></div>
-        <div class="marquee-item"><div class="marquee-placeholder">MARCA · M</div></div>
-        <div class="marquee-item"><div class="marquee-placeholder">MARCA · N</div></div>
-        <div class="marquee-item"><div class="marquee-placeholder">MARCA · O</div></div>
-        <div class="marquee-item"><div class="marquee-placeholder">MARCA · P</div></div>
+        <div class="marquee-item"><div class="logo-card">Productos Latina</div></div>
+        <div class="marquee-item"><div class="logo-card">Bipisa</div></div>
+        <div class="marquee-item"><div class="logo-card">Crestron</div></div>
+        <div class="marquee-item"><div class="logo-card">Ensamble Studio</div></div>
+        <div class="marquee-item"><div class="logo-card">We Missed Ourselves</div></div>
+        <div class="marquee-item"><div class="logo-card">Distrito Zion</div></div>
+        <div class="marquee-item"><div class="logo-card">Astral Nights</div></div>
+        <div class="marquee-item"><div class="logo-card">Undrworld</div></div>
       </div>
     </div>
   </section>
@@ -1845,14 +1866,16 @@ body.letterbox-on .letterbox-bottom {
     </div>
     <div class="marquee-row">
       <div class="marquee-track left">
-        <div class="marquee-item"><div class="marquee-placeholder">PARTNER · A</div></div>
-        <div class="marquee-item"><div class="marquee-placeholder">PARTNER · B</div></div>
-        <div class="marquee-item"><div class="marquee-placeholder">PARTNER · C</div></div>
-        <div class="marquee-item"><div class="marquee-placeholder">PARTNER · D</div></div>
-        <div class="marquee-item"><div class="marquee-placeholder">PARTNER · E</div></div>
-        <div class="marquee-item"><div class="marquee-placeholder">PARTNER · F</div></div>
-        <div class="marquee-item"><div class="marquee-placeholder">PARTNER · G</div></div>
-        <div class="marquee-item"><div class="marquee-placeholder">PARTNER · H</div></div>
+        <div class="marquee-item"><div class="logo-card">Movida Música</div></div>
+        <div class="marquee-item"><div class="logo-card">Estudio Verne</div></div>
+        <div class="marquee-item"><div class="logo-card">OCESA</div></div>
+        <div class="marquee-item"><div class="logo-card">SUPREMO</div></div>
+        <div class="marquee-item"><div class="logo-card">Monstercat</div></div>
+        <div class="marquee-item"><div class="logo-card">EDC</div></div>
+        <div class="marquee-item"><div class="logo-card">Zepeda Bros</div></div>
+        <div class="marquee-item"><div class="logo-card">Intremor Bros</div></div>
+        <div class="marquee-item"><div class="logo-card">I Wish Producciones</div></div>
+        <div class="marquee-item"><div class="logo-card">DRMRS Entertainment</div></div>
       </div>
     </div>
   </section>
@@ -1904,7 +1927,7 @@ body.letterbox-on .letterbox-bottom {
           <ul>
             <li><a href="#manifesto">Intro</a></li>
             <li><a href="#disciplinas">Disciplinas</a></li>
-            <li><a href="#selected-work">Trabajos</a></li>
+            <li><a href="#selected-work">Creaciones</a></li>
             <li><a href="#proximos-eventos">Eventos</a></li>
           </ul>
         </div>

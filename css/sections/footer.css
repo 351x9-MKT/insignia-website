@@ -30,8 +30,11 @@
 .footer-logo-img {
   width: clamp(200px, 28vw, 400px);
   height: auto;
+  /* Solid white #FFFFFF, no transparency. brightness(0) invert(1)
+     converts whatever color the source SVG has to pure white;
+     opacity 1 keeps it solid (no ghosting against the canvas particles). */
   filter: brightness(0) invert(1);
-  opacity: .7;
+  opacity: 1;
   display: block;
 }
 

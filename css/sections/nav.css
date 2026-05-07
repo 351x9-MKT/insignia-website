@@ -23,10 +23,13 @@
   height: 32px;
   width: auto;
   display: block;
+  /* Solid white. brightness(0) invert(1) maps any source color to pure
+     white; opacity 1 keeps it crisp against the dark navbar. */
   filter: brightness(0) invert(1);
+  opacity: 1;
   transition: opacity .3s;
 }
-.nav-logo-img:hover { opacity: .8; }
+.nav-logo-img:hover { opacity: .85; }
 
 .nav-links {
   display: flex;
