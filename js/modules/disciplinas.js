@@ -1,24 +1,67 @@
 /**
  * modules/disciplinas.js
  *
- * Five-panel disciplinas section. Each panel has a static WebP image with
- * a unique idle CSS animation (defined in disciplinas.css) and a copy block
- * (number, rule, title, desc).
+ * Cinematic disciplinas section. Each panel has a static WebP image that
+ * floats as a 3D object in the void:
+ *   1. Scroll-triggered entrance with a DISTINCT motion per service
+ *      (drop-in for #1, slide-in for #2, etc.) so each subject reveals in
+ *      character. Plays once.
+ *   2. Mouse-parallax 3D tilt on the placeholder wrapper (desktop only) —
+ *      the image follows the cursor by ±8° rotateX/Y. Idle CSS keyframes
+ *      on the image itself keep working because tilt lives on the parent.
+ *   3. Per-service idle CSS animations kick in (via .is-revealed class)
+ *      after the entrance completes. Defined in disciplinas.css.
+ *   4. Optional canvas overlays — desktop only — for #2 (chalk dust) and
+ *      #4 (sparkle drift). Preserved from the prior implementation.
  *
- * This module is responsible for two things:
- *   1. Scroll-driven entrance for image + copy. Images use a soft
- *      fade + scale + translateY; copy uses the original GSAP timeline.
- *   2. Optional canvas overlays — desktop-only — for two disciplinas:
- *        03 FILMACIÓN  → chalk dust drift (10–15 particles)
- *        05 EXPERIENCIAS → ambient sparkle drift (12–18 particles)
- *      Skipped on mobile (CPU/battery) and reduced-motion (vestibular).
- *
- * Idle CSS animations (breathe, pendulum, tilt, etc.) are NOT controlled
- * here — they're declared via `.disciplina-image[data-discipline="N"]`
- * keyframes and start automatically once the image gets `.is-revealed`.
+ * Reduced motion: simple opacity fade via IntersectionObserver. No GSAP,
+ * no idle animations, no tilt, no canvases.
  */
 
 import { prefersReducedMotion, isCoarsePointer } from '../core/motion.js';
+
+/* ──────────────────────────────────────────────────
+   Per-discipline entrance recipes
+   Each entrance ends at the natural rest state. After GSAP completes,
+   `.is-revealed` is added so the CSS idle animation takes over.
+   ────────────────────────────────────────────────── */
+const ENTRANCE = {
+  // 0 EVENTOS — mic ambient bloom: zoom-out from 115% with a small tilt.
+  0: {
+    from: { opacity: 0, scale: 1.15, rotation: -3 },
+    to:   { opacity: 1, scale: 1,    rotation:  0 },
+    duration: 1.2,
+    ease: 'power3.out',
+  },
+  // 1 BOOKING — VIP gafete drops in from above with elastic settle.
+  1: {
+    from: { opacity: 0, y: -100, rotation: 12 },
+    to:   { opacity: 1, y: 0,    rotation:  0 },
+    duration: 1.4,
+    ease: 'back.out(1.7)',
+  },
+  // 2 FILMACIÓN — clapperboard slides in left-to-right with a tilt.
+  2: {
+    from: { opacity: 0, x: -150, rotation: -8 },
+    to:   { opacity: 1, x: 0,    rotation:  0 },
+    duration: 1.3,
+    ease: 'power3.out',
+  },
+  // 3 FOTOGRAFÍA — Hasselblad zooms in slightly with a flash burst (brightness).
+  3: {
+    from: { opacity: 0, scale: 0.85, filter: 'brightness(1.4)' },
+    to:   { opacity: 1, scale: 1,    filter: 'brightness(1)' },
+    duration: 1.0,
+    ease: 'power3.out',
+  },
+  // 4 EXPERIENCIAS — portal opens from zero with a focus-pull.
+  4: {
+    from: { opacity: 0, scale: 0,   filter: 'blur(20px)' },
+    to:   { opacity: 1, scale: 1,   filter: 'blur(0px)' },
+    duration: 1.5,
+    ease: 'back.out(1.5)',
+  },
+};
 
 /* ──────────────────────────────────────────────────
    Public entry
@@ -27,7 +70,6 @@ import { prefersReducedMotion, isCoarsePointer } from '../core/motion.js';
 export function initDisciplinas() {
   const panels = document.querySelectorAll('.disciplina-panel');
   if (!panels.length) return;
-
   panels.forEach(panel => initPanel(panel));
 }
 
@@ -40,17 +82,17 @@ function initPanel(panel) {
   const desc  = panel.querySelector('.disciplina-desc');
   const rule  = panel.querySelector('.disciplina-rule');
   const image = panel.querySelector('.disciplina-image');
+  const idx   = +panel.dataset.discipline;
 
-  // Reduced motion: simple fade-in via IntersectionObserver. No GSAP, no
-  // scroll-scrub, no canvas overlays. Idle animations are already disabled
-  // by the CSS reduced-motion block.
+  // Reduced motion: minimal fade-in, no GSAP, no tilt, no canvas.
   if (prefersReducedMotion || !window.gsap) {
     revealOnIntersect([rule, title, desc, image].filter(Boolean));
     return;
   }
 
-  // Copy block — original entrance from the prior implementation.
   const { gsap } = window;
+
+  // Copy block — original entrance from the prior implementation.
   gsap.timeline({
     scrollTrigger: { trigger: panel, start: 'top 75%', once: true },
   })
@@ -58,13 +100,14 @@ function initPanel(panel) {
     .to(title, { opacity: 1, y: 0,     duration: 0.8, ease: 'power3.out' }, '-=.3')
     .to(desc,  { opacity: 1, y: 0,     duration: 0.8, ease: 'power3.out' }, '-=.5');
 
-  // Image — scrubbed entrance (fade + scale + translateY). Adds
-  // `.is-revealed` once visible so the per-discipline idle animation kicks in.
-  if (image) initImageReveal(image, panel);
+  // Image — per-discipline entrance, plays once.
+  if (image) initImageEntrance(image, panel, idx);
 
-  // Canvas overlays for 03 + 05 — desktop only, full-touch devices skip.
+  // 3D mouse-parallax tilt — desktop only.
+  if (!isCoarsePointer) initTilt(panel);
+
+  // Canvas overlays — desktop only.
   if (!isCoarsePointer) {
-    const idx = +panel.dataset.discipline;
     if (idx === 2) initChalkDust(panel);
     if (idx === 4) initSparkleDrift(panel);
   }
@@ -82,33 +125,84 @@ function revealOnIntersect(els) {
   });
 }
 
-function initImageReveal(image, panel) {
+/* ──────────────────────────────────────────────────
+   Per-discipline entrance — image falls into rest state then idle starts
+   ────────────────────────────────────────────────── */
+
+function initImageEntrance(image, panel, idx) {
+  const recipe = ENTRANCE[idx] || ENTRANCE[0];
   const { gsap } = window;
-  // Use a scrubbed tween over a short range so the entrance feels tied to
-  // scroll without dragging out forever. `once: true` so we don't fight the
-  // idle CSS animation once revealed.
-  gsap.fromTo(image,
-    { opacity: 0, y: 30, scale: 0.95 },
-    {
-      opacity: 1, y: 0, scale: 1,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: panel,
-        start: 'top 80%',
-        end:   'top 35%',
-        scrub: 0.3,
-        onLeave:    () => image.classList.add('is-revealed'),
-        onEnterBack: () => image.classList.add('is-revealed'),
-      },
-    });
+
+  // Set the initial state immediately so the image doesn't flash at its
+  // rest position before the trigger fires.
+  gsap.set(image, recipe.from);
+
+  gsap.to(image, {
+    ...recipe.to,
+    duration: recipe.duration,
+    ease: recipe.ease,
+    scrollTrigger: { trigger: panel, start: 'top 70%', once: true },
+    onComplete() {
+      // Clear inline transform/filter so CSS idle keyframes own them again.
+      // Opacity stays at 1 (set by .is-revealed).
+      gsap.set(image, { clearProps: 'transform,filter,x,y,scale,rotation' });
+      image.classList.add('is-revealed');
+    },
+  });
 }
 
 /* ──────────────────────────────────────────────────
-   Canvas overlays (desktop-only)
+   3D mouse-parallax tilt
+   Applied to .disciplina-placeholder so it composes WITH the per-discipline
+   idle CSS keyframes that animate transform on .disciplina-image.
    ────────────────────────────────────────────────── */
 
-/* 03 FILMACIÓN — chalk dust drift.
-   Light-grey/red specks rising slowly, fading at the top edge. */
+const MAX_TILT_DEG = 8;
+const TILT_TRANSITION = 'transform .4s cubic-bezier(0.22, 1, 0.36, 1)';
+
+function initTilt(panel) {
+  const visual = panel.querySelector('.disciplina-visual');
+  const target = panel.querySelector('.disciplina-placeholder');
+  if (!visual || !target) return;
+
+  // Set the smoothing transition once. We avoid a CSS rule because we want
+  // to disable it instantly on mousemove (transitions cause cursor lag) and
+  // re-enable it on mouseleave for the smooth reset.
+  target.style.transition = TILT_TRANSITION;
+  target.style.willChange = 'transform';
+
+  let pending = null;
+  let raf = 0;
+
+  visual.addEventListener('mousemove', (e) => {
+    pending = e;
+    if (raf) return;
+    raf = requestAnimationFrame(() => {
+      raf = 0;
+      if (!pending) return;
+      const r = visual.getBoundingClientRect();
+      const x = ((pending.clientX - r.left) / r.width)  * 2 - 1; // -1..1
+      const y = ((pending.clientY - r.top)  / r.height) * 2 - 1;
+      // Disable transition during active tracking (snappier feel).
+      target.style.transition = 'none';
+      target.style.transform =
+        `rotateX(${(-y * MAX_TILT_DEG).toFixed(2)}deg) ` +
+        `rotateY(${( x * MAX_TILT_DEG).toFixed(2)}deg)`;
+    });
+  });
+
+  visual.addEventListener('mouseleave', () => {
+    if (raf) { cancelAnimationFrame(raf); raf = 0; }
+    pending = null;
+    target.style.transition = TILT_TRANSITION;
+    target.style.transform = 'rotateX(0deg) rotateY(0deg)';
+  });
+}
+
+/* ──────────────────────────────────────────────────
+   Canvas overlays (desktop-only) — unchanged from prior commit
+   ────────────────────────────────────────────────── */
+
 function initChalkDust(panel) {
   const host = panel.querySelector('.disciplina-placeholder');
   if (!host) return;
@@ -158,8 +252,6 @@ function spawnDust(canvas) {
   };
 }
 
-/* 05 EXPERIENCIAS — sparkle drift.
-   Slower, brighter motes drifting in many directions, very low density. */
 function initSparkleDrift(panel) {
   const host = panel.querySelector('.disciplina-placeholder');
   if (!host) return;
@@ -186,7 +278,7 @@ function initSparkleDrift(panel) {
       p.y += p.vy;
       p.life -= 1;
       const fade = p.life / p.lifeMax;
-      const a = p.alpha * Math.sin(fade * Math.PI); // fade in then out
+      const a = p.alpha * Math.sin(fade * Math.PI);
       const out = p.x < -10 || p.x > canvas.width + 10 ||
                   p.y < -10 || p.y > canvas.height + 10;
       if (p.life <= 0 || out) Object.assign(p, spawnSparkle(canvas));
@@ -217,7 +309,7 @@ function spawnSparkle(canvas) {
 }
 
 /* ──────────────────────────────────────────────────
-   Canvas helpers — 1:1 logical sizing (decorative, no need for DPR)
+   Canvas helpers
    ────────────────────────────────────────────────── */
 
 function createCanvas(host) {
@@ -225,7 +317,6 @@ function createCanvas(host) {
   canvas.setAttribute('aria-hidden', 'true');
   host.appendChild(canvas);
   resizeCanvas(canvas, host);
-  // Watch for layout changes (responsive viewport, image load).
   const ro = new ResizeObserver(() => resizeCanvas(canvas, host));
   ro.observe(host);
   return canvas;
@@ -236,5 +327,4 @@ function resizeCanvas(canvas, host) {
   if (!r.width || !r.height) return;
   canvas.width  = Math.round(r.width);
   canvas.height = Math.round(r.height);
-  // CSS sizing keeps the canvas pinned to its host (already inset:0).
 }
