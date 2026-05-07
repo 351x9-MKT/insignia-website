@@ -1793,7 +1793,10 @@ body.letterbox-on .letterbox-bottom {
 
   <!-- ══ CONTACT MODAL · 4-step wizard ══ -->
   <div id="contact-modal" role="dialog" aria-modal="true" aria-label="Cotizar proyecto">
-    <div class="modal-inner">
+    <!-- data-lenis-prevent tells Lenis to NOT intercept wheel events here,
+         so the modal's native overflow-y:auto scroll works (step 3 has too
+         much content to fit in 90vh on smaller viewports). -->
+    <div class="modal-inner" data-lenis-prevent>
       <button class="modal-close" type="button" aria-label="Cerrar">×</button>
       <h3 class="modal-title">COTIZAR PROYECTO</h3>
       <p class="modal-sub">Cuéntanos qué tienes en mente y te respondemos en menos de 48 horas.</p>
