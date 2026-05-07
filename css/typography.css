@@ -1,12 +1,75 @@
 /* ──────────────────────────────────────────────────
-   typography.css — base body/text rules
-   Fonts loaded via <link> in index.html (Google Fonts):
-     Anton · Inter (400/500/600) · JetBrains Mono (400/500)
+   typography.css — base body/text rules + self-hosted fonts.
+   Eliminates ~786 ms of render-blocking from fonts.googleapis.com on
+   slow 4G by serving the 3 fonts directly from /assets/fonts/.
+
+   Subsets: latin only (U+0000-00FF + the small symbol set Google ships
+   with the latin subset). Spanish accents are within U+0080-U+00FF so
+   no need to ship latin-ext.
+
+   Inter and JetBrains Mono are variable fonts — one .woff2 file serves
+   all weights via the wght axis, so we declare multiple @font-face rules
+   pointing at the same URL with different font-weight values.
    ────────────────────────────────────────────────── */
 
-/* CLS prevention — metric-adjusted fallbacks. While Anton/Inter download,
-   the browser uses these system-fallback faces with overridden metrics so
-   layout box matches the final font. No reflow when the real font swaps. */
+/* ── Anton — display, weight 400 only ── */
+@font-face {
+  font-family: 'Anton';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/anton-latin-400.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ── Inter — body, variable file shared across 400/500/600 ── */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/inter-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../assets/fonts/inter-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../assets/fonts/inter-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ── JetBrains Mono — small UI labels, variable file shared 400/500 ── */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/jetbrainsmono-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../assets/fonts/jetbrainsmono-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ── Metric-adjusted fallbacks (CLS prevention) ──
+   While the real fonts download, the browser uses these system-fallback
+   faces with overridden metrics so layout box matches the final font.
+   No reflow when the real font swaps in via font-display: swap. */
 @font-face {
   font-family: 'Anton-fallback';
   src: local('Impact'), local('Haettenschweiler'), local('Arial Black');
