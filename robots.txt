@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://insignia-entertainment.netlify.app/sitemap.xml

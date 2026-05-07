@@ -3,3 +3,7 @@
 
 # Local Netlify folder
 .netlify
+
+# Lighthouse audit HTML reports (local)
+.lh-*.report.html
+.lh-*.report.json
