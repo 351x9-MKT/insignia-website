@@ -19,7 +19,7 @@
 
 import { prefersReducedMotion } from '../core/motion.js';
 
-const POSTER_PATH = 'assets/images/cinematic/poster_hero.jpg';
+const POSTER_PATH = 'assets/images/cinematic/poster_hero.webp';
 
 export function initHeroScrub() {
   const video = document.getElementById('hero-camera-video');
