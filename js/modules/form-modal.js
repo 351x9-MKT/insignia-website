@@ -10,13 +10,13 @@
  *
  * Submit:
  *   - POST a /api/contact (placeholder, falla silencioso si no hay backend)
- *   - Abre wa.me/525516952852?text=... con resumen pre-redactado
+ *   - Abre wa.me/525610108446?text=... con resumen pre-redactado
  *   - Muestra estado success in-modal
  */
 
 import { getLenis } from '../core/lenis.js';
 
-const WHATSAPP_NUMBER = '525516952852';
+const WHATSAPP_NUMBER = '525610108446';
 
 const state = {
   step: 1,
