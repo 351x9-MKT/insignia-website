@@ -12,6 +12,21 @@
   height: 64px;
   transition: background .6s var(--ease), backdrop-filter .6s var(--ease);
 }
+/* Always-on top scrim so the white logo + nav links keep contrast against
+   bright hero video frames at scrollY=0 (when the .scrolled background
+   isn't yet applied). The scrim fades out once scrolled state takes over
+   with its own opaque backdrop. */
+#navbar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(10, 10, 10, .55), rgba(10, 10, 10, 0));
+  transition: opacity .6s var(--ease);
+  z-index: -1;
+}
+#navbar.scrolled::before { opacity: 0; }
+
 #navbar.scrolled {
   background: rgba(10, 10, 10, .88);
   backdrop-filter: blur(12px);
