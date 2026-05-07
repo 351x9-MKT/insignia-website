@@ -50,17 +50,20 @@
   width: clamp(280px, 52vw, 880px);
   height: auto;
   display: block;
-  /* AI exports the logo as a single compound path: a full-canvas white
-     rectangle with subpaths that cut out the letterforms. evenodd makes
-     those subpaths render as cut-outs instead of overlap. */
-  fill-rule: evenodd;
-  /* SVG fill is white via inline style; we mask with clip-path during reveal */
+  /* The hero logo is now a PNG (the previous inline SVG was an outline
+     export — paths traced letter edges instead of filling letter shapes,
+     which made the wordmark render as ghostly outlines). brightness(0)
+     invert(1) maps any non-transparent pixel to pure white regardless of
+     the source color, so anti-aliased PNG edges stay crisp. */
+  filter: brightness(0) invert(1);
+  /* Sweep reveal: the clip-path inset on the right collapses to 0
+     over 2.4 s when JS adds .revealed to the wrap. Works identically
+     on <img> and inline <svg>. */
   -webkit-clip-path: inset(0 100% 0 0);
           clip-path: inset(0 100% 0 0);
   transition: -webkit-clip-path 2.4s var(--ease),
                       clip-path 2.4s var(--ease);
 }
-.hero-logo-svg .logo-fill { fill-rule: evenodd; }
 .hero-logo-wrap.revealed .hero-logo-svg {
   -webkit-clip-path: inset(0 0 0 0);
           clip-path: inset(0 0 0 0);
