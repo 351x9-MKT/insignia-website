@@ -30,7 +30,8 @@
   <link rel="stylesheet" href="css/animations.css" />
   <link rel="stylesheet" href="css/sections/nav.css" />
   <link rel="stylesheet" href="css/sections/hero.css" />
-  <link rel="stylesheet" href="css/sections/hero-overlays.css" />
+  <link rel="stylesheet" href="css/sections/manifesto.css" />
+  <link rel="stylesheet" href="css/sections/disciplinas.css" />
   <link rel="stylesheet" href="css/sections/selected-work.css" />
   <link rel="stylesheet" href="css/sections/servicios.css" />
   <link rel="stylesheet" href="css/sections/eventos-hero.css" />
@@ -82,6 +83,8 @@
         id="hero-camera-video"
         width="1912"
         height="1080"
+        autoplay
+        loop
         muted
         playsinline
         preload="metadata"
@@ -92,8 +95,6 @@
     </div>
     <div id="hero-overlay" aria-hidden="true"></div>
 
-    <!-- ENTRANCE PANE — wordmark + cards + scroll cue. Fades out 0–15% of pin. -->
-    <div class="hero-entrance">
     <div style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;">
       <p class="hero-pre">HECHO PARA EL ESCENARIO. CONSTRUIDO PARA LA CÁMARA.</p>
 
@@ -336,47 +337,132 @@
       </div>
       <span class="hero-scroll-label">SCROLL TO CONTINUE</span>
     </div>
-    </div><!-- /.hero-entrance -->
-
-    <!-- OVERLAY 1 — Manifesto (15–25% of pin) -->
-    <div class="hero-overlay-pane overlay-manifesto" id="manifesto" aria-label="Manifiesto">
-      <h2 class="ov-headline">No vendemos servicios.</h2>
-      <div class="ov-rule" aria-hidden="true"></div>
-      <p class="ov-body">Producimos momentos que merecen ser filmados, fotografiados y recordados. Cada proyecto pasa por una sola dirección creativa — la nuestra.</p>
-    </div>
-
-    <!-- OVERLAY 2 — Disciplina 03 FILMACIÓN (25–50% of pin) -->
-    <div class="hero-overlay-pane overlay-disc-03" id="disciplinas" aria-label="Filmación">
-      <p class="ov-eyebrow"><span>03 — DISCIPLINA</span></p>
-      <h2 class="ov-headline">Filmación</h2>
-      <p class="ov-desc">Cine, comercial y video corporativo. De la idea a la entrega final — preproducción, dirección, captura y post.</p>
-    </div>
-
-    <!-- OVERLAY 3 — Disciplina 01 EVENTOS (50–75% of pin) -->
-    <div class="hero-overlay-pane overlay-disc-01" aria-label="Eventos">
-      <p class="ov-eyebrow"><span>01 — DISCIPLINA</span></p>
-      <h2 class="ov-headline">Eventos</h2>
-      <p class="ov-desc">Conciertos, festivales, corporativos y activaciones de marca. De la idea al backstage, con producción integral.</p>
-    </div>
-
-    <!-- OVERLAY 4 — Mini stagger 02 / 04 / 05 (75–88% of pin) -->
-    <div class="hero-overlay-pane overlay-disc-mini" aria-label="Booking, fotografía y experiencias">
-      <p class="mini-eyebrow">Y también —</p>
-      <div class="mini-item mini-item-02">
-        <span class="mini-num">02</span>
-        <span class="mini-title">Booking &amp; Management</span>
-      </div>
-      <div class="mini-item mini-item-04">
-        <span class="mini-num">04</span>
-        <span class="mini-title">Fotografía</span>
-      </div>
-      <div class="mini-item mini-item-05">
-        <span class="mini-num">05</span>
-        <span class="mini-title">Experiencias &amp; Creatividad</span>
-      </div>
-    </div>
-
     <div class="hero-fade-bottom" aria-hidden="true"></div>
+  </section>
+
+  <!-- ══ MANIFESTO ══ -->
+  <section id="manifesto" aria-label="Manifiesto">
+    <h2 class="manifesto-headline">No vendemos servicios.</h2>
+    <div class="manifesto-rule"></div>
+    <p class="manifesto-body">Producimos momentos que merecen ser filmados, fotografiados y recordados. Cada proyecto pasa por una sola dirección creativa — la nuestra.</p>
+  </section>
+
+  <!-- ══ DISCIPLINAS ══ -->
+  <section id="disciplinas" aria-label="Cinco disciplinas">
+    <div class="disciplina-panel" data-discipline="0">
+      <div class="disciplina-visual">
+        <div class="disciplina-visual-inner">
+          <div class="disciplina-num-bg" aria-hidden="true">01</div>
+          <div class="disciplina-placeholder" role="img" aria-label="Eventos">
+            <picture>
+              <source srcset="assets/images/disciplinas/01-eventos.webp" type="image/webp" />
+              <img src="assets/images/disciplinas/01-eventos.webp"
+                   alt="Micrófono vintage representando producción de eventos"
+                   loading="lazy" width="1920" height="1080"
+                   class="disciplina-image" data-discipline="0" />
+            </picture>
+          </div>
+        </div>
+      </div>
+      <div class="disciplina-copy">
+        <div class="disciplina-number" aria-hidden="true">01</div>
+        <div class="disciplina-rule"></div>
+        <h3 class="disciplina-title">EVENTOS</h3>
+        <p class="disciplina-desc">Conciertos, corporativos, festivales, activaciones de marca. De la idea al backstage.</p>
+      </div>
+    </div>
+
+    <div class="disciplina-panel" data-discipline="1">
+      <div class="disciplina-visual">
+        <div class="disciplina-visual-inner">
+          <div class="disciplina-num-bg" aria-hidden="true">02</div>
+          <div class="disciplina-placeholder" role="img" aria-label="Booking y Management">
+            <picture>
+              <source srcset="assets/images/disciplinas/02-booking.webp" type="image/webp" />
+              <img src="assets/images/disciplinas/02-booking.webp"
+                   alt="Gafete VIP representando booking y management"
+                   loading="lazy" width="1920" height="1080"
+                   class="disciplina-image" data-discipline="1" />
+            </picture>
+          </div>
+        </div>
+      </div>
+      <div class="disciplina-copy">
+        <div class="disciplina-number" aria-hidden="true">02</div>
+        <div class="disciplina-rule"></div>
+        <h3 class="disciplina-title">BOOKING &amp;<br/>MANAGEMENT</h3>
+        <p class="disciplina-desc">Representación de talento, tours, agenda y riders. La trastienda que hace que la función ocurra.</p>
+      </div>
+    </div>
+
+    <div class="disciplina-panel" data-discipline="2">
+      <div class="disciplina-visual">
+        <div class="disciplina-visual-inner">
+          <div class="disciplina-num-bg" aria-hidden="true">03</div>
+          <div class="disciplina-placeholder" role="img" aria-label="Filmación">
+            <picture>
+              <source srcset="assets/images/disciplinas/03-filmacion.webp" type="image/webp" />
+              <img src="assets/images/disciplinas/03-filmacion.webp"
+                   alt="Claqueta de cine representando filmación"
+                   loading="lazy" width="1920" height="1080"
+                   class="disciplina-image" data-discipline="2" />
+            </picture>
+          </div>
+        </div>
+      </div>
+      <div class="disciplina-copy">
+        <div class="disciplina-number" aria-hidden="true">03</div>
+        <div class="disciplina-rule"></div>
+        <h3 class="disciplina-title">FILMACIÓN</h3>
+        <p class="disciplina-desc">Cine, comercial y video corporativo. De la idea a la entrega final.</p>
+      </div>
+    </div>
+
+    <div class="disciplina-panel" data-discipline="3">
+      <div class="disciplina-visual">
+        <div class="disciplina-visual-inner">
+          <div class="disciplina-num-bg" aria-hidden="true">04</div>
+          <div class="disciplina-placeholder" role="img" aria-label="Fotografía">
+            <picture>
+              <source srcset="assets/images/disciplinas/04-fotografia.webp" type="image/webp" />
+              <img src="assets/images/disciplinas/04-fotografia.webp"
+                   alt="Cámara Hasselblad representando fotografía"
+                   loading="lazy" width="1920" height="1080"
+                   class="disciplina-image" data-discipline="3" />
+            </picture>
+          </div>
+        </div>
+      </div>
+      <div class="disciplina-copy">
+        <div class="disciplina-number" aria-hidden="true">04</div>
+        <div class="disciplina-rule"></div>
+        <h3 class="disciplina-title">FOTOGRAFÍA</h3>
+        <p class="disciplina-desc">Editorial, producto, BTS, retrato y campaña.</p>
+      </div>
+    </div>
+
+    <div class="disciplina-panel" data-discipline="4">
+      <div class="disciplina-visual">
+        <div class="disciplina-visual-inner">
+          <div class="disciplina-num-bg" aria-hidden="true">05</div>
+          <div class="disciplina-placeholder" role="img" aria-label="Experiencias">
+            <picture>
+              <source srcset="assets/images/disciplinas/05-experiencias.webp" type="image/webp" />
+              <img src="assets/images/disciplinas/05-experiencias.webp"
+                   alt="Portal de luz representando experiencias inmersivas"
+                   loading="lazy" width="1920" height="1080"
+                   class="disciplina-image" data-discipline="4" />
+            </picture>
+          </div>
+        </div>
+      </div>
+      <div class="disciplina-copy">
+        <div class="disciplina-number" aria-hidden="true">05</div>
+        <div class="disciplina-rule"></div>
+        <h3 class="disciplina-title">EXPERIENCIAS &amp;<br/>CREATIVIDAD</h3>
+        <p class="disciplina-desc">Branded entertainment, inmersivos, dirección creativa 360.</p>
+      </div>
+    </div>
   </section>
 
   <!-- ══ SELECTED WORK ══ -->

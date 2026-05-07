@@ -1,4 +1,8 @@
-/* ── DISCIPLINAS ── */
+/* ── DISCIPLINAS ──
+   Five 100vh panels (50/50 visual + copy split). Each .disciplina-image is
+   a static WebP at 16:9; idle motion is per-discipline CSS animations
+   (defined at the bottom). Scroll-driven entrance is in disciplinas.js. */
+
 #disciplinas {
   background: var(--bg);
   position: relative;
@@ -58,9 +62,10 @@
   pointer-events: none;
 }
 
+/* ── PLACEHOLDER (diagonal-stripe fallback when image missing) ── */
 .disciplina-placeholder {
-  width: 60%;
-  aspect-ratio: 4/3;
+  width: 78%;
+  aspect-ratio: 16 / 9;
   border: 1px solid rgba(255, 255, 255, .08);
   display: flex;
   align-items: center;
@@ -70,18 +75,18 @@
   background-image: repeating-linear-gradient(-45deg, transparent, transparent 6px, rgba(255, 255, 255, .02) 6px, rgba(255, 255, 255, .02) 12px);
   overflow: hidden;
 }
-/* When an <img> is dropped in, hide the diagonal pattern + label */
 .disciplina-placeholder:has(img) {
   background-image: none;
   border-color: transparent;
 }
 .disciplina-placeholder:has(img) .disciplina-placeholder-label { display: none; }
+.disciplina-placeholder picture,
 .disciplina-placeholder img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
   display: block;
 }
+
 .disciplina-placeholder-label {
   font-family: var(--font-mono);
   font-size: 10px;
@@ -92,6 +97,32 @@
   padding: 20px;
 }
 
+/* ── DISCIPLINA IMAGE (the actual WebP, 16:9 + per-discipline animation) ── */
+.disciplina-image {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+  /* Default rim-light: each discipline overrides intensity in its keyframes. */
+  filter: drop-shadow(0 0 30px rgba(225, 6, 0, .15));
+  /* Initial state for scroll-driven entrance.
+     GSAP writes inline opacity/transform during scrub — CSS transition is
+     intentionally OMITTED here because it would re-trigger on every inline
+     write and never settle. The reduced-motion fallback re-enables a simple
+     transition further down. */
+  opacity: 0;
+  transform: translateY(30px) scale(.95);
+  will-change: opacity, transform, filter;
+}
+/* Class is added by JS once entrance finishes. With GSAP done writing inline
+   styles, this rule lets idle animation take over (filter changes only). */
+.disciplina-image.is-revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* ── COPY ── */
 .disciplina-copy {
   flex: 1;
   padding: 80px 60px;
@@ -135,6 +166,7 @@
   transform: translateY(20px);
 }
 
+/* ── RESPONSIVE ── */
 @media (max-width: 1024px) {
   .disciplina-panel {
     flex-direction: column;
@@ -144,10 +176,137 @@
   .disciplina-visual {
     position: relative;
     width: 100%;
-    height: 280px;
+    height: auto;
+    min-height: 280px;
   }
+  .disciplina-placeholder { width: 90%; }
   .disciplina-copy { padding: 40px 24px; }
 }
 @media (max-width: 640px) {
   .disciplina-copy { padding: 32px 20px; }
+}
+
+/* ──────────────────────────────────────────────────
+   PER-DISCIPLINE IDLE ANIMATIONS
+   Distinct character for each service. All 6–8s loops, infinite, ease.
+   Idle motion runs in parallel with the GSAP scroll entrance.
+   ────────────────────────────────────────────────── */
+
+/* 01 EVENTOS — mic vintage, ambient breathing rim-light */
+@keyframes ambient-breathe-mic {
+  0%, 100% {
+    filter: drop-shadow(0 0 24px rgba(225, 6, 0, .15)) brightness(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 48px rgba(225, 6, 0, .30)) brightness(1.05);
+  }
+}
+.disciplina-image[data-discipline="0"].is-revealed {
+  animation: ambient-breathe-mic 6s ease-in-out infinite;
+}
+
+/* 02 BOOKING — gafete VIP, pendulum micro-swing + holographic shimmer */
+@keyframes pendulum-swing {
+  0%, 100% { transform: rotate(-1.5deg); }
+  50%      { transform: rotate( 1.5deg); }
+}
+.disciplina-image[data-discipline="1"].is-revealed {
+  animation: pendulum-swing 8s ease-in-out infinite;
+  transform-origin: 50% 0%;
+}
+/* Holographic shimmer overlay — diagonal moving gradient on the image's
+   parent placeholder (so it sits above the image). 12s linear loop. */
+@keyframes holographic-shimmer {
+  0%   { background-position:    0% 50%; }
+  100% { background-position: -200% 50%; }
+}
+.disciplina-panel[data-discipline="1"] .disciplina-placeholder::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(115deg,
+      transparent 30%,
+      rgba(225, 6, 0, .08)   45%,
+      rgba(255, 255, 255, .12) 50%,
+      rgba(225, 6, 0, .08)   55%,
+      transparent 70%);
+  background-size: 300% 100%;
+  background-position: 0% 50%;
+  mix-blend-mode: screen;
+  animation: holographic-shimmer 12s linear infinite;
+}
+
+/* 03 FILMACIÓN — claqueta, pre-clap tension (organic micro-tilt).
+   The chalk-dust drift is added by JS canvas overlay, desktop only. */
+@keyframes pre-clap-tension {
+  0%, 100% { transform: rotate(0deg); }
+  35%      { transform: rotate(.5deg); }
+  65%      { transform: rotate(-.3deg); }
+}
+.disciplina-image[data-discipline="2"].is-revealed {
+  animation: pre-clap-tension 7s ease-in-out infinite;
+  transform-origin: 50% 50%;
+}
+
+/* 04 FOTOGRAFÍA — Hasselblad, mechanical precision pulse (chrome highlight
+   + rim-red breathing). Tighter cycle = more "machine-like". */
+@keyframes mechanical-precision {
+  0%, 100% {
+    filter: drop-shadow(0 0 24px rgba(225, 6, 0, .15)) brightness(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 56px rgba(225, 6, 0, .35)) brightness(1.06);
+  }
+}
+.disciplina-image[data-discipline="3"].is-revealed {
+  animation: mechanical-precision 5s ease-in-out infinite;
+}
+
+/* 05 EXPERIENCIAS — portal de luz, vertical light shift (deeper pulse).
+   Particles drift is added by JS canvas overlay, desktop only. */
+@keyframes vertical-light-shift {
+  0%, 100% {
+    filter: drop-shadow(0 0 32px rgba(225, 6, 0, .20)) brightness(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 72px rgba(225, 6, 0, .40)) brightness(1.10);
+  }
+}
+.disciplina-image[data-discipline="4"].is-revealed {
+  animation: vertical-light-shift 4s ease-in-out infinite;
+}
+
+/* ── REDUCED MOTION ──
+   Per spec: simple fade-in entrance still happens (so the page doesn't feel
+   broken), but ALL idle animations are removed once visible. JS skips the
+   GSAP path under reduced-motion and uses an IntersectionObserver to add
+   .is-revealed; with no GSAP writing inline styles, CSS transition is safe. */
+@media (prefers-reduced-motion: reduce) {
+  .disciplina-image {
+    transform: none;
+    transition: opacity .4s ease-out;
+  }
+  .disciplina-image.is-revealed {
+    animation: none !important;
+  }
+  /* Disable holographic shimmer (background-position movement). */
+  .disciplina-panel[data-discipline="1"] .disciplina-placeholder::after {
+    animation: none !important;
+    opacity: 0;
+  }
+}
+
+/* Canvas overlays for 03 + 05 (chalk dust / particle drift) are positioned
+   via inline style by JS. We style the host placeholder as the positioning
+   context — already position: relative above. The canvas itself is added
+   inset:0 on top of the image. */
+.disciplina-panel[data-discipline="2"] .disciplina-placeholder canvas,
+.disciplina-panel[data-discipline="4"] .disciplina-placeholder canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: .6;
 }
