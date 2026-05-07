@@ -83,14 +83,19 @@
         id="hero-camera-video"
         width="1912"
         height="1080"
-        autoplay
         loop
         muted
         playsinline
-        preload="metadata"
+        preload="none"
         poster="assets/images/cinematic/poster_hero.jpg"
+        data-src-mobile="assets/videos/sprint1_chained_mobile.mp4"
+        data-src-desktop="assets/videos/sprint1_chained.mp4"
         aria-hidden="true">
-        <source src="assets/videos/sprint1_chained.mp4" type="video/mp4" />
+        <!-- The actual <source> is appended by hero-scrub.js based on
+             matchMedia('(max-width: 768px)'). With <source media> in HTML,
+             Chrome speculatively fetched the desktop MP4 on mobile even with
+             preload="none" — only one URL must ever appear in the DOM to
+             guarantee mobile loads only the 844 KB asset. -->
       </video>
     </div>
     <div id="hero-overlay" aria-hidden="true"></div>
@@ -588,9 +593,14 @@
 
   <!-- ══ EVENTOS HERO (post-servicios) ══ -->
   <section id="eventos-hero" aria-label="Eventos — Disciplina principal">
-    <video id="eventos-bg-video" muted playsinline preload="auto" aria-hidden="true"
+    <!-- Atmospheric background — uses the mobile-grade MP4 on all devices.
+         Full-resolution isn't needed for a behind-text background loop, and
+         this avoids re-fetching the 18 MB desktop file on a section that's
+         secondary to the hero. preload="none" + IO-driven start in
+         eventos-hero.js means it doesn't compete with critical path. -->
+    <video id="eventos-bg-video" muted playsinline preload="none" aria-hidden="true"
       poster="assets/images/cinematic/match_04_aerial.jpg">
-      <source src="assets/videos/sprint1_chained.mp4" type="video/mp4" />
+      <source src="assets/videos/sprint1_chained_mobile.mp4" type="video/mp4" />
     </video>
     <div class="eventos-overlay" aria-hidden="true"></div>
     <div class="eventos-rimlight" aria-hidden="true"></div>

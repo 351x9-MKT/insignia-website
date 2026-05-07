@@ -1,13 +1,20 @@
 /**
  * modules/hero-scrub.js
- * Simple autoplay-loop for the hero cinematic on all devices.
+ * Hero cinematic — autoplay loop on all devices.
  *
- * Why simple loop instead of scrub?
- *   The scroll-scrubbed cinematic + mega-pinned hero made the page heavy and
- *   hard to maintain. The pivot decision: hero plays as a normal cinematic
- *   loop, the storytelling moves to the standalone Manifesto + Disciplinas
- *   sections below (with static WebP images and per-discipline CSS animations).
- *   Reduced-motion still gets a static poster instead of the looping video.
+ * Source selection nuance:
+ *   The HTML has TWO <source> tags inside the <video>: a mobile-grade MP4
+ *   (~840 KB) gated by `media="(max-width: 768px)"` and a full-quality
+ *   desktop MP4 (~18 MB) as fallback. Chrome's behavior with <source media>
+ *   inside <video> is unreliable — under preload="metadata" it sometimes
+ *   probes BOTH sources, which on mobile undoes the bandwidth savings.
+ *
+ *   To guarantee only one source loads, this module removes the
+ *   non-matching <source> from the DOM before any load is triggered. The
+ *   HTML keeps autoplay OFF and preload="none" so nothing fires before the
+ *   prune; we then set preload, call load(), and play() programmatically.
+ *
+ *   Reduced motion: replace the video with the static poster, no playback.
  */
 
 import { prefersReducedMotion } from '../core/motion.js';
@@ -21,15 +28,12 @@ export function initHeroScrub() {
   const wrap = document.getElementById('hero-video-wrap');
   if (!wrap) return;
 
-  // Reduced motion: replace the video with the static poster.
   if (prefersReducedMotion) {
     video.style.cssText = 'opacity:0;pointer-events:none;';
     showStaticPoster(wrap);
     return;
   }
 
-  // Everyone else: autoplay loop muted. The browser's preload="auto" plus
-  // muted+playsinline lets this autoplay on iOS too.
   initLooped(video);
 }
 
@@ -43,12 +47,37 @@ function showStaticPoster(wrap) {
 }
 
 function initLooped(video) {
-  video.autoplay = true;
-  video.loop = true;
+  // Pick exactly ONE source URL from data-* attributes. We avoid putting
+  // <source> tags in the HTML because Chrome speculatively prefetches
+  // alternate sources even with preload="none", which negates the
+  // mobile-bitrate optimization.
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  const src = isMobile
+    ? video.dataset.srcMobile
+    : video.dataset.srcDesktop;
+  if (!src) return;
+
   video.muted = true;
   video.playsInline = true;
   video.style.cssText = 'pointer-events:none;';
-  // play() returns a promise that may reject under autoplay policies.
-  // We swallow the error — the video will play on first user interaction.
-  video.play().catch(() => {});
+
+  // Defer the actual <source> append + load() past first paint so the
+  // hero's poster image is the LCP element (small, paints immediately)
+  // instead of the video element (which on slow 4G can take 4–6 s to show
+  // its first frame and would otherwise dominate LCP).
+  const start = () => {
+    const source = document.createElement('source');
+    source.src = src;
+    source.type = 'video/mp4';
+    video.appendChild(source);
+    video.preload = 'metadata';
+    video.load();
+    video.autoplay = true;
+    video.play().catch(() => {});
+  };
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(start, { timeout: 1500 });
+  } else {
+    setTimeout(start, 800);
+  }
 }
