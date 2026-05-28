@@ -1,0 +1,1744 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos & Producción - Insignia Entertainment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-black: #0a0a0a;
+            --primary-red: #C41E1E;
+            --primary-white: #FFF;
+            --text-light: #F5F5F5;
+            --text-dark: #1a1a1a;
+            --dark-gray: #1a1a1a;
+            --light-gray: #2a2a2a;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary-black);
+            color: var(--text-light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Film grain overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" /></filter><rect width="100" height="100" fill="rgba(255,255,255,0.02)" filter="url(%23noise)"/></svg>');
+            animation: grain 0.8s steps(2) infinite;
+        }
+
+        @keyframes grain {
+            0%, 100% { opacity: 0.02; }
+            50% { opacity: 0.03; }
+        }
+
+        /* ==================== CUSTOM CURSOR ==================== */
+        .cursor {
+            position: fixed;
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--primary-red);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            display: none;
+            transform: translate(-50%, -50%);
+            will-change: transform;
+        }
+
+        .cursor::before {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--primary-red);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .cursor.active {
+            display: block;
+            animation: cursor-trail 0.3s ease-out forwards;
+        }
+
+        @keyframes cursor-trail {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+        }
+
+        .cursor.hover {
+            width: 32px;
+            height: 32px;
+            border-color: var(--primary-red);
+            background: rgba(196, 30, 30, 0.1);
+        }
+
+        /* ==================== NAVIGATION ==================== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(196, 30, 30, 0.2);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+        }
+
+        .nav-logo {
+            height: 50px;
+            width: auto;
+            filter: brightness(0) invert(1);
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-red);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-red);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--primary-red);
+        }
+
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 2px;
+            background: var(--text-light);
+            margin: 4px 0;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* ==================== HERO ==================== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin-top: 80px;
+            overflow: hidden;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            z-index: 0;
+        }
+
+        #particleCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 900px;
+            padding: 40px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 10px 20px;
+            border: 1px solid var(--primary-red);
+            color: var(--primary-red);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            animation: float-in 1s ease 0.2s both;
+        }
+
+        @keyframes float-in {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-tagline {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(36px, 8vw, 72px);
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .glitch {
+            position: relative;
+            display: inline-block;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch::before {
+            animation: glitch-1 0.3s infinite;
+            color: #FF0000;
+            z-index: -1;
+            text-shadow: -2px 0 var(--primary-red);
+        }
+
+        .glitch::after {
+            animation: glitch-2 0.3s infinite;
+            color: #0FF;
+            z-index: -2;
+            text-shadow: 2px 0 cyan;
+        }
+
+        @keyframes glitch-1 {
+            0% {
+                clip-path: polygon(0 0, 100% 0, 100% 10%, 0 10%);
+                transform: translate(-2px, -2px);
+            }
+            10% {
+                clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%);
+                transform: translate(2px, 2px);
+            }
+            20% {
+                clip-path: polygon(0 50%, 100% 50%, 100% 70%, 0 70%);
+                transform: translate(-2px, 0);
+            }
+            30%, 100% {
+                clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+                transform: translate(0);
+            }
+        }
+
+        @keyframes glitch-2 {
+            0% {
+                clip-path: polygon(0 30%, 100% 30%, 100% 50%, 0 50%);
+                transform: translate(2px, -2px);
+            }
+            10% {
+                clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%);
+                transform: translate(-2px, 2px);
+            }
+            20% {
+                clip-path: polygon(0 0, 100% 0, 100% 20%, 0 20%);
+                transform: translate(2px, -2px);
+            }
+            30%, 100% {
+                clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+                transform: translate(0);
+            }
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: #999;
+            margin-bottom: 40px;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+            animation: float-in 1s ease 0.6s both;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+            animation: float-in 1s ease 0.8s both;
+        }
+
+        .btn {
+            padding: 16px 40px;
+            border: 2px solid var(--primary-red);
+            background: transparent;
+            color: var(--text-light);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            will-change: transform;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-red);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .btn:hover {
+            color: var(--primary-black);
+        }
+
+        .btn:hover::before {
+            left: 0;
+        }
+
+        .btn.primary {
+            background: var(--primary-red);
+            color: var(--primary-black);
+            border-color: var(--primary-red);
+        }
+
+        .btn.primary:hover {
+            color: var(--primary-white);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--primary-red);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(10px);
+            }
+        }
+
+        /* ==================== MARQUEE ==================== */
+        .marquee-section {
+            background: var(--primary-black);
+            padding: 40px 0;
+            overflow: hidden;
+            border-top: 1px solid rgba(196, 30, 30, 0.2);
+            border-bottom: 1px solid rgba(196, 30, 30, 0.2);
+            position: relative;
+        }
+
+        .marquee {
+            display: flex;
+            white-space: nowrap;
+            animation: marquee 30s linear infinite;
+            will-change: transform;
+        }
+
+        .marquee-item {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 48px;
+            font-weight: 900;
+            padding: 0 40px;
+            color: transparent;
+            -webkit-text-stroke: 2px var(--primary-red);
+            text-stroke: 2px var(--primary-red);
+            flex-shrink: 0;
+            letter-spacing: 3px;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* ==================== SECTION ==================== */
+        .section {
+            min-height: auto;
+            display: flex;
+            align-items: center;
+            padding: 100px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-divider {
+            position: relative;
+            height: 200px;
+            background: var(--primary-black);
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 70%);
+            border-top: 1px solid rgba(196, 30, 30, 0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* ==================== EVENT TYPES SECTION ==================== */
+        .event-types-header {
+            margin-bottom: 80px;
+        }
+
+        .event-types-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(36px, 5vw, 56px);
+            font-weight: 900;
+            margin-bottom: 20px;
+            color: var(--primary-white);
+            line-height: 1.2;
+        }
+
+        .event-types-header p {
+            color: #999;
+            font-size: 16px;
+            max-width: 600px;
+        }
+
+        .event-types-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .event-type-card {
+            background: rgba(196, 30, 30, 0.05);
+            border: 1px solid rgba(196, 30, 30, 0.3);
+            padding: 40px;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .event-type-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(196, 30, 30, 0.1);
+            transition: left 0.3s ease;
+            z-index: 0;
+        }
+
+        .event-type-card:hover {
+            border-color: var(--primary-red);
+            transform: translateY(-5px);
+        }
+
+        .event-type-card:hover::before {
+            left: 0;
+        }
+
+        .event-type-card-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .event-type-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .event-type-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-red);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .event-type-desc {
+            font-size: 14px;
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        /* ==================== PROCESS SECTION ==================== */
+        .process-header {
+            margin-bottom: 80px;
+        }
+
+        .process-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(36px, 5vw, 56px);
+            font-weight: 900;
+            margin-bottom: 20px;
+            color: var(--primary-white);
+            line-height: 1.2;
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            position: relative;
+        }
+
+        .process-grid::before {
+            content: '';
+            position: absolute;
+            top: 80px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, rgba(196, 30, 30, 0.5) 25%, rgba(196, 30, 30, 0.5) 75%, transparent 100%);
+            z-index: 0;
+        }
+
+        .process-step {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .process-number {
+            width: 80px;
+            height: 80px;
+            background: var(--primary-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--primary-black);
+            margin: 0 auto 30px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .process-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-white);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .process-desc {
+            font-size: 14px;
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        /* ==================== CAPABILITIES SECTION ==================== */
+        .capabilities-header {
+            margin-bottom: 80px;
+        }
+
+        .capabilities-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(36px, 5vw, 56px);
+            font-weight: 900;
+            margin-bottom: 20px;
+            color: var(--primary-white);
+            line-height: 1.2;
+        }
+
+        .capabilities-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .capability-stat {
+            background: rgba(196, 30, 30, 0.05);
+            border: 1px solid rgba(196, 30, 30, 0.2);
+            padding: 40px;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .capability-stat-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--primary-red);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .capability-stat-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #666;
+        }
+
+        .capability-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .capability-tag {
+            padding: 10px 20px;
+            background: rgba(196, 30, 30, 0.1);
+            border: 1px solid rgba(196, 30, 30, 0.4);
+            color: var(--primary-red);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 2px;
+        }
+
+        /* ==================== UPCOMING EVENTS SECTION ==================== */
+        .upcoming-header {
+            margin-bottom: 80px;
+        }
+
+        .upcoming-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(36px, 5vw, 56px);
+            font-weight: 900;
+            margin-bottom: 20px;
+            color: var(--primary-white);
+            line-height: 1.2;
+        }
+
+        .upcoming-events-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .event-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+            aspect-ratio: 0.85;
+            cursor: pointer;
+            group: event-card;
+        }
+
+        .event-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .event-card:hover img {
+            transform: scale(1.08);
+        }
+
+        .event-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(196, 30, 30, 0.9), rgba(0, 0, 0, 0.85));
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 40px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 2;
+        }
+
+        .event-card:hover .event-overlay {
+            opacity: 1;
+        }
+
+        .event-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-white);
+            margin-bottom: 15px;
+        }
+
+        .event-meta {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .event-meta strong {
+            color: var(--primary-white);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .event-link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: var(--primary-white);
+            color: var(--primary-black);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .event-link:hover {
+            background: var(--primary-red);
+            transform: translateX(5px);
+        }
+
+        /* ==================== CTA SECTION ==================== */
+        .cta-section {
+            background: linear-gradient(135deg, rgba(196, 30, 30, 0.1), rgba(0, 0, 0, 0.5));
+            padding: 100px 40px;
+            text-align: center;
+            border: 1px solid rgba(196, 30, 30, 0.3);
+            border-radius: 4px;
+            margin: 80px 0;
+        }
+
+        .cta-section h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(36px, 5vw, 56px);
+            font-weight: 900;
+            margin-bottom: 20px;
+            color: var(--primary-white);
+            line-height: 1.2;
+        }
+
+        .cta-section p {
+            font-size: 16px;
+            color: #ccc;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ==================== FOOTER ==================== */
+        footer {
+            background: #000;
+            border-top: 1px solid rgba(196, 30, 30, 0.2);
+            padding: 60px 40px 30px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 60px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--primary-red);
+            margin-bottom: 20px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column a {
+            color: #999;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: var(--primary-red);
+        }
+
+        .footer-column p {
+            color: #999;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .footer-copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(196, 30, 30, 0.1);
+            color: #666;
+            font-size: 12px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ==================== WHATSAPP BUTTON ==================== */
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--primary-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            text-decoration: none;
+            font-size: 28px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 30px rgba(196, 30, 30, 0.4);
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 40px rgba(196, 30, 30, 0.6);
+        }
+
+        /* ==================== SCROLL ANIMATIONS ==================== */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .scroll-reveal.visible {
+            animation: scroll-reveal-animation 0.8s ease forwards;
+        }
+
+        @keyframes scroll-reveal-animation {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 1024px) {
+            .event-types-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .process-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .capabilities-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .upcoming-events-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            nav {
+                padding: 0 20px;
+                height: 70px;
+            }
+
+            .nav-links {
+                gap: 20px;
+            }
+
+            .nav-links a {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: rgba(10, 10, 10, 0.98);
+                padding: 30px 20px;
+                gap: 20px;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+            }
+
+            .nav-links.active {
+                max-height: 400px;
+            }
+
+            .hero-ctas {
+                gap: 15px;
+            }
+
+            .btn {
+                padding: 12px 25px;
+                font-size: 12px;
+            }
+
+            .marquee-item {
+                font-size: 28px;
+                padding: 0 20px;
+            }
+
+            .section {
+                padding: 60px 20px;
+            }
+
+            .event-types-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .process-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .process-grid::before {
+                display: none;
+            }
+
+            .capabilities-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .upcoming-events-grid {
+                gap: 20px;
+            }
+
+            .event-card {
+                aspect-ratio: auto;
+                min-height: 300px;
+            }
+
+            .whatsapp-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-tagline {
+                font-size: 28px;
+            }
+
+            .hero-subtitle {
+                font-size: 14px;
+            }
+
+            .hero-ctas {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .marquee-item {
+                font-size: 18px;
+                padding: 0 15px;
+            }
+
+            .event-types-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .event-type-card {
+                padding: 25px;
+            }
+
+            .process-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .process-number {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+
+            .capabilities-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .capability-stat {
+                padding: 25px;
+            }
+
+            .capability-tags {
+                gap: 8px;
+            }
+
+            .capability-tag {
+                padding: 8px 15px;
+                font-size: 11px;
+            }
+
+            .cta-section {
+                padding: 60px 20px;
+                margin: 40px 0;
+            }
+
+            .cta-section h2 {
+                font-size: 24px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .cta-buttons .btn {
+                width: 100%;
+            }
+
+            .footer-content {
+                gap: 20px;
+            }
+
+            .footer-column h3 {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cursor -->
+    <div class="cursor"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html"><img src="logo.png" alt="Insignia Entertainment" class="nav-logo"></a>
+        <ul class="nav-links">
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="index.html#servicios">Servicios</a></li>
+            <li><a href="eventos.html" class="active">Eventos</a></li>
+            <li><a href="index.html#contacto">Contacto</a></li>
+        </ul>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-background"></div>
+        <canvas id="particleCanvas"></canvas>
+        <div class="floating-shapes"></div>
+        <div class="hero-content">
+            <div class="hero-badge">Insignia Entertainment Presenta</div>
+            <h1 class="hero-tagline">
+                <span class="glitch" data-text="EVENTOS & PRODUCCIÓN">EVENTOS & PRODUCCIÓN</span>
+            </h1>
+            <p class="hero-subtitle">Creamos experiencias que trascienden lo ordinario</p>
+            <div class="hero-ctas">
+                <button class="btn primary" onclick="document.querySelector('.upcoming-events-grid').parentElement.scrollIntoView({behavior: 'smooth'})">Ver Próximos Eventos</button>
+                <a href="index.html#contacto" class="btn">Cotizar Evento</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 5v14M5 15l7 7 7-7" stroke="currentColor"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Marquee -->
+    <div class="marquee-section">
+        <div class="marquee">
+            <div class="marquee-item">CONCIERTOS</div>
+            <div class="marquee-item">FESTIVALES</div>
+            <div class="marquee-item">CORPORATIVOS</div>
+            <div class="marquee-item">EXPERIENCIAS</div>
+            <div class="marquee-item">ACTIVACIONES</div>
+            <div class="marquee-item">PRODUCCIÓN</div>
+            <div class="marquee-item">CONCIERTOS</div>
+            <div class="marquee-item">FESTIVALES</div>
+            <div class="marquee-item">CORPORATIVOS</div>
+            <div class="marquee-item">EXPERIENCIAS</div>
+            <div class="marquee-item">ACTIVACIONES</div>
+            <div class="marquee-item">PRODUCCIÓN</div>
+        </div>
+    </div>
+
+    <!-- Event Types Section -->
+    <section class="section">
+        <div class="container">
+            <div class="event-types-header scroll-reveal">
+                <h2>Tipos de <span style="color: var(--primary-red);">Eventos</span></h2>
+                <p>Especializados en la producción integral de cualquier tipo de evento con visión creativa y ejecución impecable</p>
+            </div>
+
+            <div class="event-types-grid">
+                <div class="event-type-card scroll-reveal">
+                    <div class="event-type-card-content">
+                        <div class="event-type-icon">🎤</div>
+                        <div class="event-type-title">Conciertos y Giras</div>
+                        <p class="event-type-desc">Producción integral de shows en vivo con artistas nacionales e internacionales</p>
+                    </div>
+                </div>
+
+                <div class="event-type-card scroll-reveal">
+                    <div class="event-type-card-content">
+                        <div class="event-type-icon">🎪</div>
+                        <div class="event-type-title">Festivales</div>
+                        <p class="event-type-desc">Conceptualización y producción de festivales multidisciplinarios</p>
+                    </div>
+                </div>
+
+                <div class="event-type-card scroll-reveal">
+                    <div class="event-type-card-content">
+                        <div class="event-type-icon">💼</div>
+                        <div class="event-type-title">Eventos Corporativos</div>
+                        <p class="event-type-desc">Convenciones, lanzamientos y activaciones de marca de alto impacto</p>
+                    </div>
+                </div>
+
+                <div class="event-type-card scroll-reveal">
+                    <div class="event-type-card-content">
+                        <div class="event-type-icon">✨</div>
+                        <div class="event-type-title">Activaciones de Marca</div>
+                        <p class="event-type-desc">Experiencias inmersivas que conectan marcas con audiencias</p>
+                    </div>
+                </div>
+
+                <div class="event-type-card scroll-reveal">
+                    <div class="event-type-card-content">
+                        <div class="event-type-icon">🎭</div>
+                        <div class="event-type-title">Eventos Privados</div>
+                        <p class="event-type-desc">Producciones exclusivas con atención personalizada al detalle</p>
+                    </div>
+                </div>
+
+                <div class="event-type-card scroll-reveal">
+                    <div class="event-type-card-content">
+                        <div class="event-type-icon">🌐</div>
+                        <div class="event-type-title">Experiencias Inmersivas</div>
+                        <p class="event-type-desc">Instalaciones audiovisuales y experiencias de realidad aumentada</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Process Section -->
+    <section class="section">
+        <div class="container">
+            <div class="process-header scroll-reveal">
+                <h2>Nuestro <span style="color: var(--primary-red);">Proceso</span></h2>
+                <p>Un enfoque integral que garantiza la excelencia en cada etapa de tu evento</p>
+            </div>
+
+            <div class="process-grid">
+                <div class="process-step scroll-reveal">
+                    <div class="process-number">1</div>
+                    <div class="process-title">Conceptualización</div>
+                    <p class="process-desc">Escuchamos tu visión y diseñamos la experiencia perfecta</p>
+                </div>
+
+                <div class="process-step scroll-reveal">
+                    <div class="process-number">2</div>
+                    <div class="process-title">Pre-Producción</div>
+                    <p class="process-desc">Planificación detallada, logística y coordinación técnica</p>
+                </div>
+
+                <div class="process-step scroll-reveal">
+                    <div class="process-number">3</div>
+                    <div class="process-title">Producción</div>
+                    <p class="process-desc">Ejecución impecable con equipo técnico de primer nivel</p>
+                </div>
+
+                <div class="process-step scroll-reveal">
+                    <div class="process-number">4</div>
+                    <div class="process-title">Post-Evento</div>
+                    <p class="process-desc">Documentación audiovisual y análisis de resultados</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Capabilities Section -->
+    <section class="section">
+        <div class="container">
+            <div class="capabilities-header scroll-reveal">
+                <h2>Nuestras <span style="color: var(--primary-red);">Capacidades</span></h2>
+                <p>Tecnología de punta y equipo especializado para cada necesidad</p>
+            </div>
+
+            <div class="capabilities-grid">
+                <div class="capability-stat scroll-reveal">
+                    <span class="capability-stat-number counter" data-target="80">0</span>
+                    <span class="capability-stat-label">+ Eventos Producidos</span>
+                </div>
+
+                <div class="capability-stat scroll-reveal">
+                    <span class="capability-stat-number counter" data-target="150">0</span>
+                    <span class="capability-stat-label">+ Horas de Cobertura</span>
+                </div>
+
+                <div class="capability-stat scroll-reveal">
+                    <span class="capability-stat-number">50K</span>
+                    <span class="capability-stat-label">+ Asistentes Promedio</span>
+                </div>
+            </div>
+
+            <div class="capability-tags scroll-reveal">
+                <span class="capability-tag">Producción integral</span>
+                <span class="capability-tag">Sonido profesional</span>
+                <span class="capability-tag">Iluminación avanzada</span>
+                <span class="capability-tag">Gestión de aforo</span>
+                <span class="capability-tag">Transmisión en vivo</span>
+                <span class="capability-tag">Experiencias interactivas</span>
+                <span class="capability-tag">Cobertura multicámara</span>
+                <span class="capability-tag">Post-producción rápida</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Upcoming Events Section -->
+    <section class="section">
+        <div class="container">
+            <div class="upcoming-header scroll-reveal">
+                <h2>Próximos <span style="color: var(--primary-red);">Eventos</span></h2>
+            </div>
+
+            <div class="upcoming-events-grid">
+                <div class="event-card scroll-reveal">
+                    <img src="Assets/Eventos/i-see-stars-flyer.jpg" alt="I See Stars - The Wheel Tour">
+                    <div class="event-overlay">
+                        <h3 class="event-title">I See Stars<br>The Wheel Tour</h3>
+                        <div class="event-meta">
+                            <strong>8 de Mayo, 2026 · 7:00 PM</strong>
+                            I See Stars + Afterglow<br>
+                            Multiforo Alicia, CDMX<br>
+                            <small>Presentan: Insignia Entertainment · The Gang · Ekoos · I Wish Productions</small>
+                        </div>
+                        <a href="https://www.boletia.com" target="_blank" class="event-link">Comprar Boletos</a>
+                    </div>
+                </div>
+
+                <div class="event-card scroll-reveal">
+                    <img src="Assets/Eventos/flow-festival-flyer.jpg" alt="FLOW Festival '26">
+                    <div class="event-overlay">
+                        <h3 class="event-title">FLOW<br>Festival '26</h3>
+                        <div class="event-meta">
+                            <strong>22 de Julio, 2026 · 6:00 PM</strong>
+                            FLOW · DOES · DJ TAKE<br>
+                            Foro Moliere, CDMX<br>
+                            <small>Presentan: Insignia Entertainment · Boletia</small>
+                        </div>
+                        <a href="https://www.boletia.com" target="_blank" class="event-link">Comprar Boletos</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- CTA Section -->
+    <section class="section">
+        <div class="container">
+            <div class="cta-section scroll-reveal">
+                <h2>¿Tienes un evento en mente?</h2>
+                <p>En Insignia Entertainment sabemos cómo transformar tu visión en una experiencia inolvidable. Desde la conceptualización hasta la post-producción, estamos listos para hacerlo realidad.</p>
+                <div class="cta-buttons">
+                    <a href="index.html#contacto" class="btn primary">Cotizar Mi Evento</a>
+                    <a href="https://wa.me/5215516952852" target="_blank" class="btn">Contactar por WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Sobre Insignia</h3>
+                <p>Casa productora creativa en CDMX especializada en crear experiencias audiovisuales memorables y eventos de impacto.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Navegación</h3>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="index.html#servicios">Servicios</a></li>
+                    <li><a href="eventos.html">Eventos</a></li>
+                    <li><a href="index.html#contacto">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Servicios</h3>
+                <ul>
+                    <li><a href="index.html#servicios">Producción Audiovisual</a></li>
+                    <li><a href="index.html#servicios">Fotografía Profesional</a></li>
+                    <li><a href="eventos.html">Eventos y Producción</a></li>
+                    <li><a href="index.html#servicios">Branding y Estrategia</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <p>&copy; 2026 Insignia Entertainment. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/5215516952852" target="_blank" class="whatsapp-btn">💬</a>
+
+    <script>
+        // ==================== CUSTOM CURSOR ====================
+        const cursor = document.querySelector('.cursor');
+        const interactiveElements = document.querySelectorAll('.btn, a, .social-link, .nav-links a, input, textarea, select, .event-card');
+
+        let mouseX = 0;
+        let mouseY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            cursor.style.left = mouseX + 'px';
+            cursor.style.top = mouseY + 'px';
+
+            // Trail effect
+            setTimeout(() => {
+                const trail = document.createElement('div');
+                trail.classList.add('cursor', 'active');
+                trail.style.left = mouseX + 'px';
+                trail.style.top = mouseY + 'px';
+                document.body.appendChild(trail);
+                setTimeout(() => trail.remove(), 300);
+            }, 0);
+        });
+
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.classList.add('hover');
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hover');
+            });
+        });
+
+        // ==================== PARTICLE CANVAS ====================
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 2;
+                this.vy = (Math.random() - 0.5) * 2;
+                this.radius = Math.random() * 3 + 1;
+                this.alpha = Math.random() * 0.5 + 0.3;
+            }
+
+            update(mouseX, mouseY) {
+                const dx = mouseX - this.x;
+                const dy = mouseY - this.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                const force = 5000 / (dist * dist + 1);
+
+                if (dist < 200) {
+                    this.vx += (dx / dist) * force * 0.01;
+                    this.vy += (dy / dist) * force * 0.01;
+                }
+
+                this.x += this.vx;
+                this.y += this.vy;
+
+                this.vx *= 0.99;
+                this.vy *= 0.99;
+
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+
+                this.x = Math.max(0, Math.min(canvas.width, this.x));
+                this.y = Math.max(0, Math.min(canvas.height, this.y));
+            }
+
+            draw() {
+                ctx.fillStyle = `rgba(196, 30, 30, ${this.alpha})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        const particles = [];
+        for (let i = 0; i < 80; i++) {
+            particles.push(new Particle());
+        }
+
+        // Floating shapes
+        const shapesContainer = document.querySelector('.floating-shapes');
+        const shapeCount = 5;
+        for (let i = 0; i < shapeCount; i++) {
+            const shape = document.createElement('div');
+            shape.classList.add('shape');
+            shape.style.left = Math.random() * 100 + '%';
+            shape.style.top = Math.random() * 100 + '%';
+            shape.style.width = Math.random() * 300 + 100 + 'px';
+            shape.style.height = shape.style.width;
+
+            if (i % 2 === 0) {
+                shape.style.background = `linear-gradient(135deg, rgba(196, 30, 30, 0.1), rgba(196, 30, 30, 0.05))`;
+                shape.style.borderRadius = '0';
+                shape.style.transform = `rotate(${Math.random() * 45}deg)`;
+            } else {
+                shape.style.background = `radial-gradient(circle, rgba(196, 30, 30, 0.1), rgba(196, 30, 30, 0))`;
+                shape.style.borderRadius = '50%';
+            }
+
+            shape.style.animation = `float ${10 + Math.random() * 10}s ease-in-out infinite`;
+            shape.style.animationDelay = i * 2 + 's';
+            shapesContainer.appendChild(shape);
+        }
+
+        // Add float animation
+        if (!document.querySelector('style[data-float]')) {
+            const style = document.createElement('style');
+            style.setAttribute('data-float', 'true');
+            style.textContent = `
+                @keyframes float {
+                    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+                    25% { transform: translate(30px, -50px) rotate(10deg); }
+                    50% { transform: translate(-20px, 30px) rotate(20deg); }
+                    75% { transform: translate(50px, 20px) rotate(-10deg); }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(p => {
+                p.update(mouseX, mouseY);
+                p.draw();
+            });
+
+            // Draw connections
+            particles.forEach((p1, i) => {
+                particles.slice(i + 1).forEach(p2 => {
+                    const dx = p1.x - p2.x;
+                    const dy = p1.y - p2.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 100) {
+                        ctx.strokeStyle = `rgba(196, 30, 30, ${0.2 * (1 - dist / 100)})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(p1.x, p1.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                });
+            });
+
+            if (canvas.parentElement) {
+                requestAnimationFrame(animateParticles);
+            }
+        }
+
+        animateParticles();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // ==================== HAMBURGER MENU ====================
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // ==================== SCROLL ANIMATIONS ====================
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    const children = entry.target.querySelectorAll('.scroll-reveal');
+                    children.forEach((child, index) => {
+                        child.style.animationDelay = index * 0.1 + 's';
+                    });
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // ==================== COUNTER ANIMATION ====================
+        function animateCounter(element) {
+            const target = parseInt(element.dataset.target);
+            let current = 0;
+            const duration = 2000;
+            const startTime = Date.now();
+
+            function update() {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+
+                const easeOutElastic = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress) * Math.sin((progress * 10 - 0.75) * ((2 * Math.PI) / 3));
+                current = Math.floor(target * easeOutElastic);
+                element.textContent = current;
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+
+            update();
+        }
+
+        const counters = document.querySelectorAll('.counter');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
+                    entry.target.classList.add('animated');
+                    animateCounter(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(counter => counterObserver.observe(counter));
+
+        // ==================== MAGNETIC BUTTONS ====================
+        const buttons = document.querySelectorAll('.btn');
+        buttons.forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                const distance = Math.sqrt(x * x + y * y);
+
+                if (distance < 100) {
+                    const force = 1 - distance / 100;
+                    btn.style.transform = `translate(${x * force * 0.3}px, ${y * force * 0.3}px)`;
+                }
+            });
+
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translate(0, 0)';
+            });
+        });
+
+        // ==================== SMOOTH SCROLL ENHANCEMENT ====================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // ==================== PAGE ENTRANCE ANIMATION ====================
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.hero-badge, .hero-tagline, .hero-subtitle, .hero-ctas').forEach((el, i) => {
+                el.style.animation = `none`;
+                el.offsetHeight;
+                el.style.animation = `float-in 1s ease ${0.2 + i * 0.2}s both`;
+            });
+        });
+
+        console.log('Insignia Entertainment - Eventos Page Loaded');
+    </script>
+</body>
+</html>

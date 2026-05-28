@@ -1,0 +1,536 @@
+================================================================================
+WEBSITE INFO — ANÁLISIS ESTRUCTURAL DE https://oryzo.ai
+Referencia visual y narrativa para el sitio web de INSIGNIA ENTERTAINMENT
+Fuente: oryzo.ai (Lusion Studio, Awwwards SOTD 2026) + GitHub lusionltd/ORYZO-1
+================================================================================
+
+
+================================================================================
+1. NOMBRE DE LA MARCA
+================================================================================
+
+ORYZO
+Submarca técnica/producto: ORYZO-1 (modelo "open-weight" del cork coaster)
+Autoría declarada: "Designed by LUSION, the award-winning design studio."
+
+El nombre se presenta en el hero en wordmark gigantesco, sans serif geométrica,
+con letras O perfectamente circulares (eco visual del propio coaster). En el
+costado derecho, a 90°, aparece la etiqueta vertical "ORYZO-1 MODEL" como
+marca de versionado tipo lanzamiento de producto AI.
+
+
+================================================================================
+2. ESLOGAN
+================================================================================
+
+Eslogan principal (sobre el wordmark, en uppercase tracking amplio):
+    "MADE FOR MUGS. BUILT FOR TABLES."
+
+Variante técnica/satirical (sub-headline derecha, prosa):
+    "Designed to lift, insulate, and grip in all the right ways.
+     Oryzo makes the simplest moment feel considered."
+
+
+================================================================================
+3. ONE-LINER (FRASE BREVE)
+================================================================================
+
+Frase corta que resume la propuesta en una sola línea:
+    "The world's most unnecessarily sophisticated cork coaster."
+
+Aparece dentro de un card semi-transparente abajo a la izquierda del hero,
+dividido en dos bloques por una línea de puntos:
+    Bloque superior:  DESIGNED BY LUSION, THE AWARD-WINNING DESIGN STUDIO.
+    Bloque inferior:  The world's most unnecessarily sophisticated cork coaster.
+
+
+================================================================================
+4. VOZ DE LA MARCA
+================================================================================
+
+Tono general:
+    - Editorial premium con humor deadpan.
+    - Parodia seria de un lanzamiento de producto AI (HuggingFace / OpenAI style)
+      aplicada a un objeto absurdamente trivial: un posavasos de corcho.
+    - Lenguaje de paper de research mezclado con copy de Apple/Linear/Arc Browser.
+    - Cero marketing-hype literal. Cero emojis. Cero exclamaciones.
+    - "Treated with real craft" — la broma vive en el contraste entre la presentación
+      ultra-premium y el sujeto banal.
+
+Reglas de redacción:
+    - Frases cortas, cinematográficas, con cadencia.
+    - Tecnicismos absurdos: "open-weight", "checkpoint", "WoodenBench", "344B
+      parameters", "passive thermal moderation under everyday beverage conditions".
+    - Self-aware: el copy reconoce la ridiculez ("gloriously unnecessary research",
+      "very possibly rigged by us").
+    - Sustantivos concretos, verbos limpios: lift, insulate, grip, disappear.
+    - Inglés británico/internacional, sentence case en cuerpo / UPPERCASE en labels.
+
+Adjetivos rectores:
+    considered · quiet · honest · tactile · sustained · unnecessary (irónico)
+
+
+================================================================================
+5. COLORES
+================================================================================
+
+Paleta INSIGNIA ENTERTAINMENT (negro · rojo · blanco):
+
+    PRIMARIO       #0A0A0A   Negro absoluto (fondo navbar, footer, cards
+                             translúcidos, hero base, modo dark dominante)
+    ACENTO         #E10600   Rojo cinematográfico (estado activo nav, frame de
+                             video card, líneas de progreso, hovers, scroll hints,
+                             CTAs primarios). Color rector de marca.
+    NEUTRO CLARO   #FFFFFF   Blanco puro (wordmark hero, copy primario sobre
+                             fotografía oscura, sidebar lateral, divisores)
+    NEUTRO MEDIO   #F2F2F2   Off-white sutil (cards alternos, fondos de sección
+                             clara cuando rompemos el dark)
+    SOMBRA         rgba(10,10,10,0.65)   Overlay sobre cinemagraph para legibilidad
+    GRADIENTE      linear-gradient(180deg, #0A0A0A 0%, #1A0000 100%)
+                             Halo rojo casi imperceptible para profundidad
+
+Modo dominante: dark cinemascope — el sitio se siente "after-hours en un set".
+Contraste: blanco sobre negro (AAA). Rojo #E10600 reservado para CTAs y elementos
+de marca dinámicos (frames de video, brackets de nav activo, líneas de progreso).
+El rojo nunca se usa en bloques grandes de fondo — siempre como acento puntual.
+
+
+================================================================================
+6. MENÚ DE NAVEGACIÓN
+================================================================================
+
+Navbar superior derecha (uppercase, tracking amplio, font geométrica):
+
+    • INTRO       (estado activo en hero, círculo y bracket de selección)
+    ⚬ FEATURES
+    ⚬ PRODUCT
+    ⚬ CONTACT
+
+Cada item lleva un dot circular a la izquierda. El item activo se distingue
+con un bracket / box outline alrededor del label (estilo sci-fi/HUD).
+
+Sidebar derecho (vertical, rotado 90°, sobre fondo cream):
+    "ORYZO-1 MODEL"
+    Funciona como ancla persistente que recuerda la versión del producto.
+
+Sidebar izquierdo (vertical, dot índice de progreso de scroll):
+    Pequeño punto que indica posición en el scroll storytelling.
+
+Logo / wordmark: no hay logo separado — el wordmark "ORYZO" funciona como logo
+y es elemento dominante del hero.
+
+
+================================================================================
+7. SECCIÓN HERO
+================================================================================
+
+Layout (full bleed, 100vh, cinemascope):
+
+    ┌─────────────────────────────────────────────────────────────────────┐
+    │                                              [INTRO] FEATURES ...  │
+    │                                                                     │
+    │            MADE FOR MUGS. BUILT FOR TABLES.                         │
+    │                                                                     │
+    │       O R Y Z O                                                     │
+    │       (wordmark XXL, cream)                                         │
+    │                                                                     │
+    │                                              Designed to lift,     │
+    │                                              insulate, and grip    │
+    │                          [coaster]           in all the right      │
+    │                                              ways. Oryzo makes     │
+    │                                              the simplest moment   │
+    │                                              feel considered.      │
+    │                                                                     │
+    │   ┌─card────────────┐                                               │
+    │   │ DESIGNED BY     │                              ┌────────────┐   │
+    │   │ LUSION, THE     │                              │ ORYZO PLAY │   │
+    │   │ AWARD-WINNING   │                              │  (video)   │   │
+    │   │ DESIGN STUDIO.  │                              └────────────┘   │
+    │   │ ............... │                                               │
+    │   │ The world's most│            ⌄ SCROLL TO CONTINUE                │
+    │   │ unnecessarily   │                                               │
+    │   │ sophisticated   │                                               │
+    │   │ cork coaster.   │                                               │
+    │   └─────────────────┘                                               │
+    └─────────────────────────────────────────────────────────────────────┘
+
+Elementos clave:
+    1. Pre-headline:    MADE FOR MUGS. BUILT FOR TABLES.
+    2. Headline (XXL):  ORYZO  (wordmark, fill cream sobre fotografía)
+    3. Sub-headline:    "Designed to lift, insulate, and grip in all the right
+                         ways. Oryzo makes the simplest moment feel considered."
+    4. Designer card:   2 bloques separados por dotted line (autoría + one-liner)
+    5. Video card:      Esquina inferior derecha, frame naranja, label "PLAY ORYZO"
+                         (cinemagraph del founder)
+    6. Scroll prompt:   ⌄ SCROLL TO CONTINUE  (ícono chevron en círculo)
+    7. Background:      Cinemagraph fotográfico de un escritorio de taller con
+                         coaster de corcho sobre cutting mat verde, lápices,
+                         portaminas crema, cutter naranja, paper clips. Real
+                         craft aesthetic, no 3D evidente.
+
+
+================================================================================
+8. SHADERS / FONDOS
+================================================================================
+
+Stack técnico observado (Awwwards menciona GSAP + storytelling + transitions;
+Three.js forum confirma WebGL):
+
+    - Three.js / WebGL para renders 3D del coaster en secciones intermedias.
+    - GSAP ScrollTrigger para coreografía de animaciones por scroll.
+    - Lenis (probable) para smooth scroll inertia.
+    - Cinemagraph en hero: video looped 4K con paralaje sutil de elementos
+      del fondo (papelería se mueve más lento que primer plano).
+    - Shader de partículas en footer (confirmado por Awwwards "Footer
+      Interactive Particles") — polvo cálido drift, reactivo al cursor.
+    - Volumetric light haz cálido cruzando la escena.
+    - Iluminación: soft directional studio + rim light naranja sutil sobre el
+      producto. Mood golden hour.
+    - Texture work: corcho con micro-displacement, cutting mat con grain,
+      madera con scratches sutiles.
+
+Backgrounds por sección:
+    HERO        → Photo cinemagraph (cutting mat verde + props)
+    FEATURES    → Render 3D del coaster sobre superficie de madera con luz dura
+                  cenital, partículas drift
+    PRODUCT     → Stage minimalista con las 3 variantes en línea, plano cenital
+                  rotando lento
+    SPECS       → Backplate gráfico (grid técnico) sobre #100904
+    FOOTER      → Canvas de partículas interactivas
+
+
+================================================================================
+9. ÁREAS DE SCROLL
+================================================================================
+
+Storytelling vertical en 7 actos (scroll-driven, cada acto ocupa ~100vh):
+
+    ACTO 1 — HERO / INTRO
+        Cinemagraph + wordmark ORYZO + designer card + video card.
+        Dot nav indica "INTRO".
+
+    ACTO 2 — TRANSICIÓN "MADE FOR MUGS"
+        Cámara hace dolly-in lento sobre el coaster. Texto editorial
+        flotante: "Made for mugs. Built for tables."
+        Pencils y cutter desaparecen del frame.
+
+    ACTO 3 — FEATURES
+        Coaster en stage 3D rotando lento. Las 5 características aparecen
+        secuencialmente (open-weight, lift, thermal, micro-texture, sustainable).
+        Cada feature pinea el viewport ~80% del scroll antes de la siguiente.
+        Dot nav cambia a "FEATURES".
+
+    ACTO 4 — WOODENBENCH (specs satirical)
+        Tabla de "checkpoints" del modelo: 26B, 40B, 108B, 145B, 168B-instruct,
+        344B. Tipografía monospaced, look de paper de research.
+
+    ACTO 5 — PRODUCT (variantes)
+        Tres tarjetas: The Original, The Double, The Stack.
+        Hover 3D: cada tarjeta rota el render del coaster.
+        Dot nav cambia a "PRODUCT".
+
+    ACTO 6 — TESTIMONIAL / QUOTE
+        Quote falso de "Anonymous LocalLLaMA Reddit user":
+        "Oryzo-1 A0B is the best model out there. Trust me bro."
+        Tipografía editorial gigante, mucha aire.
+
+    ACTO 7 — FOUNDER VIDEO + CONTACT / FOOTER
+        Player de video full-bleed con el founder. Al terminar, transición
+        al footer con shader de partículas interactivas.
+        Dot nav cambia a "CONTACT".
+
+Pacing:
+    - Transiciones gentle (1.2s ease-out típico, cubic-bezier(0.22, 1, 0.36, 1)).
+    - Pin sections con GSAP ScrollTrigger.
+    - Paralaje multi-capa en cada acto.
+    - Loop ping-pong en cinemagraph del hero.
+
+
+================================================================================
+10. SECCIÓN DE CARACTERÍSTICAS (FEATURES)
+================================================================================
+
+Cinco features presentadas como specs de modelo AI:
+
+    1. OPEN-WEIGHT MODEL
+       "Designed to be lightweight and easy to carry."
+       Subtexto: "Released in clean OBJ format."
+
+    2. PRECISION-ENGINEERED LIFT
+       "Exactly one coaster thick."
+       Subtexto: "Elevates your mug above every boring surface
+        you've ever known."
+
+    3. PASSIVE THERMAL MODERATION
+       "From piping-hot mugs to ice-cold drinks."
+       Subtexto: "Stable under everyday beverage conditions."
+
+    4. MICRO-TEXTURED CORK
+       "Spills are politely discouraged."
+       Subtexto: "Tactile feedback engineered into the surface."
+
+    5. SUSTAINABLY SOURCED
+       "Purely sourced sustainably."
+       Subtexto: "100% biodegradable open-weight material."
+
+Tratamiento visual:
+    - Cada feature en su propia "página" pinada (full viewport).
+    - Headline UPPERCASE crema. Subtexto regular. Numeración 01 — 05.
+    - Render 3D del coaster con cámara y luz distinta por feature.
+    - Línea horizontal naranja delgada dividiendo número de copy.
+
+
+================================================================================
+11. SECCIÓN DE SERVICIOS (NO PRECIOS — SELECCIÓN POR ESPECIALIDAD)
+================================================================================
+
+DECISIÓN DE PRODUCTO: Insignia Entertainment NO presenta paquetes ni precios.
+La sección equivalente al "pricing" de oryzo.ai funciona como un MENÚ DE
+ESPECIALIDADES: el cliente elige el servicio que más le interesa y desde ahí
+se inicia la conversación (cotización personalizada por proyecto).
+
+Las 5 especialidades como cards de servicio (grid 2+3 en desktop, stack en mobile):
+
+    ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐
+    │ 01              │  │ 02              │  │ 03              │
+    │ PRODUCCIÓN DE   │  │ BOOKING &       │  │ FILMACIÓN       │
+    │ EVENTOS         │  │ MANAGEMENT      │  │                 │
+    │                 │  │                 │  │                 │
+    │ [cinemagraph]   │  │ [cinemagraph]   │  │ [cinemagraph]   │
+    │                 │  │                 │  │                 │
+    │ Conciertos,     │  │ Representación  │  │ Cine, comercial │
+    │ corporativos,   │  │ de talento,     │  │ y video         │
+    │ festivales,     │  │ tours, agenda y │  │ corporativo. De │
+    │ activaciones    │  │ riders. La      │  │ la idea a la    │
+    │ de marca. De la │  │ trastienda que  │  │ entrega final.  │
+    │ idea al backstage│ │ hace que la     │  │                 │
+    │                 │  │ función ocurra. │  │                 │
+    │                 │  │                 │  │                 │
+    │ → Cotizar       │  │ → Cotizar       │  │ → Cotizar       │
+    └─────────────────┘  └─────────────────┘  └─────────────────┘
+
+    ┌─────────────────┐  ┌─────────────────┐
+    │ 04              │  │ 05              │
+    │ FOTOGRAFÍA      │  │ EXPERIENCIAS &  │
+    │                 │  │ CREATIVIDAD     │
+    │                 │  │                 │
+    │ [cinemagraph]   │  │ [cinemagraph]   │
+    │                 │  │                 │
+    │ Editorial,      │  │ Conceptos       │
+    │ producto, BTS,  │  │ originales,     │
+    │ retrato y       │  │ branded         │
+    │ campaña.        │  │ entertainment,  │
+    │                 │  │ experiencias    │
+    │                 │  │ inmersivas y    │
+    │                 │  │ dirección       │
+    │                 │  │ creativa 360.   │
+    │                 │  │                 │
+    │ → Cotizar       │  │ → Cotizar       │
+    └─────────────────┘  └─────────────────┘
+
+Estructura por card de servicio:
+    - Numeración 01–05 (eyebrow label, blanco sobre negro, mono spaced)
+    - Título del servicio en UPPERCASE (display font)
+    - Cinemagraph corto (3-5s loop) representando esa especialidad
+    - Copy editorial 2-3 líneas describiendo qué incluye y para quién es
+    - CTA "→ Cotizar" (link a formulario o WhatsApp pre-llenado con el
+      servicio ya seleccionado)
+    - Border-radius 4px, hover lift 8px + sutil scale del cinemagraph
+    - Frame del video card en rojo #E10600 1.5px (consistente con video
+      card del hero)
+
+Lógica de interacción:
+    - Click en una card → scroll/redirect a sección de contacto con el
+      servicio pre-seleccionado en el formulario.
+    - Hover desktop → el cinemagraph empieza a reproducir, el resto de
+      cards se desaturan ligeramente (opacity 0.7).
+    - Mobile → tap único expande la card, segundo tap dispara el CTA.
+
+Reemplazos importantes vs oryzo.ai:
+    - "→ Choose" → "→ Cotizar" (acción concreta, no decisión de tier).
+    - No hay precio. No hay "tier alto / bajo". Las 5 son iguales en
+      jerarquía visual — ninguna se destaca como "premium".
+    - El rojo #E10600 NO se usa de fondo en las cards — solo en frames
+      de video, número del eyebrow y CTA hover.
+
+
+================================================================================
+12. LLAMADOS A LA ACCIÓN (CTAs)
+================================================================================
+
+CTAs primarios:
+    1. SCROLL TO CONTINUE          (hero, chevron en círculo, invita a explorar)
+    2. PLAY ORYZO                  (video card hero, frame naranja parpadeante)
+    3. → CHOOSE                    (en cada variante de producto)
+    4. DOWNLOAD MODEL              (sección WoodenBench, link a GitHub OBJ)
+    5. CITE THIS PAPER             (sección quote, copy del BibTeX)
+
+CTAs secundarios (footer):
+    6. WATCH FOUNDER VIDEO         (YouTube embed)
+    7. VIEW ON GITHUB              (lusionltd/ORYZO-1)
+    8. PRODUCT HUNT                (campaña extendida)
+    9. CONTACT LUSION              (mailto / form)
+
+Tratamiento:
+    - CTA primario:   pill-shape, fill #FF8539, label uppercase #100904.
+    - CTA secundario: outline 1px crema, label crema, hover invierte color.
+    - Hover:          micro-magnetism (el botón "ataca" al cursor 4-6px).
+    - Click:          haptic-feel scale(0.97) + ripple naranja.
+
+
+================================================================================
+13. TARJETAS (CARDS)
+================================================================================
+
+Inventario de cards usados en el sitio:
+
+    A. DESIGNER CARD (hero, abajo izquierda)
+       - Background: rgba(244,236,221,0.12) blur backdrop
+       - Border: 1px rgba(244,236,221,0.18)
+       - Padding generoso (32px)
+       - Dotted divider central
+       - 2 bloques de copy uppercase
+
+    B. VIDEO CARD (hero, abajo derecha)
+       - Frame naranja 2-3px #FF8539
+       - Thumb del founder + label "ORYZO" overlay
+       - Mini-CTA "PLAY"
+       - Aspect 16:9, ~280×160px
+
+    C. SIDE LABEL (hero, derecha)
+       - Block crema #F4ECDD full height
+       - Texto vertical "ORYZO-1 MODEL" rotado -90°
+       - Dot indicator arriba
+
+    D. FEATURE CARD (sección features)
+       - Numeración XXL 01–05 a la izquierda
+       - Headline + subtexto a la derecha
+       - Línea horizontal naranja delgada como divider
+
+    E. SPEC ROW (WoodenBench)
+       - Tipografía monospaced
+       - Background #100904, líneas crema 1px
+       - 3 columnas: Checkpoint / Parameters / Score
+
+    F. PRODUCT CARD (sección variants)
+       - Background sutil cream sobre dark
+       - Render 3D en top
+       - Copy bottom
+       - Hover lift 8px + render rota 12°
+
+    G. QUOTE CARD (testimonial)
+       - Sin border, solo aire generoso
+       - Comilla XXL naranja decorativa
+       - Atribución a "Anonymous LocalLLaMA Reddit user"
+
+Reglas comunes a todas las cards:
+    - Border-radius 4-8px (nada redondeado de más).
+    - Sombras casi inexistentes — la jerarquía se logra con valor de color.
+    - Mucho aire interno (padding 24-48px).
+
+
+================================================================================
+14. FOOTER (PIE DE PÁGINA)
+================================================================================
+
+Layout footer (full-bleed, ~80vh, fondo #100904 con shader):
+
+    ┌─────────────────────────────────────────────────────────────────────┐
+    │                                                                     │
+    │                                                                     │
+    │            ORYZO                                                    │
+    │            (wordmark XL como cierre de loop)                        │
+    │                                                                     │
+    │                                                                     │
+    │   MADE FOR MUGS.                                                    │
+    │   BUILT FOR TABLES.                                                 │
+    │                                                                     │
+    │                                                                     │
+    │   ─────────────────────────────────────────────────────             │
+    │                                                                     │
+    │   PROJECT          STUDIO          CONNECT          LEGAL           │
+    │   Intro            Lusion          GitHub           Cookies         │
+    │   Features         Awards          Twitter          Privacy         │
+    │   Product          Labs            YouTube          Imprint         │
+    │   Contact          Process         Email            ©2026           │
+    │                                                                     │
+    │                                                                     │
+    │   [partículas interactivas drift — reactivas al cursor]             │
+    │                                                                     │
+    │   © Lusion Ltd · Bristol, UK · Designed and built with care        │
+    │                                                                     │
+    └─────────────────────────────────────────────────────────────────────┘
+
+Elementos clave:
+    1. Wordmark ORYZO repetido como cierre de la narrativa visual.
+    2. Eslogan "MADE FOR MUGS. BUILT FOR TABLES." como pay-off.
+    3. Cuatro columnas de links (Project / Studio / Connect / Legal).
+    4. Shader de partículas interactivas (Awwwards reconoce esta sección).
+    5. Línea de copyright + ubicación geográfica + frase de marca.
+    6. Cero formularios pesados — newsletter ausente (encaja con el tono).
+
+Tipografía:
+    - Wordmark: misma que hero, tamaño menor.
+    - Columnas: uppercase tracking, sentence case en links.
+    - Copy line: regular small caps, opacidad 0.6.
+
+
+================================================================================
+NOTAS DE TRADUCCIÓN A INSIGNIA ENTERTAINMENT
+================================================================================
+
+Esta estructura aplicada a INSIGNIA ENTERTAINMENT (Casa Productora — eventos,
+booking & management, filmación, fotografía, experiencias, creatividad) sugiere:
+
+    HERO              → Wordmark INSIGNIA + tagline ("Donde la historia se filma")
+                        sobre cinemagraph de un set / evento / cámara.
+
+    INTRO ACT         → Manifesto editorial corto. "Hacemos eventos como se filman
+                        películas."
+
+    FEATURES (5)      → Las 5 verticales del negocio:
+                        01 — Producción de Eventos
+                        02 — Booking & Management
+                        03 — Filmación
+                        04 — Fotografía
+                        05 — Experiencias / Creatividad
+
+    SPECS / WORK      → Caso de estudio numerado de proyectos pasados (en lugar
+                        de WoodenBench, "Selected Work 2024–2026").
+
+    SERVICIOS (5)     → Cards de especialidad, sin precios, sin tiers.
+                        Cada una con CTA "→ Cotizar" que pre-selecciona
+                        el servicio en el formulario / WhatsApp:
+                        01 — Producción de Eventos
+                        02 — Booking & Management
+                        03 — Filmación
+                        04 — Fotografía
+                        05 — Experiencias & Creatividad
+
+    QUOTE             → Testimonial real de talento o cliente.
+
+    FOUNDER VIDEO     → Reel de la productora.
+
+    FOOTER            → Particles + columnas + booking email + WhatsApp.
+
+Paleta confirmada: NEGRO #0A0A0A · ROJO #E10600 · BLANCO #FFFFFF.
+Mood: dark cinemascope con rojo cinematográfico como único acento de marca.
+
+
+================================================================================
+FUENTES CONSULTADAS
+================================================================================
+
+- oryzo.ai (screenshot del hero proporcionado por el cliente, 2026-04-30)
+- github.com/lusionltd/ORYZO-1 (README oficial del modelo)
+- lusion.co/projects/oryzo_ai/ (case study)
+- awwwards.com/sites/oryzo-ai (Site of the Day)
+- cssdesignawards.com/sites/oryzo-ai/49111/ (paleta confirmada #100904 / #FF8539)
+- seesaw.website/websites/oryzo
+- discourse.threejs.org/t/oryzo-ai-a-wearable-product-in-the-ai-era/90696
+- awwwards.com/inspiration/intro-interaction-oryzo-ai
+- awwwards.com/inspiration/footer-interactive-particles-oryzo-ai
+
+================================================================================
+FIN DEL ARCHIVO
+================================================================================

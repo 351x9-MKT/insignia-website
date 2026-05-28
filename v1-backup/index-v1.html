@@ -1,0 +1,1868 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insignia Entertainment - Casa Productora CDMX</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --black: #000;
+            --red: #C41E1E;
+            --white: #FFF;
+            --dark-bg: #0a0a0a;
+            --card-bg: #1a1a1a;
+            --accent-red: #E74C3C;
+            --text-light: #e0e0e0;
+            --text-muted: #999;
+            --font-display: 'Orbitron', sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-alt: 'Space Grotesk', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--dark-bg);
+            color: var(--text-light);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        .cursor-glow {
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            border: 2px solid var(--red);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            opacity: 0;
+            box-shadow: 0 0 20px var(--red), 0 0 40px rgba(196, 30, 30, 0.3);
+            mix-blend-mode: screen;
+            transition: opacity 0.3s ease;
+        }
+
+        .cursor-glow.active {
+            opacity: 0.8;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.5rem 2rem;
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+            background: transparent;
+        }
+
+        nav.scrolled {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 30px rgba(196, 30, 30, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--red);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .nav-logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--red);
+            transition: width 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+        }
+
+        .nav-links a:hover {
+            color: var(--red);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: var(--black);
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: linear-gradient(135deg, #1a0000 0%, #000 50%, #000a1a 100%);
+        }
+
+        .hero-blob {
+            position: absolute;
+            opacity: 0.1;
+            mix-blend-mode: screen;
+            animation: blobShift 8s ease-in-out infinite;
+        }
+
+        .hero-blob:nth-child(1) {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--red), transparent);
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .hero-blob:nth-child(2) {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #2a5a5a, transparent);
+            bottom: 20%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        @keyframes blobShift {
+            0%, 100% { transform: translate(0, 0); }
+            33% { transform: translate(30px, -50px); }
+            66% { transform: translate(-20px, 30px); }
+        }
+
+        .hero-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--red);
+            opacity: 0.3;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-20px) translateX(10px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            animation: heroFadeIn 1s ease-out;
+        }
+
+        @keyframes heroFadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .hero-logo {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+            animation: logoFlash 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes logoFlash {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .hero-logo img {
+            height: 120px;
+            width: auto;
+            filter: brightness(0) invert(1);
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.2rem;
+            border: 1px solid var(--red);
+            color: var(--red);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            align-self: center;
+            animation: badgePulse 0.6s ease-out 0.3s both;
+        }
+
+        @keyframes badgePulse {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .hero-tagline {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.2;
+            max-width: 800px;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            animation: taglineReveal 0.8s ease-out 0.4s both;
+        }
+
+        @keyframes taglineReveal {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+            animation: ctasReveal 0.8s ease-out 0.6s both;
+        }
+
+        @keyframes ctasReveal {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border: 2px solid var(--red);
+            background: transparent;
+            color: var(--white);
+            text-decoration: none;
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--red);
+            transform: translateX(-100%);
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            transform: translateX(0);
+        }
+
+        .btn.primary {
+            background: var(--red);
+            color: var(--white);
+        }
+
+        .btn.primary::before {
+            background: var(--accent-red);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            font-size: 0.8rem;
+            color: var(--red);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        .marquee {
+            overflow: hidden;
+            background: var(--black);
+            padding: 2rem 0;
+            border-top: 1px solid var(--red);
+            border-bottom: 1px solid var(--red);
+        }
+
+        .marquee-content {
+            display: flex;
+            gap: 3rem;
+            white-space: nowrap;
+            animation: marqueeScroll 20s linear infinite;
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: transparent;
+            -webkit-text-stroke: 1px var(--red);
+        }
+
+        @keyframes marqueeScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .marquee-content span {
+            display: inline-block;
+        }
+
+        section {
+            padding: 5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            overflow: hidden;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            line-height: 1.2;
+            color: var(--white);
+        }
+
+        .section-title .word {
+            display: inline-block;
+            overflow: hidden;
+            margin-right: 0.3em;
+        }
+
+        .section-title .word span {
+            display: inline-block;
+            animation: slideUp 0.8s cubic-bezier(0.23, 1, 0.320, 1);
+            opacity: 0;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-top: 1rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #about {
+            background: var(--black);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 4rem;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-light);
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.23, 1, 0.320, 1) forwards;
+        }
+
+        .about-text p:nth-child(1) { animation-delay: 0.1s; }
+        .about-text p:nth-child(2) { animation-delay: 0.2s; }
+        .about-text p:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .demo-reel {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border: 2px solid var(--red);
+            opacity: 0;
+            animation: fadeInUp 0.8s cubic-bezier(0.23, 1, 0.320, 1) 0.4s forwards;
+        }
+
+        .demo-reel video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .value-item {
+            padding: 2rem;
+            border: 1px solid var(--red);
+            text-align: center;
+            opacity: 0;
+            animation: scaleIn 0.6s cubic-bezier(0.23, 1, 0.320, 1) forwards;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .value-item:hover {
+            background: rgba(196, 30, 30, 0.1);
+            border-color: var(--accent-red);
+            transform: translateY(-5px);
+        }
+
+        .value-item:nth-child(1) { animation-delay: 0.1s; }
+        .value-item:nth-child(2) { animation-delay: 0.2s; }
+        .value-item:nth-child(3) { animation-delay: 0.3s; }
+        .value-item:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .value-item h4 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--red);
+            margin-bottom: 0.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            padding-top: 3rem;
+            border-top: 1px solid var(--red);
+        }
+
+        .stat-item {
+            text-align: center;
+            opacity: 0;
+            animation: fadeInUp 0.6s cubic-bezier(0.23, 1, 0.320, 1) forwards;
+        }
+
+        .stat-item:nth-child(1) { animation-delay: 0.2s; }
+        .stat-item:nth-child(2) { animation-delay: 0.3s; }
+        .stat-item:nth-child(3) { animation-delay: 0.4s; }
+        .stat-item:nth-child(4) { animation-delay: 0.5s; }
+
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--red);
+            line-height: 1;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.5rem;
+        }
+
+        #services {
+            background: var(--dark-bg);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            padding: 2.5rem;
+            background: var(--card-bg);
+            border: 1px solid transparent;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: slideInCard 0.6s cubic-bezier(0.23, 1, 0.320, 1) forwards;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .service-card:nth-child(1) { animation-delay: 0.1s; }
+        .service-card:nth-child(2) { animation-delay: 0.2s; }
+        .service-card:nth-child(3) { animation-delay: 0.3s; }
+        .service-card:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes slideInCard {
+            from {
+                opacity: 0;
+                transform: translateX(-30px) rotateY(-20deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) rotateY(0);
+            }
+        }
+
+        .service-card:hover {
+            border-color: var(--red);
+            background: rgba(196, 30, 30, 0.05);
+            box-shadow: 0 0 30px rgba(196, 30, 30, 0.2);
+        }
+
+        .service-icon {
+            width: 50px;
+            height: 50px;
+            border: 2px solid var(--red);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.4s ease;
+        }
+
+        .service-card:hover .service-icon {
+            background: var(--red);
+            color: var(--black);
+            transform: rotate(10deg) scale(1.1);
+        }
+
+        .service-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+
+        .service-description {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-features {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+        }
+
+        .service-feature {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .service-feature::before {
+            content: '▸';
+            color: var(--red);
+            font-weight: bold;
+        }
+
+        #differentiators {
+            background: var(--black);
+        }
+
+        .differentiators-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .diff-item {
+            padding: 2rem;
+            border-left: 4px solid var(--red);
+            background: linear-gradient(135deg, rgba(196, 30, 30, 0.05) 0%, transparent 100%);
+            opacity: 0;
+            animation: slideInLeft 0.6s cubic-bezier(0.23, 1, 0.320, 1) forwards;
+            transition: all 0.4s ease;
+        }
+
+        .diff-item:nth-child(1) { animation-delay: 0.1s; }
+        .diff-item:nth-child(2) { animation-delay: 0.2s; }
+        .diff-item:nth-child(3) { animation-delay: 0.3s; }
+        .diff-item:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .diff-item:hover {
+            background: linear-gradient(135deg, rgba(196, 30, 30, 0.15) 0%, transparent 100%);
+            transform: translateX(10px);
+        }
+
+        .diff-item h4 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--red);
+            margin-bottom: 0.8rem;
+        }
+
+        .diff-item p {
+            color: var(--text-light);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        #events {
+            background: var(--dark-bg);
+        }
+
+        .events-intro {
+            text-align: center;
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .events-intro p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .capabilities-tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .capability-tag {
+            padding: 0.7rem 1.5rem;
+            border: 1px solid var(--red);
+            color: var(--red);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.4s ease;
+            cursor: default;
+        }
+
+        .capability-tag:hover {
+            background: var(--red);
+            color: var(--white);
+        }
+
+        .events-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+            padding: 2rem 0;
+            border-top: 1px solid var(--red);
+            border-bottom: 1px solid var(--red);
+        }
+
+        .events-link {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .events-link a {
+            color: var(--red);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .events-link a::after {
+            content: ' →';
+            transition: transform 0.3s ease;
+        }
+
+        .events-link a:hover {
+            color: var(--accent-red);
+        }
+
+        .events-link a:hover::after {
+            transform: translateX(5px);
+        }
+
+        .upcoming-events {
+            margin-top: 3rem;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .event-card {
+            background: var(--card-bg);
+            border: 1px solid var(--red);
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeInUp 0.6s cubic-bezier(0.23, 1, 0.320, 1) forwards;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .event-card:nth-child(1) { animation-delay: 0.2s; }
+        .event-card:nth-child(2) { animation-delay: 0.3s; }
+
+        .event-card:hover {
+            box-shadow: 0 0 40px rgba(196, 30, 30, 0.3);
+            transform: translateY(-10px);
+        }
+
+        .event-header {
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(196, 30, 30, 0.1) 0%, transparent 100%);
+            border-bottom: 1px solid var(--red);
+        }
+
+        .event-title {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+
+        .event-artists {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .event-body {
+            padding: 2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .event-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex: 1;
+        }
+
+        .event-detail {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .event-detail-label {
+            color: var(--red);
+            font-weight: 600;
+            min-width: 80px;
+        }
+
+        .event-detail-value {
+            color: var(--text-light);
+        }
+
+        .event-presenters {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--red);
+        }
+
+        .event-cta {
+            margin-top: auto;
+            padding-top: 1rem;
+        }
+
+        .event-cta a {
+            display: inline-block;
+            color: var(--red);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .event-cta a::after {
+            content: ' ▸';
+            transition: transform 0.3s ease;
+        }
+
+        .event-cta a:hover {
+            color: var(--accent-red);
+        }
+
+        .event-cta a:hover::after {
+            transform: translateX(5px);
+        }
+
+        #contact {
+            background: var(--black);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            opacity: 0;
+            animation: fadeInUp 0.6s cubic-bezier(0.23, 1, 0.320, 1) forwards;
+        }
+
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.2s; }
+        .form-group:nth-child(3) { animation-delay: 0.3s; }
+        .form-group:nth-child(4) { animation-delay: 0.4s; }
+        .form-group:nth-child(5) { animation-delay: 0.5s; }
+
+        .form-group label {
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--red);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 1rem;
+            background: var(--card-bg);
+            border: 1px solid var(--red);
+            color: var(--text-light);
+            font-family: var(--font-body);
+            transition: all 0.4s ease;
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            background: rgba(196, 30, 30, 0.05);
+            box-shadow: 0 0 20px rgba(196, 30, 30, 0.2);
+        }
+
+        .form-submit {
+            margin-top: 1rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            opacity: 0;
+            animation: slideInRight 0.6s cubic-bezier(0.23, 1, 0.320, 1) 0.2s forwards;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .contact-block h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--red);
+            margin-bottom: 1rem;
+        }
+
+        .contact-block p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-block a {
+            color: var(--red);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-block a:hover {
+            color: var(--accent-red);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .social-link {
+            width: 45px;
+            height: 45px;
+            border: 1px solid var(--red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--red);
+            text-decoration: none;
+            transition: all 0.4s ease;
+        }
+
+        .social-link:hover {
+            background: var(--red);
+            color: var(--white);
+            transform: scale(1.1);
+        }
+
+        footer {
+            background: var(--black);
+            border-top: 1px solid var(--red);
+            padding: 3rem 2rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .footer-section h4 {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--red);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+        }
+
+        .footer-section a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--red);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--red);
+            padding-top: 2rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: var(--red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: var(--white);
+            font-size: 1.8rem;
+            z-index: 999;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+            box-shadow: 0 4px 20px rgba(196, 30, 30, 0.4);
+            animation: whatsappBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 1s both;
+        }
+
+        @keyframes whatsappBounce {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.15);
+            box-shadow: 0 8px 40px rgba(196, 30, 30, 0.6);
+        }
+
+        @media (max-width: 1024px) {
+            .about-grid,
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 4rem 1.5rem;
+            }
+
+            .hero-blob {
+                width: 300px !important;
+                height: 300px !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav-logo {
+                font-size: 1rem;
+            }
+
+            .nav-logo img {
+                height: 32px;
+            }
+
+            .hero-logo img {
+                height: 80px;
+            }
+
+            .hero-tagline {
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .services-grid,
+            .values-grid,
+            .differentiators-grid,
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-ctas {
+                gap: 1rem;
+            }
+
+            .btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.75rem;
+            }
+
+            .marquee-content {
+                font-size: 1.2rem;
+            }
+
+            .whatsapp-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-ctas {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .footer-content {
+                text-align: center;
+                grid-template-columns: 1fr;
+            }
+
+            .footer-section {
+                text-align: center;
+            }
+
+            .footer-section ul {
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor-glow"></div>
+
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="Assets/logo.png" alt="Insignia Entertainment" style="filter: brightness(0) invert(1);">
+            </div>
+            <ul class="nav-links">
+                <li><a href="#about">Quiénes Somos</a></li>
+                <li><a href="#services">Servicios</a></li>
+                <li><a href="#events">Eventos</a></li>
+                <li><a href="#contact">Contacto</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-blob"></div>
+        <div class="hero-blob"></div>
+        <div class="hero-particles" id="particles"></div>
+
+        <div class="hero-content">
+            <div class="hero-logo">
+                <img src="Assets/logo.png" alt="Insignia Entertainment">
+            </div>
+            <div class="hero-badge">Casa Productora</div>
+            <h1 class="hero-tagline">Transformamos ideas en experiencias inolvidables</h1>
+            <div class="hero-ctas">
+                <a href="#services" class="btn">Nuestros Servicios</a>
+                <a href="#events" class="btn primary">Ver Eventos</a>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">Scroll para explorar</div>
+    </section>
+
+    <div class="marquee">
+        <div class="marquee-content">
+            <span>PRODUCCIÓN</span>
+            <span>CREATIVIDAD</span>
+            <span>INNOVACIÓN</span>
+            <span>EVENTOS</span>
+            <span>AUDIOVISUAL</span>
+            <span>FOTOGRAFÍA</span>
+            <span>PRODUCCIÓN</span>
+            <span>CREATIVIDAD</span>
+            <span>INNOVACIÓN</span>
+            <span>EVENTOS</span>
+        </div>
+    </div>
+
+    <section id="about">
+        <div class="section-header">
+            <h2 class="section-title">
+                <span class="word"><span>Quiénes</span></span>
+                <span class="word"><span>Somos</span></span>
+            </h2>
+        </div>
+
+        <div class="about-grid">
+            <div class="about-text">
+                <p>En Insignia Entertainment, creemos en el poder de la imagen para contar historias que inspiran, conectan y dejan huella. Somos una casa productora comprometida con transformar visiones creativas en realidades audiovisuales de impacto.</p>
+                <p>Con más de una década de experiencia en la industria creativa mexicana, hemos desarrollado un enfoque integral que combina la excelencia técnica con la innovación artística. Cada proyecto es una oportunidad para superar límites y crear experiencias que resonan con las audiencias.</p>
+                <p>Nuestro equipo está formado por cineastas, productores, fotógrafos y creativos apasionados que trabajan en sincronía para entregar resultados excepcionales. No solo producimos contenido; creamos legados visuales que perduran.</p>
+            </div>
+
+            <div class="demo-reel">
+                <video controls poster="Assets/poster.jpg">
+                    <source src="Assets/demoreel.mp4" type="video/mp4">
+                    Tu navegador no soporta video HTML5.
+                </video>
+            </div>
+        </div>
+
+        <div class="values-grid">
+            <div class="value-item">
+                <h4>Creatividad</h4>
+                <p>Innovación constante en cada proyecto</p>
+            </div>
+            <div class="value-item">
+                <h4>Innovación</h4>
+                <p>Tecnología de punta y métodos avanzados</p>
+            </div>
+            <div class="value-item">
+                <h4>Calidad</h4>
+                <p>Excelencia en cada detalle producido</p>
+            </div>
+            <div class="value-item">
+                <h4>Compromiso</h4>
+                <p>Dedicación total a tus objetivos</p>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number" data-count="150">0</div>
+                <div class="stat-label">Proyectos Completados</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-count="50">0</div>
+                <div class="stat-label">Clientes Satisfechos</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-count="80">0</div>
+                <div class="stat-label">Eventos Producidos</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-count="360">0</div>
+                <div class="stat-label">Grados de Cobertura</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="section-header">
+            <h2 class="section-title">
+                <span class="word"><span>Nuestros</span></span>
+                <span class="word"><span>Servicios</span></span>
+            </h2>
+            <p class="section-subtitle">Soluciones creativas integrales para tus proyectos</p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🎬</div>
+                <h3>Producción Audiovisual</h3>
+                <p class="service-description">Creación de contenido de alta calidad desde concepto hasta post-producción.</p>
+                <div class="service-features">
+                    <div class="service-feature">Comerciales y Spots</div>
+                    <div class="service-feature">Documentales</div>
+                    <div class="service-feature">Contenido Digital</div>
+                    <div class="service-feature">Cinematografía</div>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">📸</div>
+                <h3>Fotografía Profesional</h3>
+                <p class="service-description">Captura de momentos que cuentan historias visuales poderosas.</p>
+                <div class="service-features">
+                    <div class="service-feature">Sesiones Corporativas</div>
+                    <div class="service-feature">Eventos y Coberturas</div>
+                    <div class="service-feature">Retratos Profesionales</div>
+                    <div class="service-feature">Fotografía de Producto</div>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">🎪</div>
+                <h3>Eventos y Producción</h3>
+                <p class="service-description">Organización integral de eventos con experiencias audiovisuales inmersivas.</p>
+                <div class="service-features">
+                    <div class="service-feature">Conciertos y Festivales</div>
+                    <div class="service-feature">Eventos Corporativos</div>
+                    <div class="service-feature">Lanzamientos de Producto</div>
+                    <div class="service-feature">Experiencias Inmersivas</div>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">🎨</div>
+                <h3>Branding y Estrategia Visual</h3>
+                <p class="service-description">Desarrollo de identidades visuales que comunican la esencia de tu marca.</p>
+                <div class="service-features">
+                    <div class="service-feature">Diseño de Identidad</div>
+                    <div class="service-feature">Estrategia Visual</div>
+                    <div class="service-feature">Consultoría Creativa</div>
+                    <div class="service-feature">Dirección de Arte</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="differentiators">
+        <div class="section-header">
+            <h2 class="section-title">
+                <span class="word"><span>Por</span></span>
+                <span class="word"><span>Qué</span></span>
+                <span class="word"><span>Insignia</span></span>
+            </h2>
+            <p class="section-subtitle">Diferenciadores que nos posicionan como líderes creativos</p>
+        </div>
+
+        <div class="differentiators-grid">
+            <div class="diff-item">
+                <h4>Calidad Cinematográfica</h4>
+                <p>Cada proyecto recibe el tratamiento de producción cinematográfica con equipos de última generación y especialistas.</p>
+            </div>
+            <div class="diff-item">
+                <h4>Innovación Constante</h4>
+                <p>Nos mantenemos a la vanguardia de tecnología y tendencias creativas para ofrecer siempre soluciones frescas.</p>
+            </div>
+            <div class="diff-item">
+                <h4>Experiencia Comprobada</h4>
+                <p>Portafolio robusto con proyectos de marcas internacionales, artistas reconocidos y eventos de gran escala.</p>
+            </div>
+            <div class="diff-item">
+                <h4>Enfoque 360°</h4>
+                <p>Ofrecemos soluciones integrales que abarcan conceptualización, producción, post-producción y activación.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="events">
+        <div class="section-header">
+            <h2 class="section-title">
+                <span class="word"><span>Eventos</span></span>
+                <span class="word"><span>Destacados</span></span>
+            </h2>
+        </div>
+
+        <div class="events-intro">
+            <p>Especialistas en la conceptualización, gestión y producción de eventos de gran escala. Desde conciertos y festivales hasta lanzamientos corporativos, creamos experiencias audiovisuales que generan impacto duradero.</p>
+
+            <div class="capabilities-tags">
+                <div class="capability-tag">Producción integral</div>
+                <div class="capability-tag">Sonido profesional</div>
+                <div class="capability-tag">Iluminación avanzada</div>
+                <div class="capability-tag">Gestión de aforo</div>
+                <div class="capability-tag">Transmisión en vivo</div>
+                <div class="capability-tag">Experiencias interactivas</div>
+            </div>
+
+            <div class="events-stats">
+                <div class="stat-item">
+                    <div class="stat-number" data-count="80">0</div>
+                    <div class="stat-label">Eventos Producidos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="150">0</div>
+                    <div class="stat-label">Horas de Cobertura</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="50">0</div>
+                    <div class="stat-label">K+ Asistentes</div>
+                </div>
+            </div>
+
+            <div class="events-link">
+                <a href="eventos.html">Ver galería completa de eventos →</a>
+            </div>
+        </div>
+
+        <div class="upcoming-events">
+            <h3 style="text-align: center; font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3rem; color: var(--red);">Próximos Eventos</h3>
+
+            <div class="events-grid">
+                <div class="event-card">
+                    <div class="event-header">
+                        <h4 class="event-title">I See Stars - The Wheel Tour</h4>
+                        <p class="event-artists">I See Stars + Afterglow</p>
+                    </div>
+                    <div class="event-body">
+                        <div class="event-info">
+                            <div class="event-detail">
+                                <span class="event-detail-label">📅 Fecha:</span>
+                                <span class="event-detail-value">8 de mayo, 2026</span>
+                            </div>
+                            <div class="event-detail">
+                                <span class="event-detail-label">⏰ Hora:</span>
+                                <span class="event-detail-value">7:00 PM</span>
+                            </div>
+                            <div class="event-detail">
+                                <span class="event-detail-label">📍 Lugar:</span>
+                                <span class="event-detail-value">Multiforo Alicia, CDMX</span>
+                            </div>
+                        </div>
+                        <div class="event-presenters">
+                            <strong>Presentan:</strong> Insignia Entertainment · The Gang · Ekoos · I Wish Productions
+                        </div>
+                        <div class="event-cta">
+                            <a href="https://boletia.com" target="_blank">Comprar Boletos</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="event-card">
+                    <div class="event-header">
+                        <h4 class="event-title">FLOW Festival '26</h4>
+                        <p class="event-artists">FLOW · DOES · DJ TAKE</p>
+                    </div>
+                    <div class="event-body">
+                        <div class="event-info">
+                            <div class="event-detail">
+                                <span class="event-detail-label">📅 Fecha:</span>
+                                <span class="event-detail-value">22 de julio, 2026</span>
+                            </div>
+                            <div class="event-detail">
+                                <span class="event-detail-label">⏰ Hora:</span>
+                                <span class="event-detail-value">6:00 PM</span>
+                            </div>
+                            <div class="event-detail">
+                                <span class="event-detail-label">📍 Lugar:</span>
+                                <span class="event-detail-value">Foro Moliere, CDMX</span>
+                            </div>
+                        </div>
+                        <div class="event-presenters">
+                            <strong>Presentan:</strong> Insignia Entertainment · Boletia
+                        </div>
+                        <div class="event-cta">
+                            <a href="https://boletia.com" target="_blank">Comprar Boletos</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="section-header">
+            <h2 class="section-title">
+                <span class="word"><span>Ponte</span></span>
+                <span class="word"><span>en</span></span>
+                <span class="word"><span>Contacto</span></span>
+            </h2>
+            <p class="section-subtitle">Cuéntanos sobre tu proyecto y hagamos magia juntos</p>
+        </div>
+
+        <div class="contact-container">
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <label for="name">Nombre *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Teléfono</label>
+                    <input type="tel" id="phone" name="phone">
+                </div>
+
+                <div class="form-group">
+                    <label for="service">Servicio de Interés</label>
+                    <select id="service" name="service">
+                        <option value="">Selecciona un servicio</option>
+                        <option value="produccion">Producción Audiovisual</option>
+                        <option value="fotografia">Fotografía Profesional</option>
+                        <option value="eventos">Eventos y Producción</option>
+                        <option value="branding">Branding y Estrategia Visual</option>
+                        <option value="otro">Otro</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Mensaje *</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+
+                <button type="submit" class="btn primary form-submit">Enviar Mensaje</button>
+            </form>
+
+            <div class="contact-info">
+                <div class="contact-block">
+                    <h4>Website</h4>
+                    <p><a href="https://insignia-entertainment.com" target="_blank">insignia-entertainment.com</a></p>
+                </div>
+
+                <div class="contact-block">
+                    <h4>Email</h4>
+                    <p><a href="mailto:booking@insignia-entertainment.com">booking@insignia-entertainment.com</a></p>
+                </div>
+
+                <div class="contact-block">
+                    <h4>Teléfono</h4>
+                    <p><a href="tel:+5215516952852">+55 (169) 528-52</a></p>
+                </div>
+
+                <div class="contact-block">
+                    <h4>Redes Sociales</h4>
+                    <p>
+                        <a href="https://instagram.com/insigniaentertainment" target="_blank">@insigniaentertainment</a>
+                    </p>
+                    <div class="social-links">
+                        <a href="https://instagram.com/insigniaentertainment" target="_blank" class="social-link" title="Instagram">📷</a>
+                        <a href="https://facebook.com/insigniaentertainment" target="_blank" class="social-link" title="Facebook">f</a>
+                        <a href="https://tiktok.com/@insigniaentertainment" target="_blank" class="social-link" title="TikTok">♪</a>
+                        <a href="https://youtube.com/@insigniaentertainment" target="_blank" class="social-link" title="YouTube">▶</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Insignia Entertainment</h4>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Casa productora especializada en crear experiencias audiovisuales de impacto en CDMX.</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Navegación</h4>
+                <ul>
+                    <li><a href="#about">Quiénes Somos</a></li>
+                    <li><a href="#services">Servicios</a></li>
+                    <li><a href="#events">Eventos</a></li>
+                    <li><a href="#contact">Contacto</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Servicios</h4>
+                <ul>
+                    <li><a href="#services">Producción Audiovisual</a></li>
+                    <li><a href="#services">Fotografía Profesional</a></li>
+                    <li><a href="#services">Eventos y Producción</a></li>
+                    <li><a href="#services">Branding Visual</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Insignia Entertainment. Todos los derechos reservados. | CDMX, México</p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/5215516952852" target="_blank" class="whatsapp-btn" title="Contactar por WhatsApp">💬</a>
+
+    <script>
+        const cursorGlow = document.querySelector('.cursor-glow');
+        document.addEventListener('mousemove', (e) => {
+            cursorGlow.style.left = (e.clientX - 15) + 'px';
+            cursorGlow.style.top = (e.clientY - 15) + 'px';
+        });
+
+        document.addEventListener('mouseenter', () => {
+            cursorGlow.classList.add('active');
+        });
+
+        document.addEventListener('mouseleave', () => {
+            cursorGlow.classList.remove('active');
+        });
+
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.opacity = Math.random() * 0.5 + 0.2;
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        function animateTextReveal() {
+            const titles = document.querySelectorAll('.section-title');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !entry.target.animated) {
+                        entry.target.animated = true;
+                        const words = entry.target.querySelectorAll('.word span');
+
+                        words.forEach((word, index) => {
+                            word.style.animation = `none`;
+                            setTimeout(() => {
+                                word.style.animation = `slideUp 0.8s cubic-bezier(0.23, 1, 0.320, 1) forwards`;
+                            }, index * 100);
+                        });
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            titles.forEach(title => observer.observe(title));
+        }
+        animateTextReveal();
+
+        function observeElements() {
+            const elements = document.querySelectorAll(
+                '.about-text p, .service-card, .value-item, .diff-item, .stat-item, .event-card, .form-group, .contact-info'
+            );
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !entry.animated) {
+                        entry.animated = true;
+                        entry.target.style.opacity = '1';
+                        entry.target.style.animationPlayState = 'running';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            elements.forEach(el => observer.observe(el));
+        }
+        observeElements();
+
+        document.querySelectorAll('.service-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1)`;
+            });
+        });
+
+        function animateCounters() {
+            const counterElements = document.querySelectorAll('.stat-number[data-count]');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !entry.animated) {
+                        entry.animated = true;
+                        const target = parseInt(entry.target.dataset.count);
+                        const duration = 2000;
+                        const startTime = Date.now();
+
+                        function update() {
+                            const elapsed = Date.now() - startTime;
+                            const progress = Math.min(elapsed / duration, 1);
+                            const current = Math.floor(progress * target);
+
+                            entry.target.textContent = current;
+
+                            if (progress < 1) {
+                                requestAnimationFrame(update);
+                            } else {
+                                entry.target.textContent = target;
+                            }
+                        }
+
+                        update();
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            counterElements.forEach(el => observer.observe(el));
+        }
+        animateCounters();
+
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+
+                const distance = Math.sqrt(x * x + y * y);
+                const maxDistance = 100;
+
+                if (distance < maxDistance) {
+                    const angle = Math.atan2(y, x);
+                    const force = (1 - distance / maxDistance) * 10;
+
+                    btn.style.transform = `translate(${Math.cos(angle) * force}px, ${Math.sin(angle) * force}px)`;
+                }
+            });
+
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translate(0, 0)';
+            });
+        });
+
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('¡Gracias por tu mensaje! Nos pondremos en contacto pronto.');
+            e.target.reset();
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '1';
+        });
+    </script>
+</body>
+</html>

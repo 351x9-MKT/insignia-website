@@ -1,0 +1,2125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insignia Entertainment - Casa Productora CDMX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-black: #0a0a0a;
+            --primary-red: #C41E1E;
+            --primary-white: #FFF;
+            --text-light: #F5F5F5;
+            --text-dark: #1a1a1a;
+            --dark-gray: #1a1a1a;
+            --light-gray: #2a2a2a;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary-black);
+            color: var(--text-light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Film grain overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" /></filter><rect width="100" height="100" fill="rgba(255,255,255,0.02)" filter="url(%23noise)"/></svg>');
+            animation: grain 0.8s steps(2) infinite;
+        }
+
+        @keyframes grain {
+            0%, 100% { opacity: 0.02; }
+            50% { opacity: 0.03; }
+        }
+
+        /* ==================== CUSTOM CURSOR ==================== */
+        .cursor {
+            position: fixed;
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--primary-red);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            display: none;
+            transform: translate(-50%, -50%);
+            will-change: transform;
+        }
+
+        .cursor::before {
+            content: '';
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--primary-red);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .cursor.active {
+            display: block;
+            animation: cursor-trail 0.3s ease-out forwards;
+        }
+
+        @keyframes cursor-trail {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+        }
+
+        .cursor.hover {
+            width: 32px;
+            height: 32px;
+            border-color: var(--primary-red);
+            background: rgba(196, 30, 30, 0.1);
+        }
+
+        /* ==================== NAVIGATION ==================== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(196, 30, 30, 0.2);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+        }
+
+        .nav-logo {
+            height: 50px;
+            width: auto;
+            filter: brightness(0) invert(1);
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-red);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-red);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 2px;
+            background: var(--text-light);
+            margin: 4px 0;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* ==================== HERO ==================== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            margin-top: 80px;
+            overflow: hidden;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            z-index: 0;
+        }
+
+        #particleCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 900px;
+            padding: 40px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 10px 20px;
+            border: 1px solid var(--primary-red);
+            color: var(--primary-red);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            animation: float-in 1s ease 0.2s both;
+        }
+
+        .hero-logo {
+            height: 100px;
+            margin-bottom: 30px;
+            filter: brightness(0) invert(1);
+            animation: logo-reveal 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s both;
+        }
+
+        @keyframes logo-reveal {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes float-in {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-tagline {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(32px, 8vw, 72px);
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .glitch {
+            position: relative;
+            display: inline-block;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .glitch::before {
+            animation: glitch-1 0.3s infinite;
+            color: #FF0000;
+            z-index: -1;
+            text-shadow: -2px 0 var(--primary-red);
+        }
+
+        .glitch::after {
+            animation: glitch-2 0.3s infinite;
+            color: #0FF;
+            z-index: -2;
+            text-shadow: 2px 0 cyan;
+        }
+
+        @keyframes glitch-1 {
+            0% {
+                clip-path: polygon(0 0, 100% 0, 100% 10%, 0 10%);
+                transform: translate(-2px, -2px);
+            }
+            10% {
+                clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%);
+                transform: translate(2px, 2px);
+            }
+            20% {
+                clip-path: polygon(0 50%, 100% 50%, 100% 70%, 0 70%);
+                transform: translate(-2px, 0);
+            }
+            30%, 100% {
+                clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+                transform: translate(0);
+            }
+        }
+
+        @keyframes glitch-2 {
+            0% {
+                clip-path: polygon(0 30%, 100% 30%, 100% 50%, 0 50%);
+                transform: translate(2px, -2px);
+            }
+            10% {
+                clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%);
+                transform: translate(-2px, 2px);
+            }
+            20% {
+                clip-path: polygon(0 0, 100% 0, 100% 20%, 0 20%);
+                transform: translate(2px, -2px);
+            }
+            30%, 100% {
+                clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+                transform: translate(0);
+            }
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: #999;
+            margin-bottom: 40px;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+            animation: float-in 1s ease 0.6s both;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+            animation: float-in 1s ease 0.8s both;
+        }
+
+        .btn {
+            padding: 16px 40px;
+            border: 2px solid var(--primary-red);
+            background: transparent;
+            color: var(--text-light);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            will-change: transform;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-red);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .btn:hover {
+            color: var(--primary-black);
+        }
+
+        .btn:hover::before {
+            left: 0;
+        }
+
+        .btn.primary {
+            background: var(--primary-red);
+            color: var(--primary-black);
+            border-color: var(--primary-red);
+        }
+
+        .btn.primary:hover {
+            color: var(--primary-white);
+        }
+
+        /* Magnetic button effect */
+        .btn {
+            position: relative;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--primary-red);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(10px);
+            }
+        }
+
+        /* ==================== MARQUEE ==================== */
+        .marquee-section {
+            background: var(--primary-black);
+            padding: 40px 0;
+            overflow: hidden;
+            border-top: 1px solid rgba(196, 30, 30, 0.2);
+            border-bottom: 1px solid rgba(196, 30, 30, 0.2);
+            position: relative;
+        }
+
+        .marquee {
+            display: flex;
+            white-space: nowrap;
+            animation: marquee 30s linear infinite;
+            will-change: transform;
+        }
+
+        .marquee-item {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 48px;
+            font-weight: 900;
+            padding: 0 40px;
+            color: transparent;
+            -webkit-text-stroke: 2px var(--primary-red);
+            text-stroke: 2px var(--primary-red);
+            flex-shrink: 0;
+            letter-spacing: 3px;
+        }
+
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* ==================== QUIÉNES SOMOS ==================== */
+        .section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 100px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-divider {
+            position: relative;
+            height: 200px;
+            background: var(--primary-black);
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 70%);
+            border-top: 1px solid rgba(196, 30, 30, 0.2);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .quienes-somos {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .quienes-text h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(36px, 5vw, 56px);
+            font-weight: 900;
+            margin-bottom: 40px;
+            color: var(--primary-white);
+            line-height: 1.2;
+        }
+
+        .quienes-text h2 .highlight {
+            color: var(--primary-red);
+        }
+
+        .quienes-text p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #ccc;
+            margin-bottom: 30px;
+        }
+
+        .demo-reel {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            border: 2px solid var(--primary-red);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+        }
+
+        .demo-reel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .play-button {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: rgba(196, 30, 30, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .play-button:hover {
+            background: var(--primary-red);
+            transform: scale(1.1);
+        }
+
+        .play-button::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 25px solid white;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            margin-left: 4px;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .value-card {
+            background: rgba(196, 30, 30, 0.05);
+            border: 1px solid rgba(196, 30, 30, 0.3);
+            padding: 30px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .value-card:hover {
+            background: rgba(196, 30, 30, 0.1);
+            border-color: var(--primary-red);
+            transform: translateY(-5px);
+        }
+
+        .value-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-red);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .value-card p {
+            font-size: 14px;
+            color: #999;
+            line-height: 1.6;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 30px;
+            border: 1px solid rgba(196, 30, 30, 0.3);
+            border-radius: 4px;
+            background: rgba(196, 30, 30, 0.02);
+        }
+
+        .stat-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--primary-red);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #666;
+        }
+
+        /* ==================== HORIZONTAL SCROLL SERVICES ==================== */
+        .servicios-section {
+            padding: 100px 0;
+            background: var(--primary-black);
+            position: relative;
+        }
+
+        .servicios-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .servicios-header {
+            margin-bottom: 60px;
+        }
+
+        .servicios-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(36px, 5vw, 56px);
+            font-weight: 900;
+            color: var(--primary-white);
+            margin-bottom: 20px;
+        }
+
+        .servicios-header p {
+            color: #999;
+            font-size: 16px;
+            max-width: 600px;
+        }
+
+        .servicios-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .service-card {
+            position: relative;
+            height: 420px;
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            border: 1px solid rgba(196, 30, 30, 0.15);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 40px;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .service-card-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
+            opacity: 0.25;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .service-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.85) 100%);
+            z-index: 1;
+            transition: background 0.4s ease;
+        }
+
+        .service-card:hover {
+            border-color: var(--primary-red);
+            box-shadow: 0 0 40px rgba(196, 30, 30, 0.2);
+        }
+
+        .service-card:hover .service-card-bg {
+            opacity: 0.45;
+            transform: scale(1.05);
+        }
+
+        .service-card:hover .service-icon {
+            transform: rotate(5deg) scale(1.1);
+        }
+
+        /* 3D tilt light reflection */
+        .service-card-shine {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.08), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .service-card:hover .service-card-shine {
+            opacity: 1;
+        }
+
+        .service-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .service-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-red);
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .service-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(18px, 2.5vw, 26px);
+            font-weight: 900;
+            color: var(--primary-white);
+            margin-bottom: 12px;
+            line-height: 1.3;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .service-description {
+            font-size: 14px;
+            color: #ccc;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .service-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .feature-tag {
+            padding: 6px 12px;
+            background: rgba(196, 30, 30, 0.15);
+            color: var(--primary-red);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(196, 30, 30, 0.4);
+            border-radius: 2px;
+            transition: background 0.3s ease;
+        }
+
+        .service-card:hover .feature-tag {
+            background: rgba(196, 30, 30, 0.25);
+        }
+
+        /* ==================== POR QUÉ INSIGNIA ==================== */
+        .por-que-section {
+            background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+            position: relative;
+        }
+
+        .por-que-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+
+        .differentiator {
+            background: rgba(196, 30, 30, 0.05);
+            border-left: 4px solid var(--primary-red);
+            padding: 40px;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .differentiator:hover {
+            background: rgba(196, 30, 30, 0.1);
+            transform: translateX(10px);
+        }
+
+        .differentiator h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-red);
+            margin-bottom: 15px;
+        }
+
+        .differentiator p {
+            font-size: 15px;
+            color: #ccc;
+            line-height: 1.7;
+        }
+
+        /* ==================== EVENTOS ==================== */
+        .eventos-section {
+            position: relative;
+        }
+
+        .eventos-split {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .eventos-categories {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .eventos-category-item {
+            padding: 14px 20px;
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid rgba(196, 30, 30, 0.15);
+            color: #ccc;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .eventos-category-item:hover {
+            border-color: var(--primary-red);
+            background: rgba(196, 30, 30, 0.08);
+        }
+
+        .eventos-split-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .eventos-stat-card {
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid rgba(196, 30, 30, 0.2);
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .eventos-stat-card:hover {
+            border-color: var(--primary-red);
+            transform: translateY(-3px);
+        }
+
+        .evento-stat-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 42px;
+            font-weight: 900;
+            color: var(--primary-red);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .evento-stat-label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #666;
+        }
+
+        .event-link:hover {
+            background: var(--primary-red);
+            transform: translateX(5px);
+        }
+
+        /* ==================== CONTACTO ==================== */
+        .contacto-section {
+            background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+        }
+
+        .contacto-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+        }
+
+        .contacto-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .contacto-info h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(36px, 5vw, 56px);
+            font-weight: 900;
+            color: var(--primary-white);
+            margin-bottom: 40px;
+            line-height: 1.2;
+        }
+
+        .contact-details {
+            margin-bottom: 60px;
+        }
+
+        .contact-item {
+            margin-bottom: 30px;
+        }
+
+        .contact-item h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--primary-red);
+            margin-bottom: 10px;
+        }
+
+        .contact-item p,
+        .contact-item a {
+            font-size: 16px;
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            color: var(--primary-red);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-link {
+            width: 44px;
+            height: 44px;
+            border: 1px solid rgba(196, 30, 30, 0.5);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-red);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link svg {
+            transition: transform 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary-red);
+            color: var(--primary-white);
+            border-color: var(--primary-red);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(196, 30, 30, 0.4);
+        }
+
+        .social-link:hover svg {
+            transform: scale(1.1);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary-red);
+            margin-bottom: 10px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(196, 30, 30, 0.3);
+            color: var(--text-light);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--primary-red);
+            box-shadow: 0 0 20px rgba(196, 30, 30, 0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* ==================== FOOTER ==================== */
+        footer {
+            background: #000;
+            border-top: 1px solid rgba(196, 30, 30, 0.2);
+            padding: 60px 40px 30px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 60px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--primary-red);
+            margin-bottom: 20px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column a {
+            color: #999;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: var(--primary-red);
+        }
+
+        .footer-copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(196, 30, 30, 0.1);
+            color: #666;
+            font-size: 12px;
+        }
+
+        /* ==================== WHATSAPP BUTTON ==================== */
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--primary-red);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            text-decoration: none;
+            font-size: 28px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 30px rgba(196, 30, 30, 0.4);
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 40px rgba(196, 30, 30, 0.6);
+        }
+
+        /* ==================== SCROLL ANIMATIONS ==================== */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .scroll-reveal.visible {
+            animation: scroll-reveal-animation 0.8s ease forwards;
+        }
+
+        @keyframes scroll-reveal-animation {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .split-text {
+            display: inline-block;
+            overflow: hidden;
+        }
+
+        .split-char {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .split-char.visible {
+            animation: char-reveal 0.6s ease forwards;
+        }
+
+        @keyframes char-reveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 1024px) {
+            .quienes-somos {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .servicios-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .service-card {
+                height: 350px;
+            }
+
+            .por-que-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .eventos-split {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .eventos-categories {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .contacto-wrapper {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            nav {
+                padding: 0 20px;
+                height: 70px;
+            }
+
+            .nav-links {
+                gap: 20px;
+            }
+
+            .nav-links a {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: rgba(10, 10, 10, 0.98);
+                padding: 30px 20px;
+                gap: 20px;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+            }
+
+            .nav-links.active {
+                max-height: 400px;
+            }
+
+            .hero-ctas {
+                gap: 15px;
+            }
+
+            .btn {
+                padding: 12px 25px;
+                font-size: 12px;
+            }
+
+            .marquee-item {
+                font-size: 28px;
+                padding: 0 20px;
+            }
+
+            .section {
+                padding: 60px 20px;
+            }
+
+            .quienes-text h2 {
+                font-size: 28px;
+            }
+
+            .servicios-header h2 {
+                font-size: 28px;
+            }
+
+            .por-que-grid {
+                gap: 20px;
+            }
+
+            .differentiator {
+                padding: 25px;
+            }
+
+            .eventos-grid {
+                gap: 20px;
+            }
+
+            .event-card {
+                aspect-ratio: auto;
+                min-height: 300px;
+            }
+
+            .contacto-info h2 {
+                font-size: 28px;
+            }
+
+            .events-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .whatsapp-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-tagline {
+                font-size: 28px;
+            }
+
+            .hero-subtitle {
+                font-size: 14px;
+            }
+
+            .hero-ctas {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .marquee-item {
+                font-size: 18px;
+                padding: 0 15px;
+            }
+
+            .quienes-text h2 {
+                font-size: 24px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .stat {
+                padding: 20px;
+            }
+
+            .stat-number {
+                font-size: 36px;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .servicios-header h2 {
+                font-size: 24px;
+            }
+
+            .por-que-grid {
+                gap: 15px;
+            }
+
+            .diferenciator {
+                padding: 20px;
+            }
+
+            .eventos-grid {
+                gap: 15px;
+            }
+
+            .contacto-wrapper {
+                gap: 30px;
+            }
+
+            .contacto-info h2 {
+                font-size: 24px;
+            }
+
+            .footer-content {
+                gap: 20px;
+            }
+
+            .footer-column h3 {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cursor -->
+    <div class="cursor"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <img src="logo.png" alt="Insignia Entertainment" class="nav-logo">
+        <ul class="nav-links">
+            <li><a href="#quienes-somos">Quiénes Somos</a></li>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#eventos">Eventos</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-background"></div>
+        <canvas id="particleCanvas"></canvas>
+        <div class="floating-shapes"></div>
+        <div class="hero-content">
+            <div class="hero-badge">Casa Productora · CDMX</div>
+            <img src="logo.png" alt="Insignia" class="hero-logo">
+            <h1 class="hero-tagline">
+                <span class="glitch" data-text="Transformamos ideas en experiencias inolvidables">Transformamos ideas en experiencias inolvidables</span>
+            </h1>
+            <p class="hero-subtitle">Producción audiovisual · Eventos · Fotografía · Branding</p>
+            <div class="hero-ctas">
+                <button class="btn primary" onclick="document.getElementById('servicios').scrollIntoView({behavior: 'smooth'})">Nuestros Servicios</button>
+                <button class="btn" onclick="document.getElementById('eventos').scrollIntoView({behavior: 'smooth'})">Ver Eventos</button>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 5v14M5 15l7 7 7-7" stroke="currentColor"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Marquee -->
+    <div class="marquee-section">
+        <div class="marquee">
+            <div class="marquee-item">PRODUCCIÓN</div>
+            <div class="marquee-item">CREATIVIDAD</div>
+            <div class="marquee-item">INNOVACIÓN</div>
+            <div class="marquee-item">EVENTOS</div>
+            <div class="marquee-item">AUDIOVISUAL</div>
+            <div class="marquee-item">FOTOGRAFÍA</div>
+            <div class="marquee-item">PRODUCCIÓN</div>
+            <div class="marquee-item">CREATIVIDAD</div>
+            <div class="marquee-item">INNOVACIÓN</div>
+            <div class="marquee-item">EVENTOS</div>
+            <div class="marquee-item">AUDIOVISUAL</div>
+            <div class="marquee-item">FOTOGRAFÍA</div>
+        </div>
+    </div>
+
+    <!-- Quiénes Somos -->
+    <section id="quienes-somos" class="section">
+        <div class="container">
+            <div class="quienes-somos">
+                <div class="quienes-text">
+                    <h2>¿<span class="highlight">Quiénes</span> Somos?</h2>
+                    <p>Insignia Entertainment es una casa productora creativa basada en Ciudad de México, especializada en la creación de experiencias audiovisuales memorables. Con más de una década de experiencia, transformamos visiones en realidades impactantes.</p>
+                    <p>Somos un equipo multidisciplinario apasionado por la excelencia, la innovación y la calidad cinematográfica en cada proyecto que emprendemos.</p>
+                    <div class="values-grid">
+                        <div class="value-card scroll-reveal">
+                            <h3>Creatividad</h3>
+                            <p>Ideas audaces y conceptos únicos que trascienden lo ordinario</p>
+                        </div>
+                        <div class="value-card scroll-reveal">
+                            <h3>Innovación</h3>
+                            <p>Tecnología de punta y técnicas cutting-edge en cada producción</p>
+                        </div>
+                        <div class="value-card scroll-reveal">
+                            <h3>Calidad</h3>
+                            <p>Estándares cinematográficos en audio, video y post-producción</p>
+                        </div>
+                        <div class="value-card scroll-reveal">
+                            <h3>Compromiso</h3>
+                            <p>Dedicación total a la visión de nuestros clientes y sus objetivos</p>
+                        </div>
+                    </div>
+                    <div class="stats">
+                        <div class="stat scroll-reveal">
+                            <span class="stat-number counter" data-target="150">0</span>
+                            <span class="stat-label">+ Proyectos</span>
+                        </div>
+                        <div class="stat scroll-reveal">
+                            <span class="stat-number counter" data-target="50">0</span>
+                            <span class="stat-label">+ Clientes</span>
+                        </div>
+                        <div class="stat scroll-reveal">
+                            <span class="stat-number counter" data-target="80">0</span>
+                            <span class="stat-label">+ Eventos</span>
+                        </div>
+                        <div class="stat scroll-reveal">
+                            <span class="stat-number counter" data-target="360">0</span>
+                            <span class="stat-label">° Cobertura</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="demo-reel scroll-reveal">
+                    <video controls preload="metadata" style="width:100%;height:100%;object-fit:cover;border-radius:8px;">
+                        <source src="Assets/demoreel.mp4" type="video/mp4">
+                        Tu navegador no soporta video HTML5.
+                    </video>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Servicios -->
+    <section id="servicios" class="servicios-section">
+        <div class="servicios-container">
+            <div class="servicios-header scroll-reveal">
+                <h2>Nuestros <span class="highlight">Servicios</span></h2>
+                <p>Soluciones integrales de producción audiovisual y gestión de eventos con enfoque 360°</p>
+            </div>
+            <div class="servicios-grid">
+                <div class="service-card scroll-reveal">
+                    <div class="service-card-bg" style="background-image: url('Assets/Servicios/audiovisual-bg.jpg');"></div>
+                    <div class="service-card-shine"></div>
+                    <div class="service-content">
+                        <div class="service-icon">🎬</div>
+                        <h3 class="service-title">Producción Audiovisual</h3>
+                        <p class="service-description">Cine, documentales, videoclips, comerciales y contenido digital con calidad cinematográfica.</p>
+                        <div class="service-features">
+                            <span class="feature-tag">4K/8K</span>
+                            <span class="feature-tag">Color Grading</span>
+                            <span class="feature-tag">Motion Graphics</span>
+                            <span class="feature-tag">Post-Producción</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="service-card scroll-reveal">
+                    <div class="service-card-bg" style="background-image: url('Assets/Servicios/fotografia-bg.jpg');"></div>
+                    <div class="service-card-shine"></div>
+                    <div class="service-content">
+                        <div class="service-icon">📸</div>
+                        <h3 class="service-title">Fotografía Profesional</h3>
+                        <p class="service-description">Cobertura de eventos, sesiones de estudio, fotografía comercial y lifestyle con estética premium.</p>
+                        <div class="service-features">
+                            <span class="feature-tag">Full Frame</span>
+                            <span class="feature-tag">Retoque Digital</span>
+                            <span class="feature-tag">Galería Online</span>
+                            <span class="feature-tag">Printing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="service-card scroll-reveal">
+                    <div class="service-card-bg" style="background-image: url('Assets/Servicios/eventos-bg.jpg');"></div>
+                    <div class="service-card-shine"></div>
+                    <div class="service-content">
+                        <div class="service-icon">🎪</div>
+                        <h3 class="service-title">Eventos y Producción</h3>
+                        <p class="service-description">Dirección integral de conciertos, festivales, lanzamientos y experiencias inmersivas en vivo.</p>
+                        <div class="service-features">
+                            <span class="feature-tag">Dirección Creativa</span>
+                            <span class="feature-tag">Iluminación Avanzada</span>
+                            <span class="feature-tag">Sonido Profesional</span>
+                            <span class="feature-tag">Cobertura Multicámara</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="service-card scroll-reveal">
+                    <div class="service-card-bg" style="background-image: url('Assets/branding-bg.jpg');"></div>
+                    <div class="service-card-shine"></div>
+                    <div class="service-content">
+                        <div class="service-icon">✨</div>
+                        <h3 class="service-title">Branding y Estrategia Visual</h3>
+                        <p class="service-description">Identidad de marca, diseño visual, campañas integradas y estrategia de contenido multimedia.</p>
+                        <div class="service-features">
+                            <span class="feature-tag">Brand Identity</span>
+                            <span class="feature-tag">Visual Design</span>
+                            <span class="feature-tag">Content Strategy</span>
+                            <span class="feature-tag">Campañas Digitales</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Por Qué Insignia -->
+    <section class="section por-que-section">
+        <div class="container">
+            <h2 style="font-family: 'Orbitron', sans-serif; font-size: clamp(36px, 5vw, 56px); font-weight: 900; margin-bottom: 60px; line-height: 1.2;">Por Qué <span class="highlight" style="color: var(--primary-red);">Insignia</span></h2>
+            <div class="por-que-grid">
+                <div class="differentiator scroll-reveal">
+                    <h3>Calidad Cinematográfica</h3>
+                    <p>Equipamiento de nivel profesional y equipos expertos que garantizan resultados de cine en cada proyecto, sin importar el presupuesto.</p>
+                </div>
+                <div class="differentiator scroll-reveal">
+                    <h3>Innovación Constante</h3>
+                    <p>Adoptamos las últimas tecnologías y tendencias creativas para asegurar que tu proyecto sea únicamente contemporáneo y competitivo.</p>
+                </div>
+                <div class="differentiator scroll-reveal">
+                    <h3>Experiencia Comprobada</h3>
+                    <p>Más de una década trabajando con marcas líderes, artistas reconocidos y eventos de gran escala en CDMX y el país.</p>
+                </div>
+                <div class="differentiator scroll-reveal">
+                    <h3>Enfoque 360°</h3>
+                    <p>Soluciones integrales que abarcan concepto, producción, post-producción y distribución en todas las plataformas digitales.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Eventos -->
+    <section id="eventos" class="section eventos-section">
+        <div class="container">
+            <!-- Intro hero-style -->
+            <div class="eventos-hero-intro scroll-reveal" style="text-align: center; margin-bottom: 80px;">
+                <span style="font-family: 'Space Grotesk', sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: 3px; color: var(--primary-red); display: block; margin-bottom: 20px;">Eventos y Producción</span>
+                <h2 style="font-family: 'Orbitron', sans-serif; font-size: clamp(32px, 5vw, 56px); font-weight: 900; text-transform: uppercase; color: var(--primary-white); margin-bottom: 24px; line-height: 1.1;">Creamos Experiencias Inolvidables</h2>
+                <div style="width: 60px; height: 3px; background: var(--primary-red); margin: 0 auto 24px;"></div>
+                <p style="font-size: 16px; color: #999; max-width: 700px; margin: 0 auto; line-height: 1.8;">Desarrollamos y producimos eventos de principio a fin, combinando creatividad, logística impecable y tecnología de vanguardia.</p>
+            </div>
+
+            <!-- Producción Integral split section -->
+            <div class="eventos-split scroll-reveal">
+                <div class="eventos-split-text">
+                    <h3 style="font-family: 'Orbitron', sans-serif; font-size: clamp(20px, 3vw, 28px); font-weight: 700; color: var(--primary-white); margin-bottom: 24px;">Producción Integral de Eventos</h3>
+                    <p style="font-size: 15px; color: #bbb; line-height: 1.8; margin-bottom: 20px;">En Insignia Entertainment no solo organizamos eventos — los diseñamos como experiencias. Desde conciertos internacionales y festivales de música hasta eventos corporativos y activaciones de marca, nuestro equipo se encarga de cada detalle para que tú solo te preocupes por disfrutar el resultado.</p>
+                    <p style="font-size: 15px; color: #bbb; line-height: 1.8; margin-bottom: 30px;">Contamos con un equipo multidisciplinario especializado en producción técnica, logística, diseño de escenografía, iluminación, audio, y cobertura audiovisual en vivo.</p>
+
+                    <!-- Category tags -->
+                    <div class="eventos-categories">
+                        <div class="eventos-category-item"><span style="color: var(--primary-red); margin-right: 10px;">●</span> Conciertos y Festivales</div>
+                        <div class="eventos-category-item"><span style="color: var(--primary-red); margin-right: 10px;">●</span> Eventos Corporativos</div>
+                        <div class="eventos-category-item"><span style="color: var(--primary-red); margin-right: 10px;">●</span> Activaciones de Marca</div>
+                        <div class="eventos-category-item"><span style="color: var(--primary-red); margin-right: 10px;">●</span> Experiencias Inmersivas</div>
+                        <div class="eventos-category-item"><span style="color: var(--primary-red); margin-right: 10px;">●</span> Logística y Operación</div>
+                        <div class="eventos-category-item"><span style="color: var(--primary-red); margin-right: 10px;">●</span> Producción Técnica</div>
+                    </div>
+                </div>
+
+                <div class="eventos-split-stats">
+                    <div class="eventos-stat-card scroll-reveal">
+                        <span class="evento-stat-number counter" data-target="80">0</span>
+                        <span class="evento-stat-label">Eventos Producidos</span>
+                    </div>
+                    <div class="eventos-stat-card scroll-reveal">
+                        <span class="evento-stat-number">50K+</span>
+                        <span class="evento-stat-label">Asistentes</span>
+                    </div>
+                    <div class="eventos-stat-card scroll-reveal">
+                        <span class="evento-stat-number counter" data-target="30">0</span>
+                        <span class="evento-stat-label">Artistas y Marcas</span>
+                    </div>
+                    <div class="eventos-stat-card scroll-reveal">
+                        <span class="evento-stat-number">100%</span>
+                        <span class="evento-stat-label">Compromiso</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA to eventos landing -->
+            <div style="margin-top: 50px;" class="scroll-reveal">
+                <a href="eventos.html" class="btn primary" style="display: inline-flex; align-items: center; gap: 10px;">Conoce Más Sobre Nuestros Eventos <span>→</span></a>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Contacto -->
+    <section id="contacto" class="section contacto-section">
+        <div class="container">
+            <div class="contacto-wrapper">
+                <div class="contacto-info">
+                    <h2>Hagamos tu <span class="highlight">Proyecto</span> Real</h2>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <h3>Email</h3>
+                            <a href="mailto:booking@insignia-entertainment.com">booking@insignia-entertainment.com</a>
+                        </div>
+                        <div class="contact-item">
+                            <h3>Teléfono</h3>
+                            <a href="tel:+5215516952852">+55 1695 2852</a>
+                        </div>
+                        <div class="contact-item">
+                            <h3>Sitio Web</h3>
+                            <a href="https://insignia-entertainment.com">insignia-entertainment.com</a>
+                        </div>
+                        <div class="contact-item">
+                            <h3>Redes Sociales</h3>
+                            <div class="social-links">
+                                <a href="https://instagram.com/insigniaentertainment" target="_blank" class="social-link" title="Instagram">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                                </a>
+                                <a href="https://facebook.com/insigniaentertainment" target="_blank" class="social-link" title="Facebook">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                                </a>
+                                <a href="https://tiktok.com/@insigniaentertainment" target="_blank" class="social-link" title="TikTok">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 0010.86 4.48v-7.15a8.16 8.16 0 005.58 2.2v-3.46a4.85 4.85 0 01-3.0-1.58v3z"/></svg>
+                                </a>
+                                <a href="https://youtube.com/@insigniaentertainment" target="_blank" class="social-link" title="YouTube">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scroll-reveal">
+                    <form>
+                        <div class="form-group">
+                            <label>Nombre Completo</label>
+                            <input type="text" placeholder="Tu nombre" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" placeholder="tu@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Teléfono</label>
+                            <input type="tel" placeholder="+55 XXXX XXXX">
+                        </div>
+                        <div class="form-group">
+                            <label>Servicio de Interés</label>
+                            <select required>
+                                <option value="">Selecciona un servicio</option>
+                                <option value="audiovisual">Producción Audiovisual</option>
+                                <option value="fotografia">Fotografía Profesional</option>
+                                <option value="eventos">Eventos y Producción</option>
+                                <option value="branding">Branding y Estrategia Visual</option>
+                                <option value="otro">Otro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Mensaje</label>
+                            <textarea placeholder="Cuéntanos sobre tu proyecto..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn primary">Enviar Consulta</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Sobre Insignia</h3>
+                <p style="color: #999; font-size: 14px; line-height: 1.8;">Casa productora creativa en CDMX especializada en crear experiencias audiovisuales memorables y eventos de impacto.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Navegación</h3>
+                <ul>
+                    <li><a href="#quienes-somos">Quiénes Somos</a></li>
+                    <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="#eventos">Eventos</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Servicios</h3>
+                <ul>
+                    <li><a href="#servicios">Producción Audiovisual</a></li>
+                    <li><a href="#servicios">Fotografía Profesional</a></li>
+                    <li><a href="#servicios">Eventos y Producción</a></li>
+                    <li><a href="#servicios">Branding y Estrategia</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <p>&copy; 2026 Insignia Entertainment. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/5215516952852" target="_blank" class="whatsapp-btn">💬</a>
+
+    <script>
+        // ==================== CUSTOM CURSOR ====================
+        const cursor = document.querySelector('.cursor');
+        const interactiveElements = document.querySelectorAll('.btn, a, .social-link, .nav-links a, input, textarea, select');
+
+        let mouseX = 0;
+        let mouseY = 0;
+        let trailX = 0;
+        let trailY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            // Trail effect
+            setTimeout(() => {
+                const trail = document.createElement('div');
+                trail.classList.add('cursor', 'active');
+                trail.style.left = mouseX + 'px';
+                trail.style.top = mouseY + 'px';
+                document.body.appendChild(trail);
+                setTimeout(() => trail.remove(), 300);
+            }, 0);
+        });
+
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.classList.add('hover');
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hover');
+            });
+        });
+
+        // ==================== PARTICLE CANVAS ====================
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 2;
+                this.vy = (Math.random() - 0.5) * 2;
+                this.radius = Math.random() * 3 + 1;
+                this.alpha = Math.random() * 0.5 + 0.3;
+            }
+
+            update(mouseX, mouseY) {
+                // Mouse attraction
+                const dx = mouseX - this.x;
+                const dy = mouseY - this.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                const force = 5000 / (dist * dist + 1);
+
+                if (dist < 200) {
+                    this.vx += (dx / dist) * force * 0.01;
+                    this.vy += (dy / dist) * force * 0.01;
+                }
+
+                // Movement
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Damping
+                this.vx *= 0.99;
+                this.vy *= 0.99;
+
+                // Boundaries
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+
+                this.x = Math.max(0, Math.min(canvas.width, this.x));
+                this.y = Math.max(0, Math.min(canvas.height, this.y));
+            }
+
+            draw() {
+                ctx.fillStyle = `rgba(196, 30, 30, ${this.alpha})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        const particles = [];
+        for (let i = 0; i < 80; i++) {
+            particles.push(new Particle());
+        }
+
+        // Floating shapes
+        const shapesContainer = document.querySelector('.floating-shapes');
+        const shapeCount = 5;
+        for (let i = 0; i < shapeCount; i++) {
+            const shape = document.createElement('div');
+            shape.classList.add('shape');
+            shape.style.left = Math.random() * 100 + '%';
+            shape.style.top = Math.random() * 100 + '%';
+            shape.style.width = Math.random() * 300 + 100 + 'px';
+            shape.style.height = shape.style.width;
+
+            if (i % 2 === 0) {
+                shape.style.background = `linear-gradient(135deg, rgba(196, 30, 30, 0.1), rgba(196, 30, 30, 0.05))`;
+                shape.style.borderRadius = '0';
+                shape.style.transform = `rotate(${Math.random() * 45}deg)`;
+            } else {
+                shape.style.background = `radial-gradient(circle, rgba(196, 30, 30, 0.1), rgba(196, 30, 30, 0))`;
+                shape.style.borderRadius = '50%';
+            }
+
+            shape.style.animation = `float ${10 + Math.random() * 10}s ease-in-out infinite`;
+            shape.style.animationDelay = i * 2 + 's';
+            shapesContainer.appendChild(shape);
+        }
+
+        // Add float animation
+        if (!document.querySelector('style[data-float]')) {
+            const style = document.createElement('style');
+            style.setAttribute('data-float', 'true');
+            style.textContent = `
+                @keyframes float {
+                    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+                    25% { transform: translate(30px, -50px) rotate(10deg); }
+                    50% { transform: translate(-20px, 30px) rotate(20deg); }
+                    75% { transform: translate(50px, 20px) rotate(-10deg); }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(p => {
+                p.update(mouseX, mouseY);
+                p.draw();
+            });
+
+            // Draw connections
+            particles.forEach((p1, i) => {
+                particles.slice(i + 1).forEach(p2 => {
+                    const dx = p1.x - p2.x;
+                    const dy = p1.y - p2.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 100) {
+                        ctx.strokeStyle = `rgba(196, 30, 30, ${0.2 * (1 - dist / 100)})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(p1.x, p1.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                });
+            });
+
+            if (canvas.parentElement) {
+                requestAnimationFrame(animateParticles);
+            }
+        }
+
+        animateParticles();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // ==================== HAMBURGER MENU ====================
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // ==================== SCROLL ANIMATIONS ====================
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    // Stagger children
+                    const children = entry.target.querySelectorAll('.scroll-reveal, .split-char');
+                    children.forEach((child, index) => {
+                        child.style.animationDelay = index * 0.1 + 's';
+                    });
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // ==================== COUNTER ANIMATION ====================
+        function animateCounter(element) {
+            const target = parseInt(element.dataset.target);
+            let current = 0;
+            const increment = target / 30;
+            const duration = 2000;
+            const startTime = Date.now();
+
+            function update() {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+
+                // Spring easing
+                const easeOutElastic = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress) * Math.sin((progress * 10 - 0.75) * ((2 * Math.PI) / 3));
+                current = Math.floor(target * easeOutElastic);
+                element.textContent = current;
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+
+            update();
+        }
+
+        const counters = document.querySelectorAll('.counter');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
+                    entry.target.classList.add('animated');
+                    animateCounter(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(counter => counterObserver.observe(counter));
+
+        // ==================== MAGNETIC BUTTONS ====================
+        const buttons = document.querySelectorAll('.btn');
+        buttons.forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                const distance = Math.sqrt(x * x + y * y);
+
+                if (distance < 100) {
+                    const force = 1 - distance / 100;
+                    btn.style.transform = `translate(${x * force * 0.3}px, ${y * force * 0.3}px)`;
+                }
+            });
+
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'translate(0, 0)';
+            });
+        });
+
+        // ==================== FORM HANDLING ====================
+        document.querySelector('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('¡Gracias por tu consulta! Nos pondremos en contacto pronto.');
+            e.target.reset();
+        });
+
+        // ==================== SMOOTH SCROLL ENHANCEMENT ====================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // ==================== PAGE ENTRANCE ANIMATION ====================
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.hero-badge, .hero-logo, .hero-tagline, .hero-subtitle, .hero-ctas').forEach((el, i) => {
+                el.style.animation = `none`;
+                el.offsetHeight;
+                el.style.animation = `float-in 1s ease ${0.2 + i * 0.2}s both`;
+            });
+        });
+
+        // ==================== 3D TILT ON SERVICE CARDS ====================
+        document.querySelectorAll('.service-card').forEach(card => {
+            const shine = card.querySelector('.service-card-shine');
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+                if (shine) {
+                    shine.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.12), transparent 60%)`;
+                }
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+            });
+        });
+
+        // Log that the site is ready
+        console.log('Insignia Entertainment - Website Loaded');
+    </script>
+</body>
+</html>
