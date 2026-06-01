@@ -3,18 +3,121 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Insignia Entertainment · Casa Productora · Ciudad de México</title>
-  <meta name="description" content="Producimos eventos como se filman películas. Cinco disciplinas, una sola dirección creativa." />
-  <meta property="og:title" content="Insignia Entertainment" />
-  <meta property="og:description" content="Producimos eventos como se filman películas. Cinco disciplinas, una sola dirección creativa." />
-  <meta property="og:image" content="assets/images/cinematic/poster_hero.jpg" />
+  <title>Casa Productora de Eventos en CDMX · Insignia Entertainment</title>
+  <meta name="description" content="Casa productora de eventos, conciertos y filmación en Ciudad de México. Cinco disciplinas, una sola dirección creativa: producimos eventos como se filman películas." />
+  <link rel="canonical" href="https://insignia-entertainment.netlify.app/" />
+
+  <meta property="og:title" content="Casa Productora de Eventos en CDMX · Insignia Entertainment" />
+  <meta property="og:description" content="Producción de eventos, conciertos y filmación en Ciudad de México. Cinco disciplinas, una sola dirección creativa." />
+  <meta property="og:image" content="https://insignia-entertainment.netlify.app/assets/images/cinematic/poster_hero.jpg" />
+  <meta property="og:image:width" content="1912" />
+  <meta property="og:image:height" content="1080" />
+  <meta property="og:url" content="https://insignia-entertainment.netlify.app/" />
   <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_MX" />
+  <meta property="og:site_name" content="Insignia Entertainment" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Casa Productora de Eventos en CDMX · Insignia Entertainment" />
+  <meta name="twitter:description" content="Producción de eventos, conciertos y filmación en Ciudad de México. Cinco disciplinas, una sola dirección creativa." />
+  <meta name="twitter:image" content="https://insignia-entertainment.netlify.app/assets/images/cinematic/poster_hero.jpg" />
 
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
 
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"LocalBusiness","name":"Insignia Entertainment","description":"Casa productora independiente.","address":{"@type":"PostalAddress","addressLocality":"Ciudad de México","addressCountry":"MX"},"telephone":"+52-56-1010-8446","email":"booking@insignia-entertainment.com"}
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://insignia-entertainment.netlify.app/#organization",
+        "name": "Insignia Entertainment",
+        "alternateName": "Insignia",
+        "url": "https://insignia-entertainment.netlify.app/",
+        "logo": "https://insignia-entertainment.netlify.app/assets/images/brand/logo.png",
+        "description": "Casa productora independiente en Ciudad de México: eventos, conciertos, filmación, fotografía, booking y experiencias inmersivas.",
+        "email": "booking@insignia-entertainment.com",
+        "telephone": "+52-56-1010-8446",
+        "areaServed": { "@type": "Country", "name": "México" }
+      },
+      {
+        "@type": "LocalBusiness",
+        "@id": "https://insignia-entertainment.netlify.app/#localbusiness",
+        "name": "Insignia Entertainment",
+        "image": "https://insignia-entertainment.netlify.app/assets/images/cinematic/poster_hero.jpg",
+        "url": "https://insignia-entertainment.netlify.app/",
+        "telephone": "+52-56-1010-8446",
+        "email": "booking@insignia-entertainment.com",
+        "priceRange": "$$$",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Ciudad de México",
+          "addressRegion": "CDMX",
+          "addressCountry": "MX"
+        },
+        "parentOrganization": { "@id": "https://insignia-entertainment.netlify.app/#organization" }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://insignia-entertainment.netlify.app/#website",
+        "url": "https://insignia-entertainment.netlify.app/",
+        "name": "Insignia Entertainment",
+        "inLanguage": "es-MX",
+        "publisher": { "@id": "https://insignia-entertainment.netlify.app/#organization" }
+      },
+      {
+        "@type": "Event",
+        "name": "I See Stars — The Wheel Tour",
+        "startDate": "2026-05-08T19:00:00-06:00",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "location": {
+          "@type": "Place",
+          "name": "Multiforo Alicia",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Ciudad de México",
+            "addressCountry": "MX"
+          }
+        },
+        "image": "https://insignia-entertainment.netlify.app/assets/images/eventos/i-see-stars-flyer-2.jpg",
+        "description": "I See Stars presenta The Wheel Tour por primera vez en CDMX. Invitado especial: Afterglow. Producción: Insignia Entertainment.",
+        "organizer": { "@id": "https://insignia-entertainment.netlify.app/#organization" },
+        "offers": {
+          "@type": "Offer",
+          "url": "https://undrworld-presenta-i-see-stars-en-cdmx.boletia.com/",
+          "availability": "https://schema.org/InStock",
+          "priceCurrency": "MXN",
+          "validFrom": "2025-01-01"
+        }
+      },
+      {
+        "@type": "Festival",
+        "name": "FLOW Festival '26 in Mexico City",
+        "startDate": "2026-07-22",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "location": {
+          "@type": "Place",
+          "name": "Foro Moliere",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Ciudad de México",
+            "addressCountry": "MX"
+          }
+        },
+        "image": "https://insignia-entertainment.netlify.app/assets/images/eventos/flow-festival-flyer-2.jpg",
+        "description": "Festival multidisciplinario en CDMX. Música electrónica, experiencias inmersivas y dirección creativa 360. Producción integral por Insignia Entertainment.",
+        "organizer": { "@id": "https://insignia-entertainment.netlify.app/#organization" },
+        "offers": {
+          "@type": "Offer",
+          "url": "https://flow-the-festival-in-mexico-city.boletia.com/",
+          "availability": "https://schema.org/InStock",
+          "priceCurrency": "MXN",
+          "validFrom": "2025-01-01"
+        }
+      }
+    ]
+  }
   </script>
 
   <!-- Self-hosted fonts: preload the two most critical (Anton display, Inter body).
@@ -1176,6 +1279,7 @@ body.letterbox-on .letterbox-bottom {
 
   <!-- ══ HERO ══ -->
   <section id="hero" aria-label="Hero — Insignia Entertainment">
+    <h1 class="sr-only">Insignia Entertainment · Casa productora de eventos, conciertos y filmación en Ciudad de México</h1>
     <div id="hero-video-wrap">
       <video
         id="hero-camera-video"
@@ -1426,7 +1530,7 @@ body.letterbox-on .letterbox-bottom {
     patrón automáticamente cuando detecta un <img>.
 
       <div class="service-image-placeholder" aria-hidden="true">
-        <img src="assets/images/servicios/eventos.jpg" alt="" />
+        <img src="assets/images/servicios/eventos.jpg" alt="Producción de eventos por Insignia Entertainment en CDMX" />
       </div>
 
     Sugeridas: 1280×720px, JPG calidad 85, dark mood matching la paleta.
@@ -1442,7 +1546,7 @@ body.letterbox-on .letterbox-bottom {
         <div class="service-image-placeholder" aria-hidden="true">
           <picture>
             <source srcset="assets/images/disciplinas/03-filmacion.webp" type="image/webp" />
-            <img src="assets/images/disciplinas/03-filmacion.webp" alt="" loading="lazy" class="service-image" />
+            <img src="assets/images/disciplinas/03-filmacion.webp" alt="Filmación cinematográfica y producción audiovisual en CDMX" loading="lazy" class="service-image" />
           </picture>
         </div>
         <h3 class="service-title">FILMACIÓN</h3>
@@ -1454,7 +1558,7 @@ body.letterbox-on .letterbox-bottom {
         <div class="service-image-placeholder" aria-hidden="true">
           <picture>
             <source srcset="assets/images/disciplinas/01-eventos.webp" type="image/webp" />
-            <img src="assets/images/disciplinas/01-eventos.webp" alt="" loading="lazy" class="service-image" />
+            <img src="assets/images/disciplinas/01-eventos.webp" alt="Producción integral de eventos y conciertos en CDMX" loading="lazy" class="service-image" />
           </picture>
         </div>
         <h3 class="service-title">EVENTOS</h3>
@@ -1466,7 +1570,7 @@ body.letterbox-on .letterbox-bottom {
         <div class="service-image-placeholder" aria-hidden="true">
           <picture>
             <source srcset="assets/images/disciplinas/04-fotografia.webp" type="image/webp" />
-            <img src="assets/images/disciplinas/04-fotografia.webp" alt="" loading="lazy" class="service-image" />
+            <img src="assets/images/disciplinas/04-fotografia.webp" alt="Fotografía editorial y de eventos por Insignia Entertainment" loading="lazy" class="service-image" />
           </picture>
         </div>
         <h3 class="service-title">FOTOGRAFÍA</h3>
@@ -1478,7 +1582,7 @@ body.letterbox-on .letterbox-bottom {
         <div class="service-image-placeholder" aria-hidden="true">
           <picture>
             <source srcset="assets/images/disciplinas/02-booking.webp" type="image/webp" />
-            <img src="assets/images/disciplinas/02-booking.webp" alt="" loading="lazy" class="service-image" />
+            <img src="assets/images/disciplinas/02-booking.webp" alt="Booking y management de artistas en México" loading="lazy" class="service-image" />
           </picture>
         </div>
         <h3 class="service-title">BOOKING &amp; MGMT</h3>
@@ -1490,7 +1594,7 @@ body.letterbox-on .letterbox-bottom {
         <div class="service-image-placeholder" aria-hidden="true">
           <picture>
             <source srcset="assets/images/disciplinas/05-experiencias.webp" type="image/webp" />
-            <img src="assets/images/disciplinas/05-experiencias.webp" alt="" loading="lazy" class="service-image" />
+            <img src="assets/images/disciplinas/05-experiencias.webp" alt="Experiencias inmersivas y activaciones de marca en CDMX" loading="lazy" class="service-image" />
           </picture>
         </div>
         <h3 class="service-title">EXPERIENCIAS</h3>
