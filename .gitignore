@@ -7,3 +7,10 @@
 # Lighthouse audit HTML reports (local)
 .lh-*.report.html
 .lh-*.report.json
+.lh-*
+
+# Claude Code worktrees (local-only; must NEVER be committed — they are
+# nested repos and Git records them as gitlinks without a .gitmodules entry,
+# which breaks Netlify's repo checkout — see commit history for context)
+.claude/worktrees/
+.claude/launch.json
